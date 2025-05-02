@@ -3,6 +3,8 @@ layout: ../layouts/Main.astro
 title: Goals
 ---
 
+<section>
+
 ## Toxicophenotype Data Model
 
 A [LinkML](https://linkml.io/)-based data model will be created (based on existing toxicological data structures) to enable a comprehensive representation of toxicological exposures, including time course, toxicants, and concentrations; genotype and genetic manipulations; phenotypic endpoints. The LinkML schema will be developed with the community, leverage a variety of different toxicological use cases, and be applicable across organisms.  
@@ -13,6 +15,10 @@ In addition, we will improve standards to represent all data, including (but not
 
 * the [Ontology of Biological Attributes](https://github.com/obophenotype/bio-attribute-ontology) (OBA), to represent “normal” phenotypes.
 
+</section>
+
+
+<section>
 
 ## Toxicophenotype Annotation Toolkit
 
@@ -26,10 +32,16 @@ Two methods for data submission will be designed and documented for more general
 
 2. Establishment and deployment of APIs  
 
+</section>
+
+
+<section>
 
 ## Toxicophenotype Atlas Web application
 
 Images representative of morphological phenotypes from toxicology studies, along with the metadata according to the new data model and zebrafish phenotype ontology, will be collected. This will provide the necessary image documentation, instantiating the new data model in a zebrafish “Toxicophenotype Atlas”. These images will provide a visual definition and standard for examining variations of specific phenotypes by laboratories at large. The online Zebrafish Toxicophenotype Atlas will be open-source, and allow users to explore and query exposures and phenotypes of interest and display example images demonstrating the phenotypes. These will be linked to external resources where relevant. FAIR API access to the data will be provided for third-party resources to utilize.
+
+</section>
 
 ---
 
