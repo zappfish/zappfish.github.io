@@ -1,0 +1,32 @@
+---
+const sections = [
+    { label: "Project Goals", path: "/goals" },
+    { label: "Get Involved", path: "/get-involved" },
+    { label: "Upcoming Workshops", path: "/events" },
+
+    { label: "Meet the team", path: "/team" },
+    { label: "Community", path: "/community" },
+    { label: "FAQs", path: "/faqs" },
+]
+---
+<ul>
+{sections.map(({ label, path }) =>
+<li>
+    <a href={path}>{label}</a>
+</li>
+)}
+</ul>
+
+<style>
+    ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        list-style-type: none;
+        text-align: center;
+        grid-gap: 50px;
+    }
+    li {
+        padding: 8px;
+        font-size: 2rem;
+    }
+</style>
