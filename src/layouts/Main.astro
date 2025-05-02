@@ -1,5 +1,6 @@
 ---
 import Header from "./Header.astro"
+import Footer from "./Footer.astro"
 const { frontmatter } = Astro.props;
 import "../styles/global.css"
 ---
@@ -10,10 +11,13 @@ import "../styles/global.css"
         <title>Zebrafish Toxicology Phenotype Atlas Project - {frontmatter.title}</title>
 	</head>
 	<body>
-        <Header title={frontmatter.title} />
-        <main>
-		<slot />
-        </main>
+        <div id="main">
+            <Header title={frontmatter.title} />
+            <main>
+                <slot />
+            </main>
+            <Footer />
+        </div>
 	</body>
 </html>
 
@@ -26,8 +30,16 @@ import "../styles/global.css"
 	}
 
     main {
+        height: 100%;
         margin: auto;
         max-width: 1280px;
-        padding: 0px 60px;
+        padding: 2rem 60px;
+    }
+
+    #main {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        align-items: stretch;
     }
 </style>
