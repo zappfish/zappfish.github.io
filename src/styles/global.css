@@ -71,6 +71,10 @@ a {
     color: var(--font-highlight-color);
 }
 
+strong {
+    font-weight: bold;
+}
+
 p,
 summary {
     font-size: 18.667px;
@@ -95,7 +99,8 @@ h1, h2, h3, h4 {
 h1 {font-size: 2rem;}
 h2 {font-size: 1.6rem;}
 
-p {
+p,
+ul:not(ul ul) {
     margin-bottom: 1rem;
 }
 

@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from "astro:content";
+import MainLayout from "../layouts/Main.astro";
+
+const events = await getCollection("events")
+
+---
+
+<MainLayout frontmatter={{ title: "Events" }}>
+    {events.map(async entry => {
+        const { Content } = await render(entry)
+
+        return (
+        <section>
+            <h2>{entry.data.title}</h2>
+            <p><strong>Day: </strong>{entry.data.date}</p>
+            <p><strong>Time: </strong>{entry.data.time}</p>
+            <p><strong>Location: </strong>{entry.data.location}</p>
+            <p><strong>Topic: </strong>{entry.data.topic}</p>
+            <p><strong>Sign up for this event <a href={entry.data.signup}>here</a></strong></p>
+            <Content />
+        </section>
+        )
+    })}
+</MainLayout>
+
