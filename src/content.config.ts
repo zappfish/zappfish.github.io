@@ -1,5 +1,5 @@
-import { defineCollection, z } from "astro:content";
-import { glob } from "astro/loaders";
+import { defineCollection, z, type SchemaContext } from "astro:content";
+import { glob, file } from "astro/loaders";
 
 const events = defineCollection({
   loader: glob({
@@ -17,6 +17,31 @@ const events = defineCollection({
 
 })
 
+const person = (context: SchemaContext) => z.object({
+  id: z.string(),
+  name: z.string(),
+  image: z.nullable(context.image()),
+  project_role: z.nullable(z.string()),
+  institution: z.string(),
+  institution_role: z.nullable(z.string()),
+})
+
+const pis = defineCollection({
+  loader: file("src/team.json", {
+    parser: text => JSON.parse(text).pis
+  }),
+  schema: person,
+})
+
+const team = defineCollection({
+  loader: file("src/team.json", {
+    parser: text => JSON.parse(text).team
+  }),
+  schema: person,
+})
+
 export const collections = {
-  events
+  pis,
+  events,
+  team,
 }

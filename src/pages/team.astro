@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../layouts/Main.astro";
+import Person from "../components/Person.astro";
+
+const pis = await getCollection("pis")
+const team = await getCollection("team")
+
+---
+
+<MainLayout frontmatter={{ title: "Meet the team" }}>
+    <section>
+    {pis.map(person => (
+    <div class="person">
+        <Person person={person} />
+    </div>
+    ))}
+    </section>
+
+    <section>
+    {team.map(person => (
+    <div class="person">
+        <Person person={person} />
+    </div>
+    ))}
+    </section>
+</MainLayout>
+
+<style>
+    .person {
+        padding: 10px;
+        flex-basis: 33%;
+        text-align: center;
+    }
+
+    section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+</style>

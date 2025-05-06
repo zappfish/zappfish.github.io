@@ -1,0 +1,24 @@
+---
+import { Image } from "astro:assets"
+const { person } = Astro.props
+---
+{person.data.image
+    ? <Image height={360} src={person.data.image} alt={person.data.name} />
+    : <div class="image-placeholder" />
+}
+<h2>{person.data.name}</h2>
+{person.data.project_role && <p>{person.data.project_role}</p>}
+{person.data.institution_role && <p>{person.data.institution_role}</p>}
+<p>{person.data.institution}</p>
+
+<style>
+    img {
+        display: inline-block;
+    }
+    .image-placeholder {
+        height: 360px;
+        width: 360px;
+        border : 2px dashed #ddd;
+        background-color: #f8f8f8;
+    }
+</style>
