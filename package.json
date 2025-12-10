@@ -10,7 +10,12 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.6",
-    "astro": "^5.7.7"
+    "@astrojs/react": "^4.4.2",
+    "astro": "^5.7.7",
+    "frogpot": "^2.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^8.31.1",
