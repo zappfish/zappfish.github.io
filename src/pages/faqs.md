@@ -4,7 +4,7 @@ title: Frequently Asked Questions
 ---
 <section>
 
-For any questions, comments, and input, please message us [here](mailto:toxicophenozebratlas-dev@tislab.org).
+For any questions, comments, and input, please message us at info@zappfish.org.
 
 </section>
 
