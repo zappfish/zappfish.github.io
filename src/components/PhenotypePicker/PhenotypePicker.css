@@ -1,5 +1,46 @@
 /* Phenotype Picker - ZAPP themed styles */
 
+/* ========================================
+   CSS Custom Properties
+   ======================================== */
+.phenotype-picker-container {
+  /* Colors */
+  --pp-primary: #136363;
+  --pp-primary-light: #1a7a7a;
+  --pp-primary-dark: #0f4f4f;
+  --pp-accent: #006580;
+  --pp-accent-light: #008099;
+  --pp-success: #28a745;
+  --pp-danger: #c00;
+  --pp-highlight: #ffe066;
+
+  /* Borders */
+  --pp-border: #d0e0e0;
+  --pp-border-light: #e0ebeb;
+  --pp-border-highlight: #e8f4f4;
+
+  /* Backgrounds */
+  --pp-bg-subtle: #f8fbfb;
+  --pp-bg-hover: #f8fcfc;
+  --pp-bg-active: #eef8f8;
+  --pp-bg-tree: #fafcfc;
+
+  /* Shadows */
+  --pp-shadow: rgba(19, 99, 99, 0.1);
+  --pp-shadow-medium: rgba(19, 99, 99, 0.12);
+  --pp-shadow-strong: rgba(19, 99, 99, 0.2);
+
+  /* Layout */
+  --pp-radius: 8px;
+  --pp-radius-sm: 4px;
+  --pp-pane-max-height: 500px;
+  --pp-pane-max-height-mobile: 300px;
+  --pp-min-height: 550px;
+
+  /* Transitions */
+  --pp-transition: 0.15s ease;
+}
+
 /* Container wrapping everything */
 .phenotype-picker-container {
   display: flex;
@@ -637,6 +678,18 @@
 
 /* ========================================
    HierarchyTree Styling (frogpot component)
+   ========================================
+
+   WARNING: Deep selectors for frogpot HierarchyTree component.
+   These target the internal DOM structure and may break on library updates.
+
+   frogpot version: 2.4.1
+   Last verified: 2024-12-10
+
+   The HierarchyTree component doesn't expose CSS class names, so we must
+   use deep child selectors and !important to override inline styles.
+   If styling breaks after a frogpot update, inspect the component's
+   DOM structure and update these selectors accordingly.
    ======================================== */
 
 /* Tree container wrapper */
@@ -649,7 +702,7 @@
 .hierarchy-tree-wrapper > div > div {
   border: 1px solid #d0e8e8 !important;
   border-radius: 6px !important;
-  background: #fafcfc;
+  background: var(--pp-bg-tree, #fafcfc);
 }
 
 /* Tree row items */
@@ -661,7 +714,7 @@
 
 /* Hover effect on rows */
 .hierarchy-tree-wrapper > div > div > div > div > div:hover {
-  background-color: #e8f4f4 !important;
+  background-color: var(--pp-border-highlight, #e8f4f4) !important;
 }
 
 /* The expand/collapse button container */
@@ -676,7 +729,7 @@
 
 /* The expand/collapse box itself */
 .hierarchy-tree-wrapper > div > div > div > div > div > span:first-child > span {
-  border-color: #136363 !important;
+  border-color: var(--pp-primary, #136363) !important;
   border-radius: 2px !important;
 }
 
@@ -696,7 +749,7 @@
 /* Selected item highlight - target the background color style */
 .hierarchy-tree-wrapper > div > div > div > div > div > span:last-child[style*="background-color: rgb(240, 240, 240)"],
 .hierarchy-tree-wrapper > div > div > div > div > div > span:last-child[style*="background-color:#f0f0f0"] {
-  background-color: #136363 !important;
+  background-color: var(--pp-primary, #136363) !important;
   color: white !important;
   font-weight: 600 !important;
   box-shadow: 0 2px 4px rgba(19, 99, 99, 0.3) !important;

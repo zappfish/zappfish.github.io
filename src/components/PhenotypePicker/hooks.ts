@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  Hierarchy,
+  type Hierarchy,
   OBOGraphLoader,
   type OBOGraphNode,
 } from 'frogpot';
@@ -17,12 +17,10 @@ export type ZPData = {
 
 type GraphsLoading = {
   loading: true;
-  reload: () => void
 };
 
 type GraphsLoaded = {
   loading: false;
-  reload: () => void;
 } & ZPData;
 
 export type GraphsResult = GraphsLoading | GraphsLoaded;
@@ -34,6 +32,34 @@ const zpCache: {
   promise: null,
   data: null,
 };
+
+/**
+ * Compute ZFIN usage count from node metadata.
+ * This extracts the reference count from nested basicPropertyValues.
+ */
+function computeZfinUsage(node: OBOGraphNode): number {
+  const bpvs = node.meta?.basicPropertyValues || [];
+
+  const zfinUsageBPV = bpvs.find(
+    (bpv) =>
+      bpv.pred === "http://purl.obolibrary.org/obo/terms_isReferencedBy" &&
+      bpv.val === "http://purl.obolibrary.org/obo/infores_zfin"
+  );
+
+  if (!zfinUsageBPV) return 0;
+
+  const usageMetaBPV = zfinUsageBPV.meta?.basicPropertyValues || [];
+
+  const zfinUsageNumber = usageMetaBPV.find(
+    (bpv) =>
+      bpv.pred ===
+      "http://www.geneontology.org/formats/oboInOwl#zapp:hasReferenceCount"
+  );
+
+  if (!zfinUsageNumber) return 0;
+
+  return parseInt(zfinUsageNumber.val);
+}
 
 async function loadZPData(): Promise<ZPData> {
   const loader = new OBOGraphLoader();
@@ -50,6 +76,9 @@ async function loadZPData(): Promise<ZPData> {
   const zpByZFA = new Map<string, OBOGraphNode[]>();
 
   for (const node of zpItems) {
+    // Pre-compute and cache ZFIN usage on each node for performance
+    (node as OBOGraphNode & { zfinUsage: number }).zfinUsage = computeZfinUsage(node);
+
     for (const edge of node.edges || []) {
       if (edge.pred === UPHENO_ASSOCIATED_WITH) {
         if (!zpByZFA.has(edge.obj)) zpByZFA.set(edge.obj, []);
@@ -58,20 +87,20 @@ async function loadZPData(): Promise<ZPData> {
     }
   }
 
+  // Pre-sort each anatomy's phenotype list by ZFIN usage (descending)
+  for (const nodes of zpByZFA.values()) {
+    nodes.sort((a, b) =>
+      ((b as OBOGraphNode & { zfinUsage: number }).zfinUsage || 0) -
+      ((a as OBOGraphNode & { zfinUsage: number }).zfinUsage || 0)
+    );
+  }
+
   return { zfaHierarchy, zpHierarchy, zpByZFA };
 }
 
 export function useZPGraph(): GraphsResult {
   const [data, setData] = useState(zpCache.data);
-  const [loadCounter, setLoadCounter] = useState(0)
   const cancelledRef = useRef(false);
-
-  const reload = () => {
-    zpCache.data = null;
-    zpCache.promise = null;
-    setData(null);
-    setLoadCounter(prev => prev + 1)
-  };
 
   useEffect(() => {
     cancelledRef.current = false;
@@ -100,18 +129,16 @@ export function useZPGraph(): GraphsResult {
     return () => {
       cancelledRef.current = true;
     };
-  }, [loadCounter]);
+  }, []);
 
   if (!data) {
     return {
       loading: true,
-      reload,
     };
   }
 
   return {
     loading: false,
-    reload,
     ...data,
   };
 }

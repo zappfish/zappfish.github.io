@@ -18,28 +18,37 @@ type ResultsPaneProps = {
   onAddPhenotype: (node: OBOGraphNode) => void;
 };
 
-function getZfinUsage(node: OBOGraphNode) {
-  const bpvs = node.meta?.basicPropertyValues || [];
+type NodeWithUsage = OBOGraphNode & { zfinUsage?: number };
 
-  const zfinUsageBPV = bpvs.find(
-    (bpv) =>
-      bpv.pred === "http://purl.obolibrary.org/obo/terms_isReferencedBy" &&
-      bpv.val === "http://purl.obolibrary.org/obo/infores_zfin"
-  );
+/**
+ * Get pre-computed ZFIN usage from node (computed during data load in hooks.ts)
+ */
+function getZfinUsage(node: OBOGraphNode): number {
+  return (node as NodeWithUsage).zfinUsage || 0;
+}
 
-  if (!zfinUsageBPV) return 0;
-
-  const usageMetaBPV = zfinUsageBPV.meta?.basicPropertyValues || [];
-
-  const zfinUsageNumber = usageMetaBPV.find(
-    (bpv) =>
-      bpv.pred ==
-      "http://www.geneontology.org/formats/oboInOwl#zapp:hasReferenceCount"
-  );
-
-  if (!zfinUsageNumber) return 0;
-
-  return parseInt(zfinUsageNumber.val);
+/**
+ * Copy text to clipboard with fallback for older browsers and non-secure contexts
+ */
+async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+    // Fallback for older browsers / non-secure contexts
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const success = document.execCommand('copy');
+    document.body.removeChild(textarea);
+    return success;
+  } catch {
+    return false;
+  }
 }
 
 const RESULTS_PAGE_SIZE = 50;
@@ -137,12 +146,20 @@ function ResultsPane(props: ResultsPaneProps) {
                 return (
                   <li
                     key={node.uri}
+                    role="button"
+                    tabIndex={0}
                     className={
                       "phenotype-item" +
                       (selectedZpNode?.uri === node.uri ? " active" : "") +
                       (isAlreadySelected ? " already-selected" : "")
                     }
                     onClick={() => onSelectNode(node)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onSelectNode(node);
+                      }
+                    }}
                   >
                     <div className="phenotype-item-content">
                       <div className="phenotype-label">
@@ -170,7 +187,7 @@ function ResultsPane(props: ResultsPaneProps) {
                         }
                       }}
                       disabled={isAlreadySelected}
-                      title={isAlreadySelected ? "Already in list" : "Add to list"}
+                      aria-label={isAlreadySelected ? "Already added" : "Add phenotype to list"}
                     >
                       {isAlreadySelected ? "✓" : "+"}
                     </button>
@@ -201,20 +218,20 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
   const [selectedPhenotypes, setSelectedPhenotypes] = useState<OBOGraphNode[]>([]);
   const treeRef = useRef<HierarchyTreeHandle>(null);
 
-  const addPhenotype = (node: OBOGraphNode) => {
+  const addPhenotype = useCallback((node: OBOGraphNode) => {
     setSelectedPhenotypes(prev => {
       if (prev.some(p => p.uri === node.uri)) return prev;
       return [...prev, node];
     });
-  };
+  }, []);
 
-  const removePhenotype = (uri: string) => {
+  const removePhenotype = useCallback((uri: string) => {
     setSelectedPhenotypes(prev => prev.filter(p => p.uri !== uri));
-  };
+  }, []);
 
-  const clearAllPhenotypes = () => {
+  const clearAllPhenotypes = useCallback(() => {
     setSelectedPhenotypes([]);
-  };
+  }, []);
 
   // Get all phenotypes for global search - must be before early return
   const allPhenotypes = useMemo(() => {
@@ -226,6 +243,35 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
   const { query: globalQuery, setQuery: setGlobalQuery, results: globalResults, highlightText: globalHighlightText } = useNodeSearch(allPhenotypes);
 
   const isGlobalSearchActive = globalQuery.trim().length > 0;
+
+  // Determine what to display (memoized for performance)
+  // NOTE: This must be before any early returns to maintain hook order
+  const { displayMode, displayedPhenotypes, modeLabel } = useMemo(() => {
+    if (isGlobalSearchActive && globalResults) {
+      return {
+        displayMode: "search" as const,
+        displayedPhenotypes: globalResults.map(r => r.node),
+        modeLabel: `Search results for "${globalQuery}"`
+      };
+    } else if (selectedZfaNode && anatomyPhenotypes.length > 0) {
+      return {
+        displayMode: "anatomy" as const,
+        displayedPhenotypes: anatomyPhenotypes,
+        modeLabel: `Phenotypes for ${selectedZfaNode.label}`
+      };
+    } else if (selectedZfaNode) {
+      return {
+        displayMode: "anatomy" as const,
+        displayedPhenotypes: [] as OBOGraphNode[],
+        modeLabel: `No phenotypes for ${selectedZfaNode.label}`
+      };
+    }
+    return {
+      displayMode: "empty" as const,
+      displayedPhenotypes: [] as OBOGraphNode[],
+      modeLabel: ""
+    };
+  }, [isGlobalSearchActive, globalResults, globalQuery, selectedZfaNode, anatomyPhenotypes]);
 
   // Expand root node on initial load
   useEffect(() => {
@@ -248,29 +294,6 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
   }
 
   const { zfaHierarchy, zpByZFA } = result;
-
-  // Determine what to display
-  let displayMode: "search" | "anatomy" | "empty";
-  let displayedPhenotypes: OBOGraphNode[];
-  let modeLabel: string;
-
-  if (isGlobalSearchActive && globalResults) {
-    displayMode = "search";
-    displayedPhenotypes = globalResults.map(r => r.node);
-    modeLabel = `Search results for "${globalQuery}"`;
-  } else if (selectedZfaNode && anatomyPhenotypes.length > 0) {
-    displayMode = "anatomy";
-    displayedPhenotypes = anatomyPhenotypes;
-    modeLabel = `Phenotypes for ${selectedZfaNode.label}`;
-  } else if (selectedZfaNode) {
-    displayMode = "anatomy";
-    displayedPhenotypes = [];
-    modeLabel = `No phenotypes for ${selectedZfaNode.label}`;
-  } else {
-    displayMode = "empty";
-    displayedPhenotypes = [];
-    modeLabel = "";
-  }
 
   return (
     <div className="phenotype-picker-container">
@@ -321,12 +344,8 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
                   if (isGlobalSearchActive) return; // Ignore clicks when disabled
                   setSelectedZfaNode(node);
                   const nodes = zpByZFA?.get(node.uri);
-                  if (!nodes) {
-                    setAnatomyPhenotypes([]);
-                  } else {
-                    const sorted = [...nodes].sort((a, b) => getZfinUsage(b) - getZfinUsage(a));
-                    setAnatomyPhenotypes(sorted);
-                  }
+                  // Data is pre-sorted by ZFIN usage in hooks.ts
+                  setAnatomyPhenotypes(nodes ? [...nodes] : []);
                   setSelectedZpNode(null);
                 }}
               />
@@ -377,15 +396,15 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
                   <div className="selected-phenotype-actions">
                     <button
                       className="copy-uri-btn"
-                      onClick={() => navigator.clipboard.writeText(node.uri)}
-                      title="Copy URI"
+                      onClick={() => copyToClipboard(node.uri)}
+                      aria-label="Copy URI to clipboard"
                     >
                       📋
                     </button>
                     <button
                       className="remove-btn"
                       onClick={() => removePhenotype(node.uri)}
-                      title="Remove"
+                      aria-label="Remove from list"
                     >
                       ×
                     </button>
@@ -398,7 +417,7 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
                 className="copy-all-btn"
                 onClick={() => {
                   const uris = selectedPhenotypes.map(p => p.uri).join("\n");
-                  navigator.clipboard.writeText(uris);
+                  copyToClipboard(uris);
                 }}
               >
                 Copy All URIs
