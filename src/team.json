@@ -22,10 +22,10 @@
     {
       "id": "aaron-odell",
       "name": "Aaron Odell",
-      "image": "/images/team/aaron-odell .jpg",
+      "image": "/images/team/aaron-odell.jpg",
       "project_role": null,
       "institution": "University of North Carolina at Chapel Hill",
-      "institution_role": "Research Associate "
+      "institution_role": "Research Associate"
     },
     {
       "id": "anne-thessen",
@@ -57,10 +57,10 @@
       "image": "./images/team/meesiing-ngu.png",
       "project_role": null,
       "institution": "University of North Carolina at Chapel Hill",
-      "institution_role": "Biocurator",
+      "institution_role": "Biocurator"
      },
     { 
-      "id": "melissa-haendel"
+      "id": "melissa-haendel",
       "name": "Melissa Haendel",
       "image": "/images/team/melissa-haendel.jpg",
       "project_role": null,
@@ -68,7 +68,7 @@
       "institution_role": "Professor"
      },
     { 
-      "id": "patrick-golden"
+      "id": "patrick-golden",
       "name": "Patrick Golden",
       "image": "/images/team/patrick-golden.jpg",
       "project_role": null,
@@ -76,15 +76,15 @@
       "institution_role": "Scientific Software Engineer"
      },
     { 
-      "id": "raeden-gray"
+      "id": "raeden-gray",
       "name": "Raéden Gray",
       "image": "/images/team/raeden-gray.jpg",
       "project_role": null,
       "institution": "University of Colorado Anschutz Medical Campus",
       "institution_role": "Post-Doctoral Fellow"
-      },
-    { 
-      "id": "sarah-gehrke"
+     },
+    {
+      "id": "sarah-gehrke",
       "name": "Sarah Gehrke",
       "image": "/images/team/sarah-gehrke.jpg",
       "project_role": null,
