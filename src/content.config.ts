@@ -17,10 +17,10 @@ const events = defineCollection({
 
 })
 
-const person = z.object({
+const person = (context: SchemaContext) => z.object({
   id: z.string(),
   name: z.string(),
-  image: z.nullable(z.string()),
+  image: z.nullable(context.image()),
   project_role: z.nullable(z.string()),
   institution: z.string(),
   institution_role: z.nullable(z.string()),
