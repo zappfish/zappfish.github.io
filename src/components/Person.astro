@@ -1,9 +1,8 @@
 ---
-import { Image } from "astro:assets"
 const { person } = Astro.props
 ---
 {person.data.image
-    ? <Image height={360} src={person.data.image} alt={person.data.name} />
+    ? <img height={360} src={person.data.image} alt={person.data.name} />
     : <div class="image-placeholder" />
 }
 <h2>{person.data.name}</h2>
