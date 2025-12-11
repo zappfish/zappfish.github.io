@@ -20,6 +20,14 @@
 
   "team": [
     {
+      "id": "aaron-odell",
+      "name": "Aaron Odell",
+      "image": "./images/team/aaron-odell .jpg",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Research Associate "
+    },
+    {
       "id": "anne-thessen",
       "name": "Anne Thessen",
       "image": "./images/team/anne-thesen.jpg",
@@ -36,12 +44,52 @@
       "institution_role": null
     },
     {
-      "id": "melissa-haendel",
+       "id": "kevin-schaper",
+      "name": "Kevin Schaper",
+      "image": "./images/team/kevin-schaper.jpg",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Scientific Software Engineer"
+     },
+    { 
+      "id": "meesiing-ngu",
+      "name": "MeeSiing Ngu",
+      "image": "./images/team/meesiing-ngu.png",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Biocurator",
+     },
+    { 
+      "id": "melissa-haendel"
       "name": "Melissa Haendel",
-      "image": null,
+      "image": "./images/team/melissa-haendel.jpg",
       "project_role": null,
       "institution": "University of North Carolina at Chapel Hill",
       "institution_role": "Professor"
+     },
+    { 
+      "id": "patrick-golden"
+      "name": "Patrick Golden",
+      "image": "./images/team/patrick-golden.jpg",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Scientific Software Engineer"
+     },
+    { 
+      "id": "raeden-gray"
+      "name": "Raéden Gray",
+      "image": "./images/team/raeden-gray.jpg",
+      "project_role": null,
+      "institution": "University of Colorado Anschutz Medical Campus",
+      "institution_role": "Post-Doctoral Fellow"
+      },
+    { 
+      "id": "sarah-gehrke"
+      "name": "Sarah Gehrke",
+      "image": "./images/team/sarah-gehrke.jpg",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Project Manager"
     }
   ]
 }
