@@ -54,7 +54,7 @@
     { 
       "id": "meesiing-ngu",
       "name": "MeeSiing Ngu",
-      "image": "./images/team/meesiing-ngu.png",
+      "image": "/images/team/meesiing-ngu.png",
       "project_role": null,
       "institution": "University of North Carolina at Chapel Hill",
       "institution_role": "Biocurator"
