@@ -2,7 +2,14 @@
 import { getCollection, render } from "astro:content";
 import MainLayout from "../layouts/Main.astro";
 
-const events = await getCollection("events")
+const eventsUnsorted = await getCollection("events")
+
+// Sort events by date (earliest first)
+const events = eventsUnsorted.sort((a, b) => {
+    const dateA = new Date(a.data.date);
+    const dateB = new Date(b.data.date);
+    return dateA.getTime() - dateB.getTime();
+});
 
 // Function to create a URL-friendly ID from the event title
 function createEventId(title: string): string {
