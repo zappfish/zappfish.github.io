@@ -59,7 +59,11 @@ time, mark, audio, video {
 }
 
 :root {
-    --font-highlight-color: rgb(0,101,128);
+    --main-color: #1c4f5d;
+    --accent-color: #741b48;
+    --light-color: #f5eeea;
+    --dark-color: #000000;
+    --font-highlight-color: var(--main-color);
 }
 
 
