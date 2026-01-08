@@ -21,24 +21,40 @@ The Community plays an integral role in the success of this project.
 <section class="questions">
 
 ## Who is the Zebrafish Toxico Phenotype Atlas community and how can one join this community?
-* Zebrafish community, including researchers 
+* Zebrafish researchers 
 
-* Toxicology community
+* Toxicologists
 
 * Data standards and ontology experts
 
 * Atlas experts
+
+* Regulators
     
 Join the Zebrafish Toxicology Phenotype Atlas community by filling out [this form](http://tislab.org/ZebraPhenoAtlas-signup).
 
-## (upcoming) Submit data
 
-## (upcoming) Scientific Advisory Board (SAB)</h2>
+## Scientific Advisory Board (SAB)</h2>
 
-A Scientific Advisory Board (SAB) will be established and consulted yearly to ensure guidance and progress of the project.  It will provide feedback on the scope of work, priorities, and project evaluation. 
+A Scientific Advisory Board (SAB) chaired by Jonathan Hamm meets annually to serve in an advisory capacity to ZAPP leadership about the status and direction of ZAPP. The board provides strategic observations and feedback on existing and proposed activities and partnerships, including prioritization of new development, external funding opportunities, operational issues, and long-term planning.
 
-The composition of the SAB is still to be determined, but it will be chaired by the consultant Jon Hamm and will include membership from ZFIN, and members from the toxicology and zebrafish communities.
+* Jonathan Hamm (Chair), Inovit
+
+* Charles Lovely, University of Louisville
+  
+* Chris Mungall, Lawrence Berkeley National Laboratory
+  
+* Monte Westerfield, University of Oregon
+
+* Philip Holmes, National Institute of Environmental Health Sciences/National Institues of Health
+
+* Robyn Tanguay, Oregon State University
+
+* Stephanie Padilla, U.S. Environmental Protection Agency
+
 
 ## (upcoming) Governance
+
+## (upcoming) Submit data
 
 </section>
