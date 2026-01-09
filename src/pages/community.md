@@ -38,6 +38,7 @@ Join the Zebrafish Toxicology Phenotype Atlas community by filling out [this for
 
 A Scientific Advisory Board (SAB) chaired by Jonathan Hamm meets annually to serve in an advisory capacity to ZAPP leadership about the status and direction of ZAPP. The board provides strategic observations and feedback on existing and proposed activities and partnerships, including prioritization of new development, external funding opportunities, operational issues, and long-term planning.
 
+**SAB members (2025)**
 * Jonathan Hamm (Chair), Inovit
 
 * Charles Lovely, University of Louisville
@@ -46,7 +47,7 @@ A Scientific Advisory Board (SAB) chaired by Jonathan Hamm meets annually to ser
   
 * Monte Westerfield, University of Oregon
 
-* Philip Holmes, National Institute of Environmental Health Sciences/National Institues of Health
+* Philip Holmes, National Institute of Environmental Health Sciences/National Institutes of Health
 
 * Robyn Tanguay, Oregon State University
 
