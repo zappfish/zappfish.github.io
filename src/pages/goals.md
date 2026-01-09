@@ -7,13 +7,15 @@ title: Goals
 
 ## Toxicophenotype Data Model
 
-A [LinkML](https://linkml.io/)-based data model will be created (based on existing toxicological data structures) to enable a comprehensive representation of toxicological exposures, including time course, toxicants, and concentrations; genotype and genetic manipulations; phenotypic endpoints. The LinkML schema will be developed with the community, leverage a variety of different toxicological use cases, and be applicable across organisms.  
+We aim to create a [LinkML](https://linkml.io/linkml/)-based data model, based on existing toxicological data structures to support comprehensive representation of toxicological exposures, including time course, toxicants, concentrations, fish information, and phenotypic endpoints. The LinkML schema will be developed with community input across multiple toxicology use cases and designed for use across organisms.
 
-In addition, we will improve standards to represent all data, including (but not limited to)
+In addition, we improve standards to represent all data, including (but not limited to)
 
 * the [Zebrafish Phenotype ontology](https://github.com/obophenotype/zebrafish-phenotype-ontology) (ZP), to represent zebrafish phenotypes. 
 
 * the [Ontology of Biological Attributes](https://github.com/obophenotype/bio-attribute-ontology) (OBA), to represent “normal” phenotypes.
+
+* the [Environment Exposure Ontology](https://github.com/EnvironmentOntology/environmental-exposure-ontology) (ECTO), to represent exposure route terms.
 
 </section>
 
@@ -22,11 +24,11 @@ In addition, we will improve standards to represent all data, including (but not
 
 ## Toxicophenotype Annotation Toolkit
 
-A Toxicophenotype Annotation Toolkit will be iteratively created and refined with the community. This Toolkit will allow communities to annotate their data and submit them to the Zebrafish ToxicoPhenotype Atlas. 
+We aim to develop a community driven Toxicophenotype Annotation Toolkit aligned with the Toxicophenotype Data Model to support standardized data annotation and submission to the ZAPP Atlas. 
 
-Tutorials and curation guidelines will be provided to ensure inter-annotator consistency. 
+Tutorials and curation guidelines will be provided to ensure consistent annotation across contributors. 
 
-Two methods for data submission will be designed and documented for more general laboratory use: 
+Two data submission methods will be designed and documented for routine laboratory use: 
 
 1. Submission of images and metadata annotations using a simple file transfer protocol
 
@@ -39,7 +41,7 @@ Two methods for data submission will be designed and documented for more general
 
 ## Toxicophenotype Atlas Web application
 
-Images representative of morphological phenotypes from toxicology studies, along with the metadata according to the new data model and zebrafish phenotype ontology, will be collected. This will provide the necessary image documentation, instantiating the new data model in a zebrafish “Toxicophenotype Atlas”. These images will provide a visual definition and standard for examining variations of specific phenotypes by laboratories at large. The online Zebrafish Toxicophenotype Atlas will be open-source, and allow users to explore and query exposures and phenotypes of interest and display example images demonstrating the phenotypes. These will be linked to external resources where relevant. FAIR API access to the data will be provided for third-party resources to utilize.
+We will collect images and metadata of morphological phenotypes from toxicology studies using Toxicophenotype Annotation Toolkit. These data will instantiate a zebrafish Toxicophenotype Atlas and provide visual standards for comparing phenotype variation across laboratories. The open source web atlas will support exploration and querying of exposures and phenotypes, display representative images, and link to relevant external resources. FAIR API access to the data will be provided for third-party resources.
 
 </section>
 
