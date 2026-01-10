@@ -9,9 +9,9 @@ The Zebrafish Atlas Phenotype Project (ZAPP) is a community driven effort focuse
 
 ZAPP aims to: 
 
-1. Develop a **data model** using exisiting standards to report zebrafish exposure experiments and resulting phenotypes
+1. Develop a **data model** and standards to report zebrafish exposure experiments and resulting phenotypes
    
-2. Create an **annotation toolkit** that enables consistent data annotation without prior knowledge of ontologies or data modeling
+2. Create an **annotation toolkit** that enables consistent data annotation following the data model and standards. This annotation toolkit will allow standards adoption without prior knowledge of ontologies or data modeling.
 
 3. Build a web-based, community-curated **phenotype atlas** that serves as a visual reference for zebrafish phenotypes
 
@@ -22,13 +22,11 @@ ZAPP aims to:
 
 ## 1. Data Model and Standards for Toxicophenotype
 
-We aim to create a [LinkML](https://linkml.io/linkml/)-based data model, based on existing toxicological data structures to support comprehensive representation of toxicological exposures, including time course, toxicants, concentrations, fish information, and phenotypic endpoints. The LinkML schema will be developed with community input across multiple toxicology use cases and designed for use across organisms.
+We are creating a [LinkML](https://linkml.io/linkml/)-based data model, based on existing toxicological data structures to support comprehensive representation of toxicological exposures, including time course, toxicants, concentrations, fish information, and phenotypic endpoints. The LinkML schema is developed with community input across multiple toxicology use cases and designed for use across organisms. More information about the data model can be found [here](https://github.com/zappfish/zebrafish-toxicology-atlas-schema)
 
 In addition, we improve standards to represent all data, including (but not limited to)
 
 * the [Zebrafish Phenotype ontology](https://github.com/obophenotype/zebrafish-phenotype-ontology) (ZP), to represent zebrafish phenotypes. 
-
-* the [Ontology of Biological Attributes](https://github.com/obophenotype/bio-attribute-ontology) (OBA), to represent “normal” phenotypes.
 
 * the [Environment Exposure Ontology](https://github.com/EnvironmentOntology/environmental-exposure-ontology) (ECTO), to represent exposure route terms.
 
