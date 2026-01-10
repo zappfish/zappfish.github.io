@@ -27,15 +27,15 @@ Data will be submitted through a custom annotation toolkit designed to ensure co
 
 ## How will my contribution to the Zebrafish Toxicology Phenotype Atlas be reported?
 
-All submitted content is fully tracked and attributed to the submitting group or individual. Contribution records link submissions to contributors. Persistent identifiers such as ORCID are a leading option. The final approach will be set with community input.
+All content in the Zebrafish Toxicology Phenotype Atlas will be fully provenanced and attributed to the group or group member who submitted the content. While the final approach is still being discussed and determined with community input, persistent identifiers such as ORCID, will be used.
 
 
 ## Who will have access to the Zebrafish Toxicology Phenotype Atlas?
 
-The atlas is intended for open access. Licensing and terms of use will be defined by the Scientific Advisory Board. A CC BY license is the expected default. Anyone with an internet connection will have access. 
+The atlas is intended for open access. Licensing and terms of use is still being discussed and determined, but our intention is to use an open license (such as CC BY) to maximize accessibility, reuse, and transparency.
 
 
 ## Does the Zebrafish Toxicology Phenotype Atlas have a sustainability plan?
 
-ZAPP's sustainability follows an open source development model. The atlas, annotation toolkit, and  data model are developed as open source software with a defined process for ongoing updates as knowledge evolves. 
+ZAPP's sustainability follows an open source development model. The atlas, annotation toolkit, and data model are developed as open source software with a defined process for ongoing updates as knowledge evolves. 
 </section>
