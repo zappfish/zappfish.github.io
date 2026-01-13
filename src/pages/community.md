@@ -32,10 +32,7 @@ The Community plays an integral role in the success of this project.
 * Regulators
     
 Join the Zebrafish Toxicology Phenotype Atlas community by filling out [this form](http://tislab.org/ZebraPhenoAtlas-signup).
-</section>
 
-
-</section>
 
 ## Scientific Advisory Board (SAB)</h2>
 
