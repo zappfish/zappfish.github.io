@@ -20,6 +20,15 @@ function createEventId(title: string): string {
         .trim();
 }
 
+// Function to check if an event date is in the past
+function isPastEvent(dateString: string): boolean {
+    const eventDate = new Date(dateString);
+    const today = new Date();
+    // Set today to start of day for fair comparison
+    today.setHours(0, 0, 0, 0);
+    return eventDate < today;
+}
+
 ---
 
 <MainLayout frontmatter={{ title: "Events" }}>
@@ -40,15 +49,16 @@ function createEventId(title: string): string {
     {events.map(async entry => {
         const { Content } = await render(entry)
         const eventId = createEventId(entry.data.title);
+        const isPast = isPastEvent(entry.data.date);
 
         return (
-        <section id={eventId} class="event-section">
+        <section id={eventId} class={`event-section ${isPast ? 'past-event' : 'upcoming-event'}`}>
             <h2>{entry.data.title}</h2>
-            <p><strong>Day: </strong>{entry.data.date}</p>
-            <p><strong>Time: </strong>{entry.data.time}</p>
-            <p><strong>Location: </strong>{entry.data.location}</p>
+            {!isPast && <p><strong>Day: </strong>{entry.data.date}</p>}
+            {!isPast && <p><strong>Time: </strong>{entry.data.time}</p>}
+            {!isPast && <p><strong>Location: </strong>{entry.data.location}</p>}
             <p><strong>Topic: </strong>{entry.data.topic}</p>
-            <p><strong>Sign up for this event <a href={entry.data.signup}>here</a></strong></p>
+            {!isPast && <p><strong>Sign up for this event <a href={entry.data.signup}>here</a></strong></p>}
             <Content />
         </section>
         )
