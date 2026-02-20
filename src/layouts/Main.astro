@@ -1,46 +1,34 @@
 ---
 import Header from "./Header.astro"
 import Footer from "./Footer.astro"
-const { frontmatter } = Astro.props;
 import "../styles/global.css"
+const { frontmatter } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- enables responsive layout on mobile -->
         <title>Zebrafish Toxicology Phenotype Atlas Project - {frontmatter.title}</title>
-	</head>
-	<body>
+    </head>
+    <body>
         <div id="main">
             <Header title={frontmatter.title} />
-            <main>
-                <slot />
-            </main>
+            <main><slot /></main>
             <Footer />
         </div>
-	</body>
+    </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+    html, body { margin: 0; width: 100%; height: 100%; }
 
-    main {
-        width: 100%;
-        height: 100%;
-        margin: auto;
-        max-width: 1280px;
-        padding: 2rem 60px;
+    main { width: 100%; margin: auto; max-width: 1280px; padding: 2rem 60px; }
+
+    /* Match nav-bar side padding on mobile */
+    @media (max-width: 768px) {
+        main { padding: 1.5rem var(--space-8); }
     }
 
-    #main {
-        min-height: 100vh;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        align-items: stretch;
-    }
+    #main { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; align-items: stretch; }
 </style>

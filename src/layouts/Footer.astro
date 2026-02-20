@@ -1,41 +1,103 @@
 ---
-const sections = [
-    { label: "Get involved", path: "/get-involved/" },
-    { label: "Upcoming workshops", path: "/events/" },
-    { label: "Contact us", path: "mailto:info@zappfish.org" },
-]
-const currentPath = Astro.url.pathname
+import { navItems } from "../config/nav"
+const quickLinks = navItems
 ---
 
-<footer>
-    {currentPath == "/" ? null : (
-        <ul>
-        {sections.map(({ label, path }) =>
-        <li>
-            <a href={path}>{label}</a>
-        </li>
-        )}
-        </ul>
-    )}
+<footer class="site-footer">
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+            <a href="/"><img class="footer-logo-img" src="/logo.jpg" alt="ZAPP" /></a>
+            <p>Department of Genetics<br />UNC Chapel Hill</p>
+            <a href="mailto:info@zappfish.org">info@zappfish.org</a>
+        </div>
+
+        <div class="footer-links">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-link-list">
+                {quickLinks.map(({ label, path }) => <li><a href={path}>{label}</a></li>)}
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h4 class="footer-heading">Contact</h4>
+            <p>UNC Chapel Hill<br />Department of Genetics<br />Email: <a href="mailto:info@zappfish.org">info@zappfish.org</a></p>
+            <div class="social-icons">
+                <a href="https://twitter.com/zappfish" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+                <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer-bottom">
+        <p>© {new Date().getFullYear()} ZAPP. All rights reserved.</p>
+    </div>
 </footer>
 
 <style>
-    ul {
-        padding: 3rem 0;
-        list-style-type: none;
-        display: flex;
-        justify-content: center;
-        gap: 3rem;
+    .site-footer { background-color: var(--color-primary-dark); color: #ffffff; width: 100%; }
+
+    /* 1.5fr brand col gives more room for logo + org info */
+    .footer-inner {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 48px;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 32px;
+        box-sizing: border-box;
     }
 
-    ul li a {
-        display: inline-block;
-        padding: .5rem 6rem;
-        color: white;
-        background-color: rgba(30,108,147,1);
+    /* max dimensions + auto sizing preserves aspect ratio */
+    .footer-logo-img { max-height: 60px; max-width: 180px; width: auto; height: auto; display: block; margin-bottom: 16px; }
+
+    /* Shared muted text — rgba opacity adapts if bg color changes */
+    .footer-brand p,
+    .footer-brand a,
+    .footer-link-list li a,
+    .footer-contact p,
+    .footer-contact a {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.65);
         text-decoration: none;
+        line-height: 1.6;
+        margin-bottom: 4px;
     }
-    ul li a:hover {
-        opacity: .8;
+
+    /* Single hover rule covers all footer links */
+    .footer-brand a:hover,
+    .footer-link-list li a:hover,
+    .footer-contact a:hover { color: #ffffff; }
+
+    .footer-heading { color: #ffffff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; }
+
+    .footer-link-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+
+    .social-icons { display: flex; gap: 12px; margin-top: 8px; }
+
+    .social-icons a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 0.75rem;
+        text-decoration: none;
+        transition: border-color 0.15s, color 0.15s;
+    }
+
+    .social-icons a:hover { border-color: #ffffff; color: #ffffff; }
+
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; padding: 16px 32px; }
+
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); margin: 0; }
+
+    /* Stack columns on mobile, center-align content */
+    @media (max-width: 768px) {
+        .footer-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+        .footer-logo-img { margin: 0 auto 16px; }
+        .social-icons { justify-content: center; }
     }
 </style>

@@ -1,71 +1,156 @@
 ---
-const sections = [
-    { label: "Home", path: "/" },
-    { label: "Goals", path: "/goals/" },
-    { label: "Community", path: "/community/" },
-    { label: "Meet the team", path: "/team/" },
-    { label: "Get involved", path: "/get-involved/" },
-    { label: "Events", path: "/events/" },
-    { label: "Frequently Asked Questions", path: "/faqs/" },
-]
-const currentPath = Astro.url.pathname
+import { navItems } from "../config/nav"
+const sections = navItems
+const currentPath = Astro.url.pathname // pathname-based active state — no hydration flash
 const { title } = Astro.props;
 ---
 <header>
-    <nav>
-        <div><a href="/">Zebrafish Toxicology Phenotype Atlas Project</a></div>
+    <div class="nav-bar">
+        <a class="logo" href="/">
+            <img src="/logo.jpg" alt="ZAPP logo" />
+            <div class="logo-text">
+                <span class="logo-name">ZAPP</span>
+                <span class="logo-sub">Zebrafish Atlas Project</span>
+            </div>
+        </a>
 
-        <ul>
-        {sections.map(({ label, path }) =>
-        <li class={ currentPath === path ? "selected" : "" }>
-            <a href={path}>{label}</a>
-        </li>
-        )}
-        </ul>
-    </nav>
-    <h1>{title}</h1>
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+
+        <nav id="main-nav">
+            <ul>
+            {sections.map(({ label, path }) =>
+                <li class={currentPath === path ? "active" : ""}><a href={path}>{label}</a></li>
+            )}
+            </ul>
+        </nav>
+    </div>
+
+    <div class="hero">
+        <h1>{title}</h1>
+    </div>
 </header>
 
+<script>
+    const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')
+    const nav = document.querySelector<HTMLElement>('#main-nav')
+
+    if (hamburger && nav) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('open')
+            hamburger.setAttribute('aria-expanded', String(isOpen))
+            hamburger.classList.toggle('open', isOpen)
+        })
+    }
+</script>
+
 <style>
-    header {
-        background: #136363;
-    }
-
-    h1 {
-        font-size: 4rem;
-        font-weight: normal;
-        text-align: center;
-        padding: 3.33rem 0;
-    }
-
-    a {
-        color: #ccc;
-        text-decoration: none;
-    }
-
-    h1,
-    li.selected a {
-        color: white;
-    }
-
-    nav {
-        padding: .5rem 1rem;
+    /* max-width + margin: auto — same centering pattern used in main and .footer-inner */
+    .nav-bar {
+        background: var(--color-bg-white);
+        border-bottom: 1px solid var(--color-border);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: var(--space-3) var(--space-8);
+        max-width: 1280px;
+        margin: 0 auto;
+        position: relative;
     }
 
-    nav ul {
-        list-style-type: none;
-        display: flex;
-    }
+    .logo { display: inline-flex; align-items: center; gap: var(--space-3); text-decoration: none; }
+
+    /* Fixed height stabilises nav bar regardless of logo aspect ratio */
+    .logo img { height: 48px; width: auto; }
+
+    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .logo-name { font-size: 1.1rem; font-weight: 700; color: var(--color-primary); }
+    .logo-sub  { font-size: 0.7rem; color: var(--color-text-muted); }
+
+    nav ul { list-style: none; display: flex; gap: var(--space-1); padding: 0; margin: 0; }
 
     nav ul li a {
         display: inline-block;
-        padding: .5rem 1rem;
-    }
-    nav ul li a:hover {
-        background-color: #333;
+        padding: var(--space-2) var(--space-2);
+        color: var(--color-text-dark);
+        text-decoration: none;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        transition: color 0.15s;
     }
 
+    nav ul li a:hover { color: var(--color-accent); }
+
+    /* Color + weight avoids layout shift from border/padding changes on active item */
+    nav ul li.active a { color: var(--color-primary); font-weight: 700; }
+
+    .hero { background: var(--color-primary); padding: var(--space-12) var(--space-8); text-align: center; }
+
+    h1 { color: var(--color-text-white); font-size: 2.5rem; font-weight: 700; margin: 0; }
+
+    /* ── Hamburger button — hidden on desktop ── */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 18px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 10;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: var(--color-primary);
+        border-radius: 2px;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+
+    /* Animate to × when open */
+    .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* ── Mobile layout ── */
+    @media (max-width: 768px) {
+        .logo-sub { display: none; }
+
+        .hamburger { display: flex; }
+
+        #main-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--color-bg-white);
+            border-top: 1px solid var(--color-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        #main-nav.open { display: block; }
+
+        #main-nav ul {
+            flex-direction: column;
+            gap: 0;
+            padding: var(--space-2) 0;
+        }
+
+        #main-nav ul li a {
+            display: block;
+            padding: var(--space-3) var(--space-8);
+            font-size: 1rem;
+            white-space: normal;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        #main-nav ul li:last-child a { border-bottom: none; }
+    }
 </style>
