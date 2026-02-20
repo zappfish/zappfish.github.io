@@ -22,8 +22,6 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-/* Self-hosted to avoid Google Fonts network dependency.
-   font-display: swap keeps text visible while font loads. */
 
 /* lato-regular - latin */
 @font-face {
@@ -103,7 +101,6 @@ strong {
     font-weight: bold;
 }
 
-/* Minor third scale (×1.333) — line-height 1.66 suits long-form scientific content */
 p,
 summary {
     font-size: 18.667px;
