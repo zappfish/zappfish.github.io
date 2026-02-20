@@ -1,7 +1,7 @@
 ---
 import Header from "./Header.astro"
 import Footer from "./Footer.astro"
-import "../styles/global.css"
+import "../styles/global.css" // design tokens + base styles for all pages
 const { frontmatter } = Astro.props;
 ---
 <!doctype html>
@@ -30,5 +30,6 @@ const { frontmatter } = Astro.props;
         main { padding: 1.5rem var(--space-8); }
     }
 
+    /* Sticky footer — header/footer natural height, main stretches to fill remaining space */
     #main { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; align-items: stretch; }
 </style>
