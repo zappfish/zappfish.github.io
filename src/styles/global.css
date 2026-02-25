@@ -1,6 +1,13 @@
-/* Include padding/border in element width — prevents layout overflow */
+/* ══════════════════════════════════════════════════════════════
+   Box-sizing reset — include padding/border in element width
+   ══════════════════════════════════════════════════════════════ */
 * { box-sizing: border-box; }
 
+
+/* ══════════════════════════════════════════════════════════════
+   CSS reset — strip browser default margins, padding, borders,
+   and font sizing so all elements start from a known baseline
+   ══════════════════════════════════════════════════════════════ */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -14,69 +21,78 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 
-/* lato-regular - latin */
+/* ══════════════════════════════════════════════════════════════
+   Web fonts — Lato (regular, italic, bold, bold-italic)
+   ══════════════════════════════════════════════════════════════ */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/fonts/lato-v24-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    font-display: swap;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/lato-v24-latin-regular.woff2') format('woff2');
 }
 
-/* lato-italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 400;
-  src: url('/fonts/lato-v24-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    font-display: swap;
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 400;
+    src: url('/fonts/lato-v24-latin-italic.woff2') format('woff2');
 }
 
-/* lato-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/fonts/lato-v24-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    font-display: swap;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/fonts/lato-v24-latin-700.woff2') format('woff2');
 }
 
-/* lato-700italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 700;
-  src: url('/fonts/lato-v24-latin-700italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    font-display: swap;
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 700;
+    src: url('/fonts/lato-v24-latin-700italic.woff2') format('woff2');
 }
 
+
+/* ══════════════════════════════════════════════════════════════
+   Design tokens
+   ──────────────────────────────────────────────────────────────
+   All raw values live here. Components reference only tokens.
+   To restyle the site, change values in this block only.
+   ══════════════════════════════════════════════════════════════ */
 :root {
-    /* Design tokens — change here, propagates everywhere.
-       Never hardcode hex values in component styles. */
 
-    --color-primary:        #1d3a4a;  /* nav, hero, primary buttons */
-    --color-primary-dark:   #1a535c;  /* footer background */
-    --color-accent:         #2a9d8a;  /* CTA buttons, hover states */
-    --color-accent-hover:   #228a78;  /* button press feedback */
-    --color-bg-light:       #f5f3ee;  /* alternating section backgrounds */
-    --color-bg-white:       #ffffff;  /* cards, nav bar */
-    --color-text-dark:      #1a1a1a;  /* primary body copy */
-    --color-text-muted:     #666666;  /* captions, secondary labels */
-    --color-text-white:     #ffffff;  /* text on dark backgrounds */
-    --color-border:         #e0ddd6;  /* dividers, card borders */
+    /* ── Colors ─────────────────────────────────────────────────
+       Semantic names map to usage, not hue.
+       Never use raw hex values outside this block.            */
+    --color-primary:       #1d3a4a;   /* nav, hero, headings, primary buttons */
+    --color-primary-dark:  #1a535c;   /* footer background                    */
+    --color-accent:        #2a9d8a;   /* CTA buttons, hover states            */
+    --color-accent-hover:  #228a78;   /* button press / active feedback       */
+    --color-bg-light:      #f5f3ee;   /* alternating section backgrounds      */
+    --color-bg-white:      #ffffff;   /* cards, nav bar, page base            */
+    --color-text-dark:     #1a1a1a;   /* primary body copy                    */
+    --color-text-muted:    #666666;   /* captions, secondary labels           */
+    --color-text-white:    #ffffff;   /* text on dark backgrounds             */
+    --color-border:        #e0ddd6;   /* dividers, card borders               */
 
-    /* 8px base grid — use these for all margins, paddings, gaps */
-    --space-1:  4px;
-    --space-2:  8px;
+    /* ── Spacing — 8 px base grid ───────────────────────────────
+       Every layout value must map to one of these tokens.
+       Intermediate values (e.g. 28 px) are not permitted.    */
+    --space-1:   4px;
+    --space-2:   8px;
     --space-3:  12px;
     --space-4:  16px;
     --space-6:  24px;
@@ -84,54 +100,84 @@ time, mark, audio, video {
     --space-12: 48px;
     --space-16: 64px;
 
-    /* Deprecated — use --color-primary in new components */
-    --font-highlight-color: #1d3a4a;
+    /* ── Typography: font family ─────────────────────────────── */
+    --font-family-base: 'Lato', sans-serif;
+
+    /* ── Typography: weights ─────────────────────────────────── */
+    --font-weight-normal: 400;
+    --font-weight-bold:   700;
+
+    /* ── Typography: size scale ─────────────────────────────────
+       Modular scale anchored at 1 rem (16 px browser default).
+       Use the semantic names (--font-size-body, --font-size-h1)
+       in component styles, not the raw rem values.           */
+    --font-size-sm:   0.875rem;  /* 14 px — fine print, captions         */
+    --font-size-base: 1rem;      /* 16 px — UI labels, nav links         */
+    --font-size-body: 1.167rem;  /* ~18.7 px — body copy, paragraphs    */
+    --font-size-h4:   1.1rem;    /* ~17.6 px — small section headings    */
+    --font-size-h3:   1.25rem;   /* 20 px — subsection headings          */
+    --font-size-h2:   1.6rem;    /* 25.6 px — section headings           */
+    --font-size-h1:   2rem;      /* 32 px — page titles                  */
+
+    /* ── Typography: line heights ────────────────────────────── */
+    --line-height-tight: 1.2;    /* headings, compact UI                 */
+    --line-height-base:  1.66;   /* body copy                            */
+
+    /* ── Typography: spacing ─────────────────────────────────── */
+    --heading-margin-bottom:  var(--space-6);   /* space below headings  */
+    --body-margin-bottom:     var(--space-4);   /* space below p and ul  */
+    --list-padding-left:      var(--space-8);   /* list indentation      */
+    --section-margin-bottom:  var(--space-16);  /* space between sections*/
 }
 
 
+/* ══════════════════════════════════════════════════════════════
+   Base element styles — use tokens only, no raw values
+   ══════════════════════════════════════════════════════════════ */
+
 body {
-    font-family: Lato, sans-serif;
+    font-family: var(--font-family-base);
 }
 
 a {
-    color: var(--font-highlight-color);
+    color: var(--color-primary);
 }
 
 strong {
-    font-weight: bold;
+    font-weight: var(--font-weight-bold);
 }
 
 p,
 summary {
-    font-size: 18.667px;
-    line-height: 1.66em;
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-base);
 }
 
 ul,
 ol {
-    padding-left: 28px;
+    padding-left: var(--list-padding-left);
 }
 
 section {
-    margin-bottom: 4rem;
+    margin-bottom: var(--section-margin-bottom);
 }
 
 h1, h2, h3, h4 {
-    font-weight: bold;
-    margin-bottom: 1.33rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--heading-margin-bottom);
 }
 
 /* Color scoped to main — header/footer headings set their own colors */
 main h1, main h2, main h3, main h4 {
-    color: var(--font-highlight-color);
+    color: var(--color-primary);
 }
 
-h1 {font-size: 2rem;}
-h2 {font-size: 1.6rem;}
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
 
 p,
 ul:not(ul ul) {
-    margin-bottom: 1rem;
+    margin-bottom: var(--body-margin-bottom);
 }
 
 /* Prevents double margin when <p> is the only child of <li> */

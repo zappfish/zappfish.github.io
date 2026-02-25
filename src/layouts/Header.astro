@@ -65,8 +65,8 @@ const { title } = Astro.props;
     .logo img { height: 48px; width: auto; }
 
     .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
-    .logo-name { font-size: 1.1rem; font-weight: 700; color: var(--color-primary); }
-    .logo-sub  { font-size: 0.7rem; color: var(--color-text-muted); }
+    .logo-name { font-weight: 700; color: var(--color-primary); }
+    .logo-sub  { color: var(--color-text-muted); }
 
     nav ul { list-style: none; display: flex; gap: var(--space-1); padding: 0; margin: 0; }
 
@@ -75,7 +75,6 @@ const { title } = Astro.props;
         padding: var(--space-2) var(--space-2);
         color: var(--color-text-dark);
         text-decoration: none;
-        font-size: 0.85rem;
         white-space: nowrap;
         transition: color 0.15s;
     }
@@ -87,7 +86,7 @@ const { title } = Astro.props;
 
     .hero { background: var(--color-primary); padding: var(--space-12) var(--space-8); text-align: center; }
 
-    h1 { color: var(--color-text-white); font-size: 2.5rem; font-weight: 700; margin: 0; }
+    h1 { color: var(--color-text-white); font-weight: 700; margin: 0; }
 
     /* ── Hamburger button — hidden on desktop ── */
     .hamburger {
@@ -146,7 +145,6 @@ const { title } = Astro.props;
         #main-nav ul li a {
             display: block;
             padding: var(--space-3) var(--space-8);
-            font-size: 1rem;
             white-space: normal;
             border-bottom: 1px solid var(--color-border);
         }
