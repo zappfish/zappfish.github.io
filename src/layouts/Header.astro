@@ -2,7 +2,6 @@
 import { navItems } from "../config/nav"
 const sections = navItems
 const currentPath = Astro.url.pathname // pathname-based active state — no hydration flash
-const { title } = Astro.props;
 ---
 <header>
     <div class="nav-bar">
@@ -25,10 +24,6 @@ const { title } = Astro.props;
             )}
             </ul>
         </nav>
-    </div>
-
-    <div class="hero">
-        <h1>{title}</h1>
     </div>
 </header>
 
@@ -83,10 +78,6 @@ const { title } = Astro.props;
 
     /* Color + weight avoids layout shift from border/padding changes on active item */
     nav ul li.active a { color: var(--color-primary); font-weight: var(--font-weight-bold); }
-
-    .hero { background: var(--color-primary); padding: var(--space-12) var(--space-8); text-align: center; }
-
-    h1 { color: var(--color-text-white); font-weight: var(--font-weight-bold); margin: 0; }
 
     /* ── Hamburger button — hidden on desktop ── */
     .hamburger {
