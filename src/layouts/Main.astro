@@ -23,11 +23,11 @@ const { frontmatter } = Astro.props;
 <style>
     html, body { margin: 0; width: 100%; height: 100%; }
 
-    main { width: 100%; margin: auto; max-width: 1280px; padding: 2rem 60px; }
+    main { width: 100%; margin: auto; max-width: 1280px; padding: var(--space-8) var(--space-16); }
 
     /* Match nav-bar side padding on mobile */
     @media (max-width: 768px) {
-        main { padding: 1.5rem var(--space-8); }
+        main { padding: var(--space-6) var(--space-8); }
     }
 
     /* Sticky footer — header/footer natural height, main stretches to fill remaining space */

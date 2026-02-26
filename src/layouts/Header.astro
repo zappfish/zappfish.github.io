@@ -64,8 +64,8 @@ const { title } = Astro.props;
     /* Fixed height stabilises nav bar regardless of logo aspect ratio */
     .logo img { height: 48px; width: auto; }
 
-    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
-    .logo-name { font-weight: 700; color: var(--color-primary); }
+    .logo-text { display: flex; flex-direction: column; line-height: var(--line-height-tight); }
+    .logo-name { font-weight: var(--font-weight-bold); color: var(--color-primary); }
     .logo-sub  { color: var(--color-text-muted); }
 
     nav ul { list-style: none; display: flex; gap: var(--space-1); padding: 0; margin: 0; }
@@ -82,11 +82,11 @@ const { title } = Astro.props;
     nav ul li a:hover { color: var(--color-accent); }
 
     /* Color + weight avoids layout shift from border/padding changes on active item */
-    nav ul li.active a { color: var(--color-primary); font-weight: 700; }
+    nav ul li.active a { color: var(--color-primary); font-weight: var(--font-weight-bold); }
 
     .hero { background: var(--color-primary); padding: var(--space-12) var(--space-8); text-align: center; }
 
-    h1 { color: var(--color-text-white); font-weight: 700; margin: 0; }
+    h1 { color: var(--color-text-white); font-weight: var(--font-weight-bold); margin: 0; }
 
     /* ── Hamburger button — hidden on desktop ── */
     .hamburger {
