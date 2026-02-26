@@ -1,13 +1,8 @@
-/* ══════════════════════════════════════════════════════════════
-   Box-sizing reset — include padding/border in element width
-   ══════════════════════════════════════════════════════════════ */
+/* Box-sizing reset */
 * { box-sizing: border-box; }
 
 
-/* ══════════════════════════════════════════════════════════════
-   CSS reset — strip browser default margins, padding, borders,
-   and font sizing so all elements start from a known baseline
-   ══════════════════════════════════════════════════════════════ */
+/* CSS reset */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -30,9 +25,7 @@ time, mark, audio, video {
 }
 
 
-/* ══════════════════════════════════════════════════════════════
-   Web fonts — Lato (regular, italic, bold, bold-italic)
-   ══════════════════════════════════════════════════════════════ */
+/* Web fonts — Lato */
 @font-face {
     font-display: swap;
     font-family: 'Lato';
@@ -66,17 +59,10 @@ time, mark, audio, video {
 }
 
 
-/* ══════════════════════════════════════════════════════════════
-   Design tokens
-   ──────────────────────────────────────────────────────────────
-   All raw values live here. Components reference only tokens.
-   To restyle the site, change values in this block only.
-   ══════════════════════════════════════════════════════════════ */
+/* Design tokens */
 :root {
 
-    /* ── Colors ─────────────────────────────────────────────────
-       Semantic names map to usage, not hue.
-       Never use raw hex values outside this block.            */
+    /* Colors */
     --color-primary:       #1d3a4a;   /* nav, hero, headings, primary buttons */
     --color-primary-dark:  #1a535c;   /* footer background                    */
     --color-accent:        #2a9d8a;   /* CTA buttons, hover states            */
@@ -94,9 +80,7 @@ time, mark, audio, video {
     --color-white-30:  rgba(255, 255, 255, 0.30);  /* subtle borders         */
     --color-white-10:  rgba(255, 255, 255, 0.10);  /* hairline dividers      */
 
-    /* ── Spacing — 8 px base grid ───────────────────────────────
-       Every layout value must map to one of these tokens.
-       Intermediate values (e.g. 28 px) are not permitted.    */
+    /* Spacing — 8px grid */
     --space-1:   4px;
     --space-2:   8px;
     --space-3:  12px;
@@ -106,17 +90,12 @@ time, mark, audio, video {
     --space-12: 48px;
     --space-16: 64px;
 
-    /* ── Typography: font family ─────────────────────────────── */
+    /* Typography */
     --font-family-base: 'Lato', sans-serif;
 
-    /* ── Typography: weights ─────────────────────────────────── */
     --font-weight-normal: 400;
     --font-weight-bold:   700;
 
-    /* ── Typography: size scale ─────────────────────────────────
-       Modular scale anchored at 1 rem (16 px browser default).
-       Use the semantic names (--font-size-body, --font-size-h1)
-       in component styles, not the raw rem values.           */
     --font-size-sm:   0.875rem;  /* 14 px — fine print, captions         */
     --font-size-base: 1rem;      /* 16 px — UI labels, nav links         */
     --font-size-body: 1.167rem;  /* ~18.7 px — body copy, paragraphs    */
@@ -125,11 +104,9 @@ time, mark, audio, video {
     --font-size-h2:   1.6rem;    /* 25.6 px — section headings           */
     --font-size-h1:   2rem;      /* 32 px — page titles                  */
 
-    /* ── Typography: line heights ────────────────────────────── */
-    --line-height-tight: 1.2;    /* headings, compact UI                 */
-    --line-height-base:  1.66;   /* body copy                            */
+    --line-height-tight: 1.2;    /* headings */
+    --line-height-base:  1.66;   /* body copy */
 
-    /* ── Typography: spacing ─────────────────────────────────── */
     --heading-margin-bottom:  var(--space-6);   /* space below headings  */
     --body-margin-bottom:     var(--space-4);   /* space below p and ul  */
     --list-padding-left:      var(--space-8);   /* list indentation      */
@@ -137,9 +114,7 @@ time, mark, audio, video {
 }
 
 
-/* ══════════════════════════════════════════════════════════════
-   Base element styles — use tokens only, no raw values
-   ══════════════════════════════════════════════════════════════ */
+/* Base element styles */
 
 body {
     font-family: var(--font-family-base);

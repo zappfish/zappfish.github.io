@@ -12,7 +12,7 @@ const { frontmatter } = Astro.props;
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- enables responsive layout on mobile -->
         <title>Zebrafish Toxicology Phenotype Atlas Project - {frontmatter.title}</title>
-        <!-- Enables SPA-style page transitions (Astro v5 replacement for ViewTransitions), eliminating the full-reload flicker on navigation.-->
+        <!-- client-side navigation, no full-reload flicker -->
         <ClientRouter />
     </head>
     <body>

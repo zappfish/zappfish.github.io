@@ -1,12 +1,11 @@
 ---
 import { navItems } from "../config/nav"
 const sections = navItems
-// transition:persist keeps the header alive across navigations, so Astro.url.pathname
-// stays stale — active link is managed client-side via astro:page-load instead.
-// Docs: https://docs.astro.build/en/guides/view-transitions/
 ---
 <!-- transition:persist keeps nav mounted across navigations — no flicker.
-     Hero moved to Hero.astro so it re-renders freely per page. -->
+     Astro.url.pathname stays stale, so active link is managed client-side via astro:page-load.
+     Hero moved to Hero.astro so it re-renders freely per page.
+     Docs: https://docs.astro.build/en/guides/view-transitions/ -->
 <header transition:persist>
     <div class="nav-bar">
         <a class="logo" href="/">
@@ -53,13 +52,10 @@ const sections = navItems
     }
 
     // astro:page-load fires on both initial load and every client-side navigation.
-    // Since the header is persisted and never re-renders, this is the only
-    // way to keep the active link in sync with the current URL.
     document.addEventListener('astro:page-load', updateActiveLink)
 </script>
 
 <style>
-    /* max-width + margin: auto — same centering pattern used in main and .footer-inner */
     .nav-bar {
         background: var(--color-bg-white);
         border-bottom: 1px solid var(--color-border);
@@ -74,7 +70,6 @@ const sections = navItems
 
     .logo { display: inline-flex; align-items: center; gap: var(--space-3); text-decoration: none; }
 
-    /* Fixed height stabilises nav bar regardless of logo aspect ratio */
     .logo img { height: 48px; width: auto; }
 
     .logo-text { display: flex; flex-direction: column; line-height: var(--line-height-tight); }
@@ -94,7 +89,6 @@ const sections = navItems
 
     nav ul li a:hover { color: var(--color-accent); }
 
-    /* Color + weight avoids layout shift from border/padding changes on active item */
     nav ul li.active a { color: var(--color-primary); font-weight: var(--font-weight-bold); }
 
     /* ── Hamburger button — hidden on desktop ── */
