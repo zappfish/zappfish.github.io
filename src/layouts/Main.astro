@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions' 
 import Header from "./Header.astro"
 import Hero from "./Hero.astro"
 import Footer from "./Footer.astro"
@@ -11,6 +12,8 @@ const { frontmatter } = Astro.props;
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- enables responsive layout on mobile -->
         <title>Zebrafish Toxicology Phenotype Atlas Project - {frontmatter.title}</title>
+        <!-- Enables SPA-style page transitions (Astro v5 replacement for ViewTransitions), eliminating the full-reload flicker on navigation.-->
+        <ClientRouter />
     </head>
     <body>
         <div id="main">

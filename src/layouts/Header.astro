@@ -1,9 +1,15 @@
 ---
 import { navItems } from "../config/nav"
 const sections = navItems
-const currentPath = Astro.url.pathname // pathname-based active state — no hydration flash
+// Active state is intentionally NOT set server-side here.
+// transition:persist keeps this header in the DOM across navigations,
+// so Astro never re-renders it — meaning Astro.url.pathname would stay
+// stale. Active link is handled client-side via astro:page-load instead.
 ---
-<header>
+<!-- transition:persist: nav bar stays mounted across page navigations,
+     preventing the flicker you'd get from a full header re-render.
+     The hero was moved to Hero.astro so it can update freely per page. -->
+<header transition:persist>
     <div class="nav-bar">
         <a class="logo" href="/">
             <img src="/logo.jpg" alt="ZAPP logo" />
@@ -20,7 +26,7 @@ const currentPath = Astro.url.pathname // pathname-based active state — no hyd
         <nav id="main-nav">
             <ul>
             {sections.map(({ label, path }) =>
-                <li class={currentPath === path ? "active" : ""}><a href={path}>{label}</a></li>
+                <li><a href={path}>{label}</a></li>
             )}
             </ul>
         </nav>
@@ -28,6 +34,15 @@ const currentPath = Astro.url.pathname // pathname-based active state — no hyd
 </header>
 
 <script>
+    function updateActiveLink() {
+        const currentPath = window.location.pathname
+        document.querySelectorAll('#main-nav li').forEach(li => {
+            const a = li.querySelector('a')
+            li.classList.toggle('active', a?.pathname === currentPath)
+        })
+    }
+
+    // Hamburger toggle
     const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')
     const nav = document.querySelector<HTMLElement>('#main-nav')
 
@@ -38,6 +53,11 @@ const currentPath = Astro.url.pathname // pathname-based active state — no hyd
             hamburger.classList.toggle('open', isOpen)
         })
     }
+
+    // astro:page-load fires on both initial load and every client-side navigation.
+    // Since the header is persisted and never re-renders, this is the only
+    // way to keep the active link in sync with the current URL.
+    document.addEventListener('astro:page-load', updateActiveLink)
 </script>
 
 <style>
