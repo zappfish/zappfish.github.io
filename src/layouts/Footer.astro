@@ -10,6 +10,10 @@ const quickLinks = navItems
             <a href="/"><img class="footer-logo-img" src="/logo.jpg" alt="ZAPP" /></a>
             <p>Department of Genetics<br />UNC Chapel Hill</p>
             <a href="mailto:info@zappfish.org">info@zappfish.org</a>
+            <div class="social-icons">
+                <a href="https://twitter.com/zappfish" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+                <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+            </div>
         </div>
 
         <div class="footer-links">
@@ -17,15 +21,6 @@ const quickLinks = navItems
             <ul class="footer-link-list">
                 {quickLinks.map(({ label, path }) => <li><a href={path}>{label}</a></li>)}
             </ul>
-        </div>
-
-        <div class="footer-contact">
-            <h4 class="footer-heading">Contact</h4>
-            <p>UNC Chapel Hill<br />Department of Genetics<br />Email: <a href="mailto:info@zappfish.org">info@zappfish.org</a></p>
-            <div class="social-icons">
-                <a href="https://twitter.com/zappfish" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
-                <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
-            </div>
         </div>
 
     </div>
@@ -39,7 +34,7 @@ const quickLinks = navItems
 
     .footer-inner {
         display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr;
+        grid-template-columns: 1.5fr 1fr;
         gap: var(--space-12);
         max-width: 1280px;
         margin: 0 auto;
@@ -63,8 +58,7 @@ const quickLinks = navItems
 
     /* Single hover rule covers all footer links */
     .footer-brand a:hover,
-    .footer-link-list li a:hover,
-    .footer-contact a:hover { color: var(--color-text-white); }
+    .footer-link-list li a:hover { color: var(--color-text-white); }
 
     .footer-heading { color: var(--color-text-white); font-weight: var(--font-weight-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-4); }
 
