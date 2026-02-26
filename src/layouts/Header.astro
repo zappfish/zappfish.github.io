@@ -1,14 +1,12 @@
 ---
 import { navItems } from "../config/nav"
 const sections = navItems
-// Active state is intentionally NOT set server-side here.
-// transition:persist keeps this header in the DOM across navigations,
-// so Astro never re-renders it — meaning Astro.url.pathname would stay
-// stale. Active link is handled client-side via astro:page-load instead.
+// transition:persist keeps the header alive across navigations, so Astro.url.pathname
+// stays stale — active link is managed client-side via astro:page-load instead.
+// Docs: https://docs.astro.build/en/guides/view-transitions/
 ---
-<!-- transition:persist: nav bar stays mounted across page navigations,
-     preventing the flicker you'd get from a full header re-render.
-     The hero was moved to Hero.astro so it can update freely per page. -->
+<!-- transition:persist keeps nav mounted across navigations — no flicker.
+     Hero moved to Hero.astro so it re-renders freely per page. -->
 <header transition:persist>
     <div class="nav-bar">
         <a class="logo" href="/">
