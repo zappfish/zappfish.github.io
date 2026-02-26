@@ -88,6 +88,12 @@ time, mark, audio, video {
     --color-text-white:    #ffffff;   /* text on dark backgrounds             */
     --color-border:        #e0ddd6;   /* dividers, card borders               */
 
+    /* ── White overlays — text/borders on dark backgrounds (footer) ── */
+    --color-white-65:  rgba(255, 255, 255, 0.65);  /* muted text             */
+    --color-white-40:  rgba(255, 255, 255, 0.40);  /* copyright / fine print */
+    --color-white-30:  rgba(255, 255, 255, 0.30);  /* subtle borders         */
+    --color-white-10:  rgba(255, 255, 255, 0.10);  /* hairline dividers      */
+
     /* ── Spacing — 8 px base grid ───────────────────────────────
        Every layout value must map to one of these tokens.
        Intermediate values (e.g. 28 px) are not permitted.    */
