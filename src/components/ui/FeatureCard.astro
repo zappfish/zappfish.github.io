@@ -1,0 +1,41 @@
+---
+const { title, description, href, btnLabel } = Astro.props
+---
+
+<div class="card">
+<h3>{title}</h3>
+    <p>{description}</p>
+    <a href={href} class="card-btn">{btnLabel}</a>
+</div>
+
+<style>
+    .card {
+        padding: var(--space-8);
+        background: var(--color-primary-dark);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+    }
+
+.card h3 { font-size: var(--font-size-h3); margin-bottom: var(--space-3); color: var(--color-text-white); }
+
+    .card p { flex: 1; margin-bottom: var(--space-6); color: var(--color-text-white); }
+
+    .card-btn {
+        display: inline-block;
+        padding: var(--space-2) var(--space-6);
+        background: var(--color-bg-card);
+        color: var(--color-primary-dark);
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-base);
+        align-self: flex-start;
+        transition: background 0.15s, color 0.15s;
+    }
+
+    .card-btn:hover {
+        background: var(--color-bg-card);
+        color: var(--color-primary-dark);
+    }
+</style>
