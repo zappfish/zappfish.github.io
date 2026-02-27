@@ -24,7 +24,7 @@ const svg = (def: Parameters<typeof icon>[0]) => icon(def).html[0]
 export const featureItems = [
     {
         title: "Learn About Project",
-        description: "ELearn how ZAPP supports the sharing, reuse, and reproducibility of zebrafish phenotypic and toxicological data. Explore our community-driven efforts to develop and promote standards, along with tools for standards-based data annotation and a zebrafish atlas featuring standardized data and visual representations of phenotypes.",
+        description: "Learn how ZAPP supports the sharing, reuse, and reproducibility of zebrafish phenotypic and toxicological data. Explore our community-driven efforts to develop and promote standards, along with tools for standards-based data annotation and a zebrafish atlas featuring standardized data and visual representations of phenotypes.",
         href: "/goals/",
         btnLabel: "Read More",
         icon: svg(faFileLines),
