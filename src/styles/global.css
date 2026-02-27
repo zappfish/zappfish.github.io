@@ -114,7 +114,7 @@ time, mark, audio, video {
     --heading-margin-bottom:  var(--space-6);   /* space below headings  */
     --body-margin-bottom:     var(--space-4);   /* space below p and ul  */
     --list-padding-left:      var(--space-8);   /* list indentation      */
-    --section-margin-bottom:  var(--space-16);  /* space between sections*/
+    --section-margin-bottom:  var(--space-12);  /* space between sections*/
 }
 
 
