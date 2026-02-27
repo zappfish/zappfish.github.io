@@ -102,14 +102,14 @@ time, mark, audio, video {
 
     --font-size-sm:   0.875rem;  /* 14 px — fine print, captions         */
     --font-size-base: 1rem;      /* 16 px — UI labels, nav links         */
-    --font-size-body: 1.167rem;  /* ~18.7 px — body copy, paragraphs    */
-    --font-size-h4:   1.1rem;    /* ~17.6 px — small section headings    */
+    --font-size-body: 1.125rem;  /* 18 px — body copy, paragraphs        */
+    --font-size-h4:   1.2rem;    /* ~19.2 px — small section headings    */
     --font-size-h3:   1.25rem;   /* 20 px — subsection headings          */
-    --font-size-h2:   1.6rem;    /* 25.6 px — section headings           */
-    --font-size-h1:   2rem;      /* 32 px — page titles                  */
+    --font-size-h2:   1.45rem;   /* ~23.2 px — section headings          */
+    --font-size-h1:   1.75rem;   /* 28 px — page titles                  */
 
     --line-height-tight: 1.2;    /* headings */
-    --line-height-base:  1.66;   /* body copy */
+    --line-height-base:  1.8;    /* body copy */
 
     --heading-margin-bottom:  var(--space-6);   /* space below headings  */
     --body-margin-bottom:     var(--space-4);   /* space below p and ul  */
