@@ -68,7 +68,8 @@ time, mark, audio, video {
     --color-accent:        #2a9d8a;   /* CTA buttons, hover states            */
     --color-accent-hover:  #228a78;   /* button press / active feedback       */
     --color-bg-light:      #f5f3ee;   /* alternating section backgrounds      */
-    --color-bg-white:      #ffffff;   /* cards, nav bar, page base            */
+    --color-bg-card:       #F8F4E8;   /* hero CTAs, feature cards             */
+    --color-bg-white:      #ffffff;   /* nav bar, page base                   */
     --color-text-dark:     #1a1a1a;   /* primary body copy                    */
     --color-text-muted:    #666666;   /* captions, secondary labels           */
     --color-text-white:    #ffffff;   /* text on dark backgrounds             */
