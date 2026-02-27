@@ -24,28 +24,28 @@ const svg = (def: Parameters<typeof icon>[0]) => icon(def).html[0]
 export const featureItems = [
     {
         title: "Learn About Project",
-        description: "Explore ZAPP's mission, goals, and innovative approach to zebrafish toxicology research. Learn how we're creating standardized phenotype data to advance comparative studies worldwide.",
+        description: "ELearn how ZAPP supports the sharing, reuse, and reproducibility of zebrafish phenotypic and toxicological data. Explore our community-driven efforts to develop and promote standards, along with tools for standards-based data annotation and a zebrafish atlas featuring standardized data and visual representations of phenotypes.",
         href: "/goals/",
         btnLabel: "Read More",
         icon: svg(faFileLines),
     },
     {
         title: "Upcoming Events",
-        description: "Stay connected with the ZAPP community. Join our workshops, webinars, and collaboration sessions to share findings and help shape the future of toxicology data standards.",
+        description: "Connect with the ZAPP team and community members, share updates, and stay informed about project developments. Participate in webinars, workshops, and collaborative sessions that support community engagement and knowledge exchange.",
         href: "/events/",
         btnLabel: "Join Now",
         icon: svg(faCalendarDays),
     },
     {
         title: "Submit Data",
-        description: "Contribute your zebrafish phenotype data to our growing atlas. Your submissions help build a comprehensive, community-driven resource that advances toxicology research globally.",
+        description: "Annotate your research findings using established standards and submit them to the zebrafish phenotype atlas. Contribute to a growing collection of phenotype images supported by standardized, structured annotations.",
         href: "/coming-soon/",
         btnLabel: "Submit Data",
         icon: svg(faShareFromSquare),
     },
     {
         title: "Phenotype Atlas",
-        description: "Access thousands of annotated zebrafish phenotypes curated by experts. Search, analyze, and visualize toxicology data to support your research and drive new discoveries.",
+        description: "Explore our interactive atlas, which includes phenotype observations, visual representations, and search tools to support data discovery and exploration.",
         href: "/coming-soon/",
         btnLabel: "Explore Atlas",
         icon: svg(faChartBar),
