@@ -1,7 +1,7 @@
 // Single source of truth for home page feature items — used by hero CTAs and feature cards.
 export const featureItems = [
     {
-        title: "Learn About The Project",
+        title: "Learn About Project",
         description: "Explore ZAPP's mission, goals, and innovative approach to zebrafish toxicology research. Learn how we're creating standardized phenotype data to advance comparative studies worldwide.",
         href: "/goals/",
         btnLabel: "Read More",
