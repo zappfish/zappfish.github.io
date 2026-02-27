@@ -1,0 +1,37 @@
+---
+const { title, href, icon } = Astro.props
+---
+
+<li>
+    <a href={href} class="cta-link">
+        <Fragment set:html={icon} />
+        {title}
+    </a>
+</li>
+
+<style>
+    .cta-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-4) var(--space-6);
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        color: var(--color-primary);
+        text-decoration: none;
+        min-width: 140px;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        transition: background 0.15s, border-color 0.15s;
+    }
+
+    .cta-link:hover {
+        background: var(--color-bg-card);
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+    }
+
+    .cta-link :global(svg) { width: 32px; height: 32px; }
+</style>
