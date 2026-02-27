@@ -39,14 +39,14 @@ export const featureItems = [
     {
         title: "Submit Data",
         description: "Contribute your zebrafish phenotype data to our growing atlas. Your submissions help build a comprehensive, community-driven resource that advances toxicology research globally.",
-        href: "#",
+        href: "/coming-soon/",
         btnLabel: "Submit Data",
         icon: svg(faShareFromSquare),
     },
     {
         title: "Phenotype Atlas",
         description: "Access thousands of annotated zebrafish phenotypes curated by experts. Search, analyze, and visualize toxicology data to support your research and drive new discoveries.",
-        href: "#",
+        href: "/coming-soon/",
         btnLabel: "Explore Atlas",
         icon: svg(faChartBar),
     },
