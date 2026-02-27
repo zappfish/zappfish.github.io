@@ -24,28 +24,28 @@ const svg = (def: Parameters<typeof icon>[0]) => icon(def).html[0]
 export const featureItems = [
     {
         title: "Learn About Project",
-        description: "Explore ZAPP's community-driven standards for zebrafish phenotypic and toxicological data sharing, reuse, and reproducibility.",
+        description: "Explore our community-driven efforts to develop and promote standards, along with tools for standards-based data annotation and a zebrafish atlas featuring standardized data and visual representations of phenotypes.",
         href: "/goals/",
         btnLabel: "Read More",
         icon: svg(faFileLines),
     },
     {
         title: "Upcoming Events",
-        description: "Join webinars, workshops, and collaborative sessions to connect with the ZAPP team and stay informed about project developments.",
+        description: "Connect with the ZAPP team and community members, share updates, and stay informed about project developments. Participate in webinars, workshops, and collaborative sessions that support community engagement and knowledge exchange.",
         href: "/events/",
         btnLabel: "Join Now",
         icon: svg(faCalendarDays),
     },
     {
         title: "Submit Data",
-        description: "Annotate your research using established standards and contribute phenotype images to the zebrafish atlas.",
+        description: "Annotate your research findings using established standards and submit them to the zebrafish phenotype atlas. Contribute to a growing collection of phenotype images supported by standardized, structured annotations.",
         href: "/coming-soon/",
         btnLabel: "Submit Data",
         icon: svg(faShareFromSquare),
     },
     {
         title: "Phenotype Atlas",
-        description: "Search and explore phenotype observations and visual representations in our interactive atlas.",
+        description: "Explore our interactive atlas, which includes phenotype observations, visual representations, and search tools to support data discovery and exploration.",
         href: "/coming-soon/",
         btnLabel: "Explore Atlas",
         icon: svg(faChartBar),
