@@ -36,6 +36,13 @@ import { featureItems } from '../config/features'
         </div>
     </section>
 
+    <section class="blog-preview">
+        <h2>Recent Blog Posts</h2>
+        <div class="blog-coming-soon">
+            <p>Blog posts coming soon. Stay tuned for updates from the ZAPP community.</p>
+        </div>
+    </section>
+
     <section class="atlas-cta">
         <h2>Explore Our Phenotype Atlas</h2>
         <p>Access our comprehensive phenotype atlas with curated data from zebrafish researchers worldwide. Search, analyze, and visualize toxicology data to support your research.</p>
@@ -74,6 +81,20 @@ import { featureItems } from '../config/features'
         grid-template-columns: repeat(4, 1fr);
         gap: var(--space-6);
     }
+
+    /* ── Blog preview ── */
+    .blog-preview h2 { text-align: center; }
+
+    .blog-coming-soon {
+        text-align: center;
+        padding: var(--space-12) var(--space-8);
+        background: var(--color-bg-white);
+        border: 2px dashed var(--color-border);
+        border-radius: 10px;
+        color: var(--color-text-muted);
+    }
+
+    .blog-coming-soon p { margin-bottom: 0; }
 
     /* ── Atlas CTA ── */
     .atlas-cta {
