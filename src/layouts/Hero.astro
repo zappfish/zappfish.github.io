@@ -1,12 +1,49 @@
 ---
-const { title } = Astro.props;
+interface Props {
+    title: string
+    image?: string
+}
+const { title, image } = Astro.props
 ---
-<div class="hero">
-    <h1>{title}</h1>
+<div class:list={['hero', { 'hero--image': !!image }]} style={image ? `background-image: url('${image}')` : undefined}>
+    <div class="hero-inner">
+        <h1>{title}</h1>
+        <slot />
+    </div>
 </div>
 
 <style>
-    .hero { background: var(--color-primary); padding: var(--space-12) var(--space-8); text-align: center; }
+    .hero {
+        background: var(--color-primary);
+        padding: var(--space-16) var(--space-8);
+        text-align: center;
+        position: relative;
+    }
 
-    h1 { color: var(--color-text-white); font-weight: var(--font-weight-bold); margin: 0; }
+    .hero--image {
+        background-size: cover;
+        background-position: center;
+        filter: brightness(1.25);
+    }
+
+    /* Dark overlay when background image is present */
+    .hero--image::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--color-hero-overlay);
+    }
+
+    .hero-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    h1 { color: var(--color-text-white); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8); }
+
+    @media (max-width: 768px) {
+        .hero { padding: var(--space-12) var(--space-6); }
+    }
 </style>

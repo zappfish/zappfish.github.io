@@ -4,21 +4,22 @@ import Header from "./Header.astro"
 import Hero from "./Hero.astro"
 import Footer from "./Footer.astro"
 import "../styles/global.css" // design tokens + base styles for all pages
-const { frontmatter } = Astro.props;
+const { frontmatter, title: propTitle } = Astro.props
+const pageTitle = frontmatter?.title ?? propTitle ?? ''
 ---
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- enables responsive layout on mobile -->
-        <title>Zebrafish Toxicology Phenotype Atlas Project - {frontmatter.title}</title>
+        <title>Zebrafish Toxicology Phenotype Atlas Project - {pageTitle}</title>
         <!-- client-side navigation, no full-reload flicker -->
         <ClientRouter />
     </head>
     <body>
         <div id="main">
             <Header />
-            <Hero title={frontmatter.title} />
+            {Astro.slots.has('hero') ? <slot name="hero" /> : <Hero title={pageTitle} />}
             <main><slot /></main>
             <Footer />
         </div>
