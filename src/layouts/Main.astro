@@ -17,10 +17,12 @@ const pageTitle = frontmatter?.title ?? propTitle ?? ''
         <ClientRouter />
     </head>
     <body>
+        {/* Accessibility — skip link lets keyboard users jump past the nav directly to page content */}
+        <a href="#main-content" class="skip-nav">Skip to main content</a>
         <div id="main">
             <Header />
             {Astro.slots.has('hero') ? <slot name="hero" /> : <Hero title={pageTitle} />}
-            <main><slot /></main>
+            <main id="main-content"><slot /></main>
             <Footer />
         </div>
     </body>
@@ -28,6 +30,22 @@ const pageTitle = frontmatter?.title ?? propTitle ?? ''
 
 <style>
     html, body { margin: 0; width: 100%; height: 100%; }
+
+    /* Accessibility — visually hidden until focused by keyboard; appears top-left on Tab */
+    .skip-nav {
+        position: absolute;
+        top: -100%;
+        left: var(--space-4);
+        z-index: 9999;
+        padding: var(--space-2) var(--space-4);
+        background: var(--color-primary);
+        color: var(--color-text-white);
+        border-radius: 0 0 4px 4px;
+        font-weight: var(--font-weight-bold);
+        text-decoration: none;
+        transition: top 0.15s;
+    }
+    .skip-nav:focus-visible { top: 0; }
 
     main { width: 100%; margin: auto; max-width: 1280px; padding: var(--space-2) var(--space-16) var(--space-8); }
 

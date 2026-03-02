@@ -1,6 +1,13 @@
 /* Box-sizing reset */
 * { box-sizing: border-box; }
 
+/* Accessibility — keyboard focus ring (Tab navigation only, not shown on mouse click) */
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 
 /* CSS reset */
 html, body, div, span, applet, object, iframe,
