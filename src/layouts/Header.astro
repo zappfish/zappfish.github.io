@@ -9,10 +9,8 @@ const sections = navItems
 <header transition:persist>
     <div class="nav-bar">
         <a class="logo" href="/">
-            <img src="/images/logo.jpg" alt="" />
             <div class="logo-text">
                 <span class="logo-name">ZAPP</span>
-                <span class="logo-sub">Zebrafish Atlas Project</span>
             </div>
         </a>
 
@@ -74,11 +72,7 @@ const sections = navItems
 
     .logo { display: inline-flex; align-items: center; gap: var(--space-3); text-decoration: none; }
 
-    .logo img { height: 48px; width: auto; }
-
-    .logo-text { display: flex; flex-direction: column; line-height: var(--line-height-tight); }
-    .logo-name { font-weight: var(--font-weight-bold); color: var(--color-primary); }
-    .logo-sub  { color: var(--color-text-muted); }
+    .logo-name { font-weight: var(--font-weight-bold); font-size: 1.5rem; color: var(--color-primary); }
 
     nav ul { list-style: none; display: flex; gap: var(--space-1); padding: 0; margin: 0; }
 
@@ -127,8 +121,6 @@ const sections = navItems
 
     /* ── Mobile layout ── */
     @media (max-width: 768px) {
-        .logo-sub { display: none; }
-
         .hamburger { display: flex; }
 
         #main-nav {
