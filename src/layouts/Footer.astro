@@ -7,12 +7,8 @@ const quickLinks = navItems
     <div class="footer-inner">
 
         <div class="footer-brand">
-            <p>Department of Genetics<br />UNC Chapel Hill</p>
+            <p>Zebrafish Toxicology Phenotype Atlas Project</p>
             <a href="mailto:info@zappfish.org">info@zappfish.org</a>
-            <div class="social-icons">
-                <a href="https://twitter.com/zappfish" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
-                <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
-            </div>
         </div>
 
         <nav class="footer-links" aria-label="Footer navigation">
@@ -24,7 +20,7 @@ const quickLinks = navItems
 
     </div>
     <div class="footer-bottom">
-        <p>© {new Date().getFullYear()} ZAPP. All rights reserved.</p>
+        <p>The ZAPP project is supported by NIEHS 1R24ES036130<br />Advancing a community-led zebrafish toxicology phenotype atlas.</p>
     </div>
 </footer>
 
@@ -61,29 +57,13 @@ const quickLinks = navItems
 
     .footer-link-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
 
-    .social-icons { display: flex; gap: var(--space-3); margin-top: var(--space-2); }
-
-    .social-icons a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: var(--space-8); height: var(--space-8);
-        border-radius: 50%;
-        border: 1px solid var(--color-white-30);
-        color: var(--color-white-65);
-        text-decoration: none;
-        transition: border-color 0.15s, color 0.15s;
-    }
-
-    .social-icons a:hover { border-color: var(--color-text-white); color: var(--color-text-white); }
 
     .footer-bottom { border-top: 1px solid var(--color-white-10); text-align: center; padding: var(--space-4) var(--space-8); }
 
-    .footer-bottom p { color: var(--color-white-65); margin: 0; }
+    .footer-bottom p { color: var(--color-white-65); margin: 0; line-height: var(--line-height-base); font-size: var(--font-size-sm); }
 
     /* Stack columns on mobile, center-align content */
     @media (max-width: 768px) {
         .footer-inner { grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
-        .social-icons { justify-content: center; }
     }
 </style>
