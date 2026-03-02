@@ -1,9 +1,9 @@
 ---
-const { title, description, href, btnLabel } = Astro.props
+const { title, cardTitle, description, href, btnLabel } = Astro.props
 ---
 
 <div class="card">
-<h3>{title}</h3>
+<h3 set:html={cardTitle ?? title} />
     <p>{description}</p>
     <a href={href} class="card-btn">{btnLabel}</a>
 </div>

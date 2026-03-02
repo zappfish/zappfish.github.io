@@ -24,6 +24,7 @@ const svg = (def: Parameters<typeof icon>[0]) => icon(def).html[0]
 export const featureItems = [
     {
         title: "Learn About Project",
+        cardTitle: "Learn About<br>Project",
         description: "Explore our community-driven efforts to develop and promote standards, along with tools for standards-based data annotation and a zebrafish atlas featuring standardized data and visual representations of phenotypes.",
         href: "/goals/",
         btnLabel: "Read More",
@@ -31,6 +32,7 @@ export const featureItems = [
     },
     {
         title: "Upcoming Events",
+        cardTitle: "Upcoming<br>Events",
         description: "Connect with the ZAPP team and community members, share updates, and stay informed about project developments. Participate in webinars, workshops, and collaborative sessions that support community engagement and knowledge exchange.",
         href: "/events/",
         btnLabel: "Join Now",
@@ -38,6 +40,7 @@ export const featureItems = [
     },
     {
         title: "Submit Data",
+        cardTitle: "Submit<br>Data",
         description: "Annotate your research findings using established standards and submit them to the zebrafish phenotype atlas. Contribute to a growing collection of phenotype images supported by standardized, structured annotations.",
         href: "/coming-soon/",
         btnLabel: "Submit Data",
@@ -45,6 +48,7 @@ export const featureItems = [
     },
     {
         title: "Phenotype Atlas",
+        cardTitle: "Phenotype<br>Atlas",
         description: "Explore our interactive atlas, which includes phenotype observations, visual representations, and search tools to support data discovery and exploration.",
         href: "/coming-soon/",
         btnLabel: "Explore Atlas",
