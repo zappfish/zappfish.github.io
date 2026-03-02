@@ -25,7 +25,7 @@ const quickLinks = navItems
 </footer>
 
 <style>
-    .site-footer { background-color: var(--color-primary-dark); color: var(--color-text-white); width: 100%; }
+    .site-footer { background-color: var(--color-bg-card); color: var(--color-text-dark); width: 100%; }
 
     .footer-inner {
         display: grid;
@@ -37,13 +37,13 @@ const quickLinks = navItems
         box-sizing: border-box;
     }
 
-    /* Shared muted text on dark background */
+    /* Shared muted text on light background */
     .footer-brand p,
     .footer-brand a,
     .footer-link-list li a,
     .footer-contact p,
     .footer-contact a {
-        color: var(--color-white-65);
+        color: var(--color-text-muted);
         text-decoration: none;
         line-height: var(--line-height-base);
         margin-bottom: var(--space-1);
@@ -51,16 +51,16 @@ const quickLinks = navItems
 
     /* Single hover rule covers all footer links */
     .footer-brand a:hover,
-    .footer-link-list li a:hover { color: var(--color-text-white); }
+    .footer-link-list li a:hover { color: var(--color-primary); }
 
-    .footer-heading { color: var(--color-text-white); font-weight: var(--font-weight-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-4); }
+    .footer-heading { color: var(--color-primary-dark); font-weight: var(--font-weight-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-4); }
 
     .footer-link-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
 
 
-    .footer-bottom { border-top: 1px solid var(--color-white-10); text-align: center; padding: var(--space-4) var(--space-8); }
+    .footer-bottom { border-top: 1px solid var(--color-border); text-align: center; padding: var(--space-4) var(--space-8); }
 
-    .footer-bottom p { color: var(--color-white-65); margin: 0; line-height: var(--line-height-base); font-size: var(--font-size-sm); }
+    .footer-bottom p { color: var(--color-text-muted); margin: 0; line-height: var(--line-height-base); font-size: var(--font-size-sm); }
 
     /* Stack columns on mobile, center-align content */
     @media (max-width: 768px) {
