@@ -11,7 +11,7 @@ import { featureItems } from '../config/features'
     <Hero title="Zebrafish Toxicology Phenotype Atlas Project" image="/images/home-hero.jpg" slot="hero">
         <ul class="hero-ctas">
             {featureItems.map(item => (
-                <HeroCTAItem title={item.title} href={item.href} icon={item.icon} />
+                <HeroCTAItem title={item.title} cardTitle={item.cardTitle} href={item.href} icon={item.icon} />
             ))}
         </ul>
     </Hero>
