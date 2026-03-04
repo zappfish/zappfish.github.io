@@ -49,6 +49,16 @@ const sections = navItems
         })
     }
 
+    // Close menu when clicking a nav link or outside the nav
+    document.addEventListener('click', ({ target }) => {
+        const el = target as HTMLElement
+        if ((nav?.contains(el) && el.closest('a')) || (!nav?.contains(el) && !hamburger?.contains(el))) {
+            nav?.classList.remove('open')
+            hamburger?.classList.remove('open')
+            hamburger?.setAttribute('aria-expanded', 'false')
+        }
+    })
+
     // astro:page-load fires on both initial load and every client-side navigation.
     document.addEventListener('astro:page-load', updateActiveLink)
 </script>
