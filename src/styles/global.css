@@ -75,9 +75,9 @@ time, mark, audio, video {
     --color-accent:        #2a9d8a;   /* CTA buttons, hover states            */
     --color-accent-hover:  #228a78;   /* button press / active feedback       */
     --color-bg-light:      #f5f3ee;   /* alternating section backgrounds      */
-    --color-bg-card:       #F8F4E8;   /* hero CTAs, feature cards             */
+    --color-bg-base:       #F8F4E8;   /* page base / body background          */
     --color-bg-card-light: #FDFBF4;   /* about section — lighter warm cream  */
-    --color-bg-white:      #ffffff;   /* nav bar, page base                   */
+    --color-bg-white:      #ffffff;   /* pure white surfaces                  */
     --color-text-dark:     #1a1a1a;   /* primary body copy                    */
     --color-text-muted:    #666666;   /* captions, secondary labels           */
     --color-text-white:    #ffffff;   /* text on dark backgrounds             */
@@ -130,7 +130,7 @@ time, mark, audio, video {
 
 body {
     font-family: var(--font-family-base);
-    background-color: var(--color-bg-card);
+    background-color: var(--color-bg-base);
     color: var(--color-text-dark);
 }
 
