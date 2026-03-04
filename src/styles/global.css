@@ -76,7 +76,7 @@ time, mark, audio, video {
     --color-accent-hover:  #228a78;   /* button press / active feedback       */
     --color-bg-light:      #f5f3ee;   /* alternating section backgrounds      */
     --color-bg-base:       #F8F4E8;   /* page base / body background          */
-    --color-bg-card-light: #FDFBF4;   /* about section — lighter warm cream  */
+    --color-bg-surface:    #FDFBF4;   /* CTA buttons, elevated surfaces       */
     --color-bg-white:      #ffffff;   /* pure white surfaces                  */
     --color-text-dark:     #1a1a1a;   /* primary body copy                    */
     --color-text-muted:    #666666;   /* captions, secondary labels           */
