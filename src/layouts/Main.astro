@@ -8,7 +8,7 @@ const { frontmatter, title: propTitle } = Astro.props
 const pageTitle = frontmatter?.title ?? propTitle ?? ''
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" transition:animate="none">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- enables responsive layout on mobile -->

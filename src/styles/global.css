@@ -84,7 +84,7 @@ time, mark, audio, video {
     --color-border:        #e0ddd6;   /* dividers, card borders               */
 
     /* ── Hero image overlay ── */
-    --color-hero-overlay:  rgba(0, 59, 92, 0.20);  /* dark blue tint over hero image */
+    --color-hero-overlay:  rgba(29, 58, 74, 0.42);  /* teal overlay over hero */
 
     /* ── White overlays — text/borders on dark backgrounds (footer) ── */
     --color-white-65:  rgba(255, 255, 255, 0.65);  /* muted text             */

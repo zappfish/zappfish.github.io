@@ -14,15 +14,16 @@ const { title, image } = Astro.props
 
 <style>
     .hero {
-        background: var(--color-primary);
+        background: var(--color-bg-base);
         padding: var(--space-16) var(--space-8);
         text-align: center;
         position: relative;
     }
 
     .hero--image {
-        background-size: 98% auto;
-        background-position: center 43%;
+        background-size: auto 100%;
+        background-position: right -5% center;
+        background-repeat: no-repeat;
     }
 
     .hero--image::before {
@@ -43,5 +44,9 @@ const { title, image } = Astro.props
 
     @media (max-width: 768px) {
         .hero { padding: var(--space-12) var(--space-6); }
+        .hero--image {
+            background-size: auto 50%;
+            background-position: right center;
+        }
     }
 </style>
