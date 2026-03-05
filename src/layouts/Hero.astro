@@ -9,8 +9,8 @@ const { title, image, imageLeft, imageRight } = Astro.props
 ---
 <div class:list={['hero', { 'hero--image': !!image, 'hero--fish': !!imageLeft || !!imageRight }]}
      style={image ? `background-image: url('${image}')` : undefined}>
-    {imageLeft && <img src={imageLeft} alt="" aria-hidden="true" class="hero-fish hero-fish--left" />}
-    {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" />}
+    {imageLeft && <img src={imageLeft} alt="" aria-hidden="true" class="hero-fish hero-fish--left" style="position:absolute" />}
+    {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" style="position:absolute" />}
     <div class="hero-inner">
         <h1>{title}</h1>
         <slot />
