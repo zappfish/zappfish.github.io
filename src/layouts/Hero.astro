@@ -2,10 +2,15 @@
 interface Props {
     title: string
     image?: string
+    imageLeft?: string
+    imageRight?: string
 }
-const { title, image } = Astro.props
+const { title, image, imageLeft, imageRight } = Astro.props
 ---
-<div class:list={['hero', { 'hero--image': !!image }]} style={image ? `background-image: url('${image}')` : undefined}>
+<div class:list={['hero', { 'hero--image': !!image, 'hero--fish': !!imageLeft || !!imageRight }]}
+     style={image ? `background-image: url('${image}')` : undefined}>
+    {imageLeft && <img src={imageLeft} alt="" aria-hidden="true" class="hero-fish hero-fish--left" />}
+    {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" />}
     <div class="hero-inner">
         <h1>{title}</h1>
         <slot />
@@ -18,8 +23,10 @@ const { title, image } = Astro.props
         padding: var(--space-16) var(--space-8);
         text-align: center;
         position: relative;
+        overflow: hidden;
     }
 
+    /* Single background image hero (e.g. home with zebrafish photo) */
     .hero--image {
         background-size: auto 100%;
         background-position: right -5% center;
@@ -35,6 +42,34 @@ const { title, image } = Astro.props
             linear-gradient(to bottom, rgba(70, 90, 110, 0.35), transparent 30%, transparent 70%, rgba(70, 90, 110, 0.25));
     }
 
+    /* White h1 on any dark/colored hero background */
+    .hero--image h1,
+    .hero--fish h1 { color: var(--color-text-white); }
+
+    /* Flanking fish images on left/right */
+    .hero-fish {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 85%;
+        width: auto;
+        max-width: 22%;
+        object-fit: contain;
+        z-index: 0;
+        mix-blend-mode: multiply;
+    }
+
+    .hero-fish--left  { left: 4%; }
+    .hero-fish--right { right: 4%; }
+
+    /* Fish layout — blue-gray overlay with edge vignette */
+    .hero--fish {
+        background:
+            linear-gradient(to right, rgba(70, 90, 110, 0.50) 0%, transparent 40%, transparent 60%, rgba(70, 90, 110, 0.50) 100%),
+            linear-gradient(to bottom, rgba(70, 90, 110, 0.35), transparent 30%, transparent 70%, rgba(70, 90, 110, 0.25)),
+            rgb(195, 205, 215);
+    }
+
     .hero-inner {
         position: relative;
         z-index: 1;
@@ -43,7 +78,6 @@ const { title, image } = Astro.props
     }
 
     h1 { color: var(--color-primary); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8); }
-    .hero--image h1 { color: var(--color-text-white); }
 
     @media (max-width: 768px) {
         .hero { padding: var(--space-12) var(--space-6); }
@@ -51,5 +85,6 @@ const { title, image } = Astro.props
             background-size: auto 50%;
             background-position: right center;
         }
+        .hero-fish { display: none; }
     }
 </style>
