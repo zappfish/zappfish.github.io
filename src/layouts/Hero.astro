@@ -9,8 +9,8 @@ const { title, image, imageLeft, imageRight } = Astro.props
 ---
 <div class:list={['hero', { 'hero--image': !!image, 'hero--fish': !!imageLeft || !!imageRight }]}
      style={image ? `background-image: url('${image}')` : undefined}>
-    {imageLeft && <img src={imageLeft} alt="" aria-hidden="true" class="hero-fish hero-fish--left" />}
-    {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" />}
+    {imageLeft && <img src={imageLeft} alt="" aria-hidden="true" class="hero-fish hero-fish--left" style="position:absolute" />}
+    {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" style="position:absolute" />}
     <div class="hero-inner">
         <h1>{title}</h1>
         <slot />
@@ -20,16 +20,19 @@ const { title, image, imageLeft, imageRight } = Astro.props
 <style>
     .hero {
         background: var(--color-bg-white);
-        padding: var(--space-16) var(--space-8);
+        padding: var(--space-12) var(--space-8);
+        min-height: 240px;
         text-align: center;
         position: relative;
         overflow: hidden;
+        display: flex;
+        align-items: center;
     }
 
     /* Single background image hero (e.g. home with zebrafish photo) */
     .hero--image {
-        background-size: auto 100%;
-        background-position: right -5% center;
+        background-size: 30% auto;
+        background-position: right center;
         background-repeat: no-repeat;
     }
 
@@ -75,7 +78,17 @@ const { title, image, imageLeft, imageRight } = Astro.props
         z-index: 1;
         max-width: 960px;
         margin: 0 auto;
+        width: 100%;
     }
+
+    .hero--image .hero-inner {
+        text-align: center;
+        max-width: 68%;
+        margin: 0;
+    }
+
+    .hero--image h1 { font-size: 2.5rem; margin-bottom: var(--space-3); }
+    .hero--image .hero-subtitle { font-size: 1.2rem; }
 
     h1 { color: var(--color-primary); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8); }
 
