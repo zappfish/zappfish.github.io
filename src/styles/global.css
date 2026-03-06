@@ -120,9 +120,9 @@ time, mark, audio, video {
     --line-height-base:  1.8;    /* body copy */
 
     --heading-margin-bottom:  var(--space-8);   /* space below headings  (was 6) */
-    --body-margin-bottom:     var(--space-4);   /* space below p and ul  */
+    --body-margin-bottom:     var(--space-2);   /* space below p and ul  */
     --list-padding-left:      var(--space-8);   /* list indentation      */
-    --section-margin-bottom:  var(--space-12);  /* space between sections*/
+    --section-margin-bottom:  var(--space-8);   /* space between sections*/
 }
 
 
