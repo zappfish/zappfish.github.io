@@ -69,8 +69,8 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
                     <p>We are creating a <a href="https://linkml.io/linkml/" target="_blank" rel="noopener noreferrer">LinkML</a>-based data model, based on existing toxicological data structures to support comprehensive representation of toxicological exposures, including time course, toxicants, concentrations, fish information, and phenotypic endpoints. The LinkML schema is developed with community input across multiple toxicology use cases and designed for use across organisms. More information about the data model can be found <a href="https://github.com/zappfish/zebrafish-toxicology-atlas-schema" target="_blank" rel="noopener noreferrer">here</a>.</p>
                     <p>In addition, we improve standards to represent all data, including (but not limited to):</p>
                     <ul class="callout-list">
-                        <li>The <a href="https://github.com/obophenotype/zebrafish-phenotype-ontology" target="_blank" rel="noopener noreferrer">Zebrafish Phenotype ontology</a> (ZP) — to represent zebrafish phenotypes</li>
-                        <li>The <a href="https://github.com/EnvironmentOntology/environmental-exposure-ontology" target="_blank" rel="noopener noreferrer">Environment Exposure Ontology</a> (ECTO) — to represent exposure route terms</li>
+                        <li><a href="https://github.com/obophenotype/zebrafish-phenotype-ontology" target="_blank" rel="noopener noreferrer">The Zebrafish Phenotype Ontology</a> (ZP) — to represent zebrafish phenotypes</li>
+                        <li><a href="https://github.com/EnvironmentOntology/environmental-exposure-ontology" target="_blank" rel="noopener noreferrer">The Environment Exposure Ontology</a> (ECTO) — to represent exposure route terms</li>
                     </ul>
                 </div>
 
@@ -237,12 +237,14 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
     .callout-list li:last-child { margin-bottom: 0; }
     .callout-list a {
         text-decoration: none !important;
-        color: var(--color-primary);
+        color: var(--color-accent);
         font-weight: var(--font-weight-medium);
         transition: color 0.2s ease;
     }
     .callout-list a:hover {
-        color: var(--color-primary-dark);
+        color: var(--color-accent-hover);
+        text-decoration: underline !important;
+        text-underline-offset: 2px;
     }
 
     .action-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
