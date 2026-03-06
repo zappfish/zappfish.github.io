@@ -235,6 +235,15 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
         line-height: var(--line-height-base);
     }
     .callout-list li:last-child { margin-bottom: 0; }
+    .callout-list a {
+        text-decoration: none !important;
+        color: var(--color-primary);
+        font-weight: var(--font-weight-medium);
+        transition: color 0.2s ease;
+    }
+    .callout-list a:hover {
+        color: var(--color-primary-dark);
+    }
 
     .action-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
     .action-card {
