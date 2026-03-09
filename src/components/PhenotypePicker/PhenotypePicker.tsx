@@ -293,7 +293,7 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
     );
   }
 
-  const { zfaHierarchy, zpByZFA } = result;
+  const { zfaHierarchy, getPhenotypesForAnatomyWithDescendants } = result;
 
   return (
     <div className="phenotype-picker-container">
@@ -343,9 +343,9 @@ export default function PhenotypePicker(props: PhenotypePickerProps) {
                 onSelectNode={(node) => {
                   if (isGlobalSearchActive) return; // Ignore clicks when disabled
                   setSelectedZfaNode(node);
-                  const nodes = zpByZFA?.get(node.uri);
-                  // Data is pre-sorted by ZFIN usage in hooks.ts
-                  setAnatomyPhenotypes(nodes ? [...nodes] : []);
+                  // Get phenotypes for this anatomy term AND all its descendants
+                  const phenotypes = getPhenotypesForAnatomyWithDescendants(node.uri);
+                  setAnatomyPhenotypes(phenotypes);
                   setSelectedZpNode(null);
                 }}
               />

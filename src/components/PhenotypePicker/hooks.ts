@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  type Graph,
   type Hierarchy,
   OBOGraphLoader,
   type OBOGraphNode,
@@ -12,7 +13,10 @@ const UPHENO_ASSOCIATED_WITH = "http://purl.obolibrary.org/obo/UPHENO_0000003";
 export type ZPData = {
   zpHierarchy: Hierarchy<OBOGraphNode>;
   zfaHierarchy: Hierarchy<OBOGraphNode>;
+  zfaGraph: Graph<OBOGraphNode>;
   zpByZFA: Map<string, OBOGraphNode[]>;
+  /** Get phenotypes for an anatomy term AND all its descendants */
+  getPhenotypesForAnatomyWithDescendants: (anatomyUri: string) => OBOGraphNode[];
 };
 
 type GraphsLoading = {
@@ -95,7 +99,52 @@ async function loadZPData(): Promise<ZPData> {
     );
   }
 
-  return { zfaHierarchy, zpHierarchy, zpByZFA };
+  // Cache for hierarchical lookups to avoid repeated traversals
+  const descendantPhenotypeCache = new Map<string, OBOGraphNode[]>();
+
+  /**
+   * Get phenotypes for an anatomy term AND all its descendants.
+   * Results are deduplicated and sorted by ZFIN usage.
+   */
+  function getPhenotypesForAnatomyWithDescendants(anatomyUri: string): OBOGraphNode[] {
+    // Check cache first
+    if (descendantPhenotypeCache.has(anatomyUri)) {
+      return descendantPhenotypeCache.get(anatomyUri)!;
+    }
+
+    // Get the anatomy node and all its descendants
+    const anatomyNode = zfaGraph.getItem(anatomyUri);
+    if (!anatomyNode) {
+      return [];
+    }
+
+    const descendants = zfaGraph.findAllChildren(anatomyNode);
+    const allAnatomyUris = [anatomyUri, ...descendants.map(d => d.uri)];
+
+    // Collect phenotypes from all anatomy terms, using a Set to deduplicate
+    const phenotypeSet = new Map<string, OBOGraphNode>();
+    for (const uri of allAnatomyUris) {
+      const phenotypes = zpByZFA.get(uri);
+      if (phenotypes) {
+        for (const p of phenotypes) {
+          phenotypeSet.set(p.uri, p);
+        }
+      }
+    }
+
+    // Convert to array and sort by ZFIN usage
+    const result = Array.from(phenotypeSet.values()).sort((a, b) =>
+      ((b as OBOGraphNode & { zfinUsage: number }).zfinUsage || 0) -
+      ((a as OBOGraphNode & { zfinUsage: number }).zfinUsage || 0)
+    );
+
+    // Cache the result
+    descendantPhenotypeCache.set(anatomyUri, result);
+
+    return result;
+  }
+
+  return { zfaHierarchy, zpHierarchy, zfaGraph, zpByZFA, getPhenotypesForAnatomyWithDescendants };
 }
 
 export function useZPGraph(): GraphsResult {
