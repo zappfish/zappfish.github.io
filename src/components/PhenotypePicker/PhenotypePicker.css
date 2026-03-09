@@ -1,0 +1,805 @@
+/* Phenotype Picker - ZAPP themed styles */
+
+/* ========================================
+   CSS Custom Properties
+   ======================================== */
+.phenotype-picker-container {
+  /* Colors */
+  --pp-primary: #136363;
+  --pp-primary-light: #1a7a7a;
+  --pp-primary-dark: #0f4f4f;
+  --pp-accent: #006580;
+  --pp-accent-light: #008099;
+  --pp-success: #28a745;
+  --pp-danger: #c00;
+  --pp-highlight: #ffe066;
+
+  /* Borders */
+  --pp-border: #d0e0e0;
+  --pp-border-light: #e0ebeb;
+  --pp-border-highlight: #e8f4f4;
+
+  /* Backgrounds */
+  --pp-bg-subtle: #f8fbfb;
+  --pp-bg-hover: #f8fcfc;
+  --pp-bg-active: #eef8f8;
+  --pp-bg-tree: #fafcfc;
+
+  /* Shadows */
+  --pp-shadow: rgba(19, 99, 99, 0.1);
+  --pp-shadow-medium: rgba(19, 99, 99, 0.12);
+  --pp-shadow-strong: rgba(19, 99, 99, 0.2);
+
+  /* Layout */
+  --pp-radius: 8px;
+  --pp-radius-sm: 4px;
+  --pp-pane-max-height: 500px;
+  --pp-pane-max-height-mobile: 300px;
+  --pp-min-height: 550px;
+
+  /* Transitions */
+  --pp-transition: 0.15s ease;
+}
+
+/* Container wrapping everything */
+.phenotype-picker-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Global Search Bar */
+.phenotype-picker-search-bar {
+  background: linear-gradient(135deg, #136363 0%, #1a7a7a 100%);
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(19, 99, 99, 0.2);
+}
+
+.global-search-wrapper {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  gap: 0.75rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.global-search-icon {
+  font-size: 1.25rem;
+  opacity: 0.6;
+}
+
+.global-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  font-family: inherit;
+  background: transparent;
+  padding: 0.5rem 0;
+}
+
+.global-search-input::placeholder {
+  color: #888;
+}
+
+.global-search-clear {
+  background: #e8f4f4;
+  border: none;
+  font-size: 1.25rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.global-search-clear:hover {
+  background: #136363;
+  color: white;
+}
+
+/* Main two-column grid */
+.phenotype-picker {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  min-height: 550px;
+}
+
+/* Facet panel (left - anatomy tree) */
+.phenotype-picker .phenotype-pane.facet-pane {
+  max-width: 320px;
+  position: relative;
+}
+
+.phenotype-picker .phenotype-pane.facet-pane .phenotype-pane-header {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+}
+
+.phenotype-picker .phenotype-pane.facet-pane .phenotype-pane-content {
+  padding: 0.5rem;
+}
+
+/* Disabled facet panel state */
+.phenotype-picker .phenotype-pane.facet-pane.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.phenotype-picker .phenotype-pane.facet-pane.disabled .phenotype-pane-header {
+  background: #888;
+}
+
+.facet-disabled-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  text-align: center;
+  pointer-events: auto;
+}
+
+.facet-disabled-overlay p {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Results panel (right - phenotypes) */
+.phenotype-picker .phenotype-pane.results-pane {
+  box-shadow: 0 4px 12px rgba(19, 99, 99, 0.12);
+}
+
+.phenotype-picker .phenotype-pane.results-pane .phenotype-pane-header {
+  font-size: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.results-title {
+  flex: 1;
+}
+
+.phenotype-picker-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #136363;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e0f0f0;
+  border-top-color: #136363;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.phenotype-pane {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(19, 99, 99, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.phenotype-pane-header {
+  background: linear-gradient(135deg, #136363 0%, #1a7a7a 100%);
+  color: white;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pane-icon {
+  font-size: 1.25rem;
+}
+
+.selected-anatomy {
+  font-weight: 400;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-left: 0.5rem;
+}
+
+.phenotype-pane-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+  max-height: 500px;
+}
+
+/* Secondary filter box (within results) */
+.phenotype-filter-box {
+  padding: 0.75rem 1rem;
+  background: #f8fbfb;
+  border-bottom: 1px solid #e0ebeb;
+}
+
+.phenotype-filter-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.phenotype-filter-input {
+  width: 100%;
+  padding: 0.5rem 2.25rem 0.5rem 0.875rem;
+  border: 1px solid #d0e0e0;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  background: white;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.phenotype-filter-input:focus {
+  outline: none;
+  border-color: #136363;
+  box-shadow: 0 0 0 2px rgba(19, 99, 99, 0.1);
+}
+
+.phenotype-filter-input::placeholder {
+  color: #999;
+}
+
+.phenotype-filter-clear {
+  position: absolute;
+  right: 0.375rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #888;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  line-height: 1;
+  border-radius: 3px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.phenotype-filter-clear:hover {
+  color: #136363;
+  background: #e0f0f0;
+}
+
+/* Results count */
+.phenotype-count {
+  font-size: 0.8rem;
+  color: #666;
+  padding: 0.5rem 0 0.75rem;
+  border-bottom: 1px solid #e8f4f4;
+  margin-bottom: 0.5rem;
+}
+
+/* Highlight matched text */
+.phenotype-label mark {
+  background: #ffe066;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Empty state */
+.phenotype-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+  color: #666;
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.phenotype-empty-state p {
+  max-width: 250px;
+  line-height: 1.5;
+}
+
+/* Phenotype list - search results style */
+.phenotype-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.phenotype-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e8f4f4;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-left: 4px solid transparent;
+  background: white;
+}
+
+.phenotype-item:hover {
+  background: #f8fcfc;
+  border-left-color: #1a7a7a;
+}
+
+.phenotype-item.active {
+  background: #eef8f8;
+  border-left-color: #136363;
+  box-shadow: inset 0 0 0 1px rgba(19, 99, 99, 0.1);
+}
+
+.phenotype-item.already-selected {
+  background: #f0f8f0;
+}
+
+.phenotype-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Add button */
+.phenotype-add-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #136363;
+  border-radius: 50%;
+  background: white;
+  color: #136363;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phenotype-add-btn:hover:not(:disabled) {
+  background: #136363;
+  color: white;
+}
+
+.phenotype-add-btn.added {
+  background: #28a745;
+  border-color: #28a745;
+  color: white;
+  cursor: default;
+}
+
+.phenotype-add-btn:disabled {
+  opacity: 0.8;
+}
+
+/* Show More button */
+.show-more-btn {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  background: #e8f4f4;
+  border: 1px solid #d0e0e0;
+  border-radius: 4px;
+  color: #136363;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.show-more-btn:hover {
+  background: #d4eeee;
+}
+
+.phenotype-label {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #136363;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+
+.phenotype-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: #666;
+  align-items: center;
+}
+
+.phenotype-id {
+  font-family: monospace;
+  font-size: 0.75rem;
+  background: #f0f5f5;
+  color: #555;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid #e0ebeb;
+}
+
+.phenotype-usage {
+  color: #006580;
+  font-weight: 500;
+}
+
+.phenotype-usage::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #006580;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+/* Detail pane (third column when selected) */
+.phenotype-detail-pane {
+  grid-column: 1 / -1;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(19, 99, 99, 0.1);
+  overflow: hidden;
+}
+
+.phenotype-detail-pane .phenotype-pane-header {
+  background: linear-gradient(135deg, #006580 0%, #008099 100%);
+}
+
+.phenotype-detail-content {
+  padding: 1.5rem;
+}
+
+.phenotype-detail-content h3 {
+  color: #136363;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.phenotype-detail-content dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.phenotype-detail-content dt {
+  font-weight: 600;
+  color: #555;
+}
+
+.phenotype-detail-content dd {
+  margin: 0;
+  color: #333;
+}
+
+.phenotype-detail-content dd.uri {
+  font-family: monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+  background: #f5f5f5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+
+.copy-button {
+  background: #136363;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.copy-button:hover {
+  background: #0f4f4f;
+}
+
+/* ========================================
+   Selected Phenotypes Pane
+   ======================================== */
+
+.phenotype-selection-pane {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(19, 99, 99, 0.1);
+  overflow: hidden;
+}
+
+.phenotype-selection-pane .phenotype-pane-header {
+  background: linear-gradient(135deg, #006580 0%, #008099 100%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.phenotype-selection-pane .selection-title {
+  flex: 1;
+}
+
+.clear-all-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.clear-all-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.phenotype-selection-content {
+  padding: 1rem;
+}
+
+.selected-phenotype-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.selected-phenotype-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f8fbfb;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  border: 1px solid #e0ebeb;
+}
+
+.selected-phenotype-item:last-child {
+  margin-bottom: 0;
+}
+
+.selected-phenotype-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.selected-phenotype-label {
+  display: block;
+  font-weight: 600;
+  color: #136363;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selected-phenotype-id {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #666;
+  background: #e8f4f4;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+}
+
+.selected-phenotype-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.copy-uri-btn,
+.remove-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  font-size: 1rem;
+}
+
+.copy-uri-btn {
+  background: #e8f4f4;
+  color: #136363;
+}
+
+.copy-uri-btn:hover {
+  background: #136363;
+  color: white;
+}
+
+.remove-btn {
+  background: #fee;
+  color: #c00;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.remove-btn:hover {
+  background: #c00;
+  color: white;
+}
+
+.selection-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e0ebeb;
+}
+
+.copy-all-btn {
+  background: #136363;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.copy-all-btn:hover {
+  background: #0f4f4f;
+}
+
+/* ========================================
+   HierarchyTree Styling (frogpot component)
+   ========================================
+
+   WARNING: Deep selectors for frogpot HierarchyTree component.
+   These target the internal DOM structure and may break on library updates.
+
+   frogpot version: 2.4.1
+   Last verified: 2024-12-10
+
+   The HierarchyTree component doesn't expose CSS class names, so we must
+   use deep child selectors and !important to override inline styles.
+   If styling breaks after a frogpot update, inspect the component's
+   DOM structure and update these selectors accordingly.
+   ======================================== */
+
+/* Tree container wrapper */
+.hierarchy-tree-wrapper {
+  font-family: Lato, sans-serif;
+  font-size: 0.9rem;
+}
+
+/* Main tree container - override the border */
+.hierarchy-tree-wrapper > div > div {
+  border: 1px solid #d0e8e8 !important;
+  border-radius: 6px !important;
+  background: var(--pp-bg-tree, #fafcfc);
+}
+
+/* Tree row items */
+.hierarchy-tree-wrapper > div > div > div > div > div {
+  transition: background-color 0.1s ease;
+  border-radius: 3px;
+  margin: 1px 4px;
+}
+
+/* Hover effect on rows */
+.hierarchy-tree-wrapper > div > div > div > div > div:hover {
+  background-color: var(--pp-border-highlight, #e8f4f4) !important;
+}
+
+/* The expand/collapse button container */
+.hierarchy-tree-wrapper > div > div > div > div > div > span:first-child {
+  opacity: 0.7;
+  transition: opacity 0.1s ease;
+}
+
+.hierarchy-tree-wrapper > div > div > div > div > div:hover > span:first-child {
+  opacity: 1;
+}
+
+/* The expand/collapse box itself */
+.hierarchy-tree-wrapper > div > div > div > div > div > span:first-child > span {
+  border-color: var(--pp-primary, #136363) !important;
+  border-radius: 2px !important;
+}
+
+/* Expanded state background */
+.hierarchy-tree-wrapper > div > div > div > div > div > span:first-child > span[style*="background: rgb(204, 204, 204)"],
+.hierarchy-tree-wrapper > div > div > div > div > div > span:first-child > span[style*="background:#ccc"] {
+  background: #b8d8d8 !important;
+}
+
+/* Label text span */
+.hierarchy-tree-wrapper > div > div > div > div > div > span:last-child {
+  color: #333;
+  padding: 2px 6px !important;
+  border-radius: 3px;
+}
+
+/* Selected item highlight - target the background color style */
+.hierarchy-tree-wrapper > div > div > div > div > div > span:last-child[style*="background-color: rgb(240, 240, 240)"],
+.hierarchy-tree-wrapper > div > div > div > div > div > span:last-child[style*="background-color:#f0f0f0"] {
+  background-color: var(--pp-primary, #136363) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 4px rgba(19, 99, 99, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+/* Canvas tree lines - make them teal */
+.hierarchy-tree-wrapper canvas {
+  filter: hue-rotate(150deg) saturate(0.5);
+}
+
+/* Scrollbar styling for the tree */
+.hierarchy-tree-wrapper::-webkit-scrollbar,
+.phenotype-pane-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.hierarchy-tree-wrapper::-webkit-scrollbar-track,
+.phenotype-pane-content::-webkit-scrollbar-track {
+  background: #f0f8f8;
+  border-radius: 4px;
+}
+
+.hierarchy-tree-wrapper::-webkit-scrollbar-thumb,
+.phenotype-pane-content::-webkit-scrollbar-thumb {
+  background: #a0c8c8;
+  border-radius: 4px;
+}
+
+.hierarchy-tree-wrapper::-webkit-scrollbar-thumb:hover,
+.phenotype-pane-content::-webkit-scrollbar-thumb:hover {
+  background: #136363;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .phenotype-picker {
+    grid-template-columns: 1fr;
+  }
+
+  .phenotype-picker .phenotype-pane.facet-pane {
+    max-width: none;
+  }
+
+  .phenotype-picker .phenotype-pane.facet-pane .phenotype-pane-content {
+    max-height: 300px;
+  }
+
+  .phenotype-pane-content {
+    max-height: 400px;
+  }
+}

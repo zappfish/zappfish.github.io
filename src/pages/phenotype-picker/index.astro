@@ -1,0 +1,104 @@
+---
+import Header from "../../layouts/Header.astro"
+import Footer from "../../layouts/Footer.astro"
+import PhenotypePicker from "../../components/PhenotypePicker/PhenotypePicker"
+import "../../styles/global.css"
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phenotype Picker - Zebrafish Toxicology Phenotype Atlas Project</title>
+    <meta name="description" content="Interactive tool to browse zebrafish anatomy and find associated phenotype terms from the Zebrafish Phenotype Ontology." />
+  </head>
+  <body>
+    <div id="main">
+      <Header title="Phenotype Picker" />
+      <main>
+        <section class="intro">
+          <p>
+            Use this tool to find phenotype terms for your zebrafish research.
+            Browse the <strong>Zebrafish Anatomy (ZFA)</strong> hierarchy on the left,
+            then select associated <strong>phenotype terms</strong> from the Zebrafish Phenotype Ontology (ZP) on the right.
+          </p>
+        </section>
+
+        <section class="picker-section">
+          <PhenotypePicker client:load />
+        </section>
+
+        <section class="help">
+          <h2>How to use</h2>
+          <ol>
+            <li><strong>Browse anatomy:</strong> Expand the tree on the left to navigate zebrafish anatomical structures</li>
+            <li><strong>View phenotypes:</strong> Click an anatomy term to see all phenotypes associated with that structure</li>
+            <li><strong>Select a phenotype:</strong> Click a phenotype to view details and copy its URI for use in your annotations</li>
+          </ol>
+          <p>
+            Phenotypes are sorted by their frequency in <a href="https://zfin.org" target="_blank" rel="noopener">ZFIN</a>,
+            with the most commonly used terms appearing first.
+          </p>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  main {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    max-width: 1280px;
+    padding: 2rem 60px;
+  }
+
+  #main {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: stretch;
+  }
+
+  .intro {
+    margin-bottom: 2rem;
+  }
+
+  .intro p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #444;
+  }
+
+  .picker-section {
+    margin-bottom: 3rem;
+  }
+
+  .help {
+    background: #f8fbfb;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #136363;
+  }
+
+  .help h2 {
+    margin-top: 0;
+  }
+
+  .help ol {
+    margin-bottom: 1rem;
+  }
+
+  .help li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+</style>
