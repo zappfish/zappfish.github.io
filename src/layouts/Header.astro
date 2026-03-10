@@ -1,71 +1,157 @@
 ---
-const sections = [
-    { label: "Home", path: "/" },
-    { label: "Goals", path: "/goals/" },
-    { label: "Community", path: "/community/" },
-    { label: "Meet the team", path: "/team/" },
-    { label: "Get involved", path: "/get-involved/" },
-    { label: "Events", path: "/events/" },
-    { label: "Frequently Asked Questions", path: "/faqs/" },
-]
-const currentPath = Astro.url.pathname
-const { title } = Astro.props;
+import { navItems } from "../config/nav"
+const sections = navItems
 ---
-<header>
-    <nav>
-        <div><a href="/">Zebrafish Toxicology Phenotype Atlas Project</a></div>
+<!-- transition:persist keeps nav mounted across navigations — no flicker.
+     Astro.url.pathname stays stale, so active link is managed client-side via astro:page-load.
+     Hero moved to Hero.astro so it re-renders freely per page.
+     Docs: https://docs.astro.build/en/guides/view-transitions/ -->
+<header transition:persist>
+    <div class="nav-bar">
+        <a class="logo" href="/">
+            <div class="logo-text">
+                <span class="logo-name">ZAPP</span>
+            </div>
+        </a>
 
-        <ul>
-        {sections.map(({ label, path }) =>
-        <li class={ currentPath === path ? "selected" : "" }>
-            <a href={path}>{label}</a>
-        </li>
-        )}
-        </ul>
-    </nav>
-    <h1>{title}</h1>
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+
+        <nav id="main-nav">
+            <ul>
+            {sections.map(({ label, path }) =>
+                <li><a href={path}>{label}</a></li>
+            )}
+            </ul>
+        </nav>
+    </div>
 </header>
 
+<script>
+    function updateActiveLink() {
+        const currentPath = window.location.pathname
+        document.querySelectorAll('#main-nav li').forEach(li => {
+            const a = li.querySelector('a')
+            li.classList.toggle('active', a?.pathname === currentPath)
+        })
+    }
+
+    // Hamburger toggle
+    const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')
+    const nav = document.querySelector<HTMLElement>('#main-nav')
+
+    if (hamburger && nav) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('open')
+            hamburger.setAttribute('aria-expanded', String(isOpen))
+            hamburger.classList.toggle('open', isOpen)
+        })
+    }
+
+    // Close menu when clicking a nav link or outside the nav
+    document.addEventListener('click', ({ target }) => {
+        const el = target as HTMLElement
+        if ((nav?.contains(el) && el.closest('a')) || (!nav?.contains(el) && !hamburger?.contains(el))) {
+            nav?.classList.remove('open')
+            hamburger?.classList.remove('open')
+            hamburger?.setAttribute('aria-expanded', 'false')
+        }
+    })
+
+    // astro:page-load fires on both initial load and every client-side navigation.
+    document.addEventListener('astro:page-load', updateActiveLink)
+</script>
+
 <style>
-    header {
-        background: #136363;
-    }
-
-    h1 {
-        font-size: 4rem;
-        font-weight: normal;
-        text-align: center;
-        padding: 3.33rem 0;
-    }
-
-    a {
-        color: #ccc;
-        text-decoration: none;
-    }
-
-    h1,
-    li.selected a {
-        color: white;
-    }
-
-    nav {
-        padding: .5rem 1rem;
+    .nav-bar {
+        background: var(--color-bg-white);
+        border-bottom: 1px solid var(--color-border);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: var(--space-3) var(--space-8);
+        position: relative;
     }
 
-    nav ul {
-        list-style-type: none;
-        display: flex;
-    }
+    .logo { display: inline-flex; align-items: center; gap: var(--space-3); text-decoration: none; }
+
+    .logo-name { font-weight: var(--font-weight-bold); font-size: 1.5rem; color: var(--color-primary); }
+
+    nav ul { list-style: none; display: flex; gap: var(--space-1); padding: 0; margin: 0; }
 
     nav ul li a {
         display: inline-block;
-        padding: .5rem 1rem;
-    }
-    nav ul li a:hover {
-        background-color: #333;
+        padding: var(--space-2) var(--space-2);
+        color: var(--color-text-dark);
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.15s;
     }
 
+    nav ul li a:hover { color: var(--color-accent); }
+
+    nav ul li.active a { color: var(--color-primary); font-weight: var(--font-weight-bold); }
+
+    /* ── Hamburger button — hidden on desktop ── */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 18px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 10;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: var(--color-primary);
+        border-radius: 2px;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+
+    /* Animate to × when open */
+    .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* ── Mobile layout ── */
+    @media (max-width: 768px) {
+        .hamburger { display: flex; }
+
+        #main-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--color-bg-white);
+            border-top: 1px solid var(--color-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        #main-nav.open { display: block; }
+
+        #main-nav ul {
+            flex-direction: column;
+            gap: 0;
+            padding: var(--space-2) 0;
+        }
+
+        #main-nav ul li a {
+            display: block;
+            padding: var(--space-3) var(--space-8);
+            white-space: normal;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        #main-nav ul li:last-child a { border-bottom: none; }
+    }
 </style>

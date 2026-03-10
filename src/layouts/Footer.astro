@@ -1,41 +1,89 @@
 ---
-const sections = [
-    { label: "Get involved", path: "/get-involved/" },
-    { label: "Upcoming workshops", path: "/events/" },
-    { label: "Contact us", path: "mailto:info@zappfish.org" },
-]
-const currentPath = Astro.url.pathname
+import { navItems } from "../config/nav"
+const quickLinks = navItems
 ---
 
-<footer>
-    {currentPath == "/" ? null : (
-        <ul>
-        {sections.map(({ label, path }) =>
-        <li>
-            <a href={path}>{label}</a>
-        </li>
-        )}
-        </ul>
-    )}
+<footer class="site-footer">
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+            <p>Department of Genetics<br />UNC Chapel Hill</p>
+            <a href="mailto:info@zappfish.org">info@zappfish.org</a>
+            <div class="social-icons">
+                <a href="https://twitter.com/zappfish" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+                <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-link-list">
+                {quickLinks.map(({ label, path }) => <li><a href={path}>{label}</a></li>)}
+            </ul>
+        </div>
+
+    </div>
+    <div class="footer-bottom">
+        <p>© {new Date().getFullYear()} ZAPP. All rights reserved.</p>
+    </div>
 </footer>
 
 <style>
-    ul {
-        padding: 3rem 0;
-        list-style-type: none;
-        display: flex;
-        justify-content: center;
-        gap: 3rem;
+    .site-footer { background-color: var(--color-primary-dark); color: var(--color-text-white); width: 100%; }
+
+    .footer-inner {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: var(--space-12);
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: var(--space-12) var(--space-8);
+        box-sizing: border-box;
     }
 
-    ul li a {
-        display: inline-block;
-        padding: .5rem 6rem;
-        color: white;
-        background-color: rgba(30,108,147,1);
+    /* Shared muted text on dark background */
+    .footer-brand p,
+    .footer-brand a,
+    .footer-link-list li a,
+    .footer-contact p,
+    .footer-contact a {
+        color: var(--color-white-65);
         text-decoration: none;
+        line-height: var(--line-height-base);
+        margin-bottom: var(--space-1);
     }
-    ul li a:hover {
-        opacity: .8;
+
+    /* Single hover rule covers all footer links */
+    .footer-brand a:hover,
+    .footer-link-list li a:hover { color: var(--color-text-white); }
+
+    .footer-heading { color: var(--color-text-white); font-weight: var(--font-weight-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-4); }
+
+    .footer-link-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+
+    .social-icons { display: flex; gap: var(--space-3); margin-top: var(--space-2); }
+
+    .social-icons a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--space-8); height: var(--space-8);
+        border-radius: 50%;
+        border: 1px solid var(--color-white-30);
+        color: var(--color-white-65);
+        text-decoration: none;
+        transition: border-color 0.15s, color 0.15s;
+    }
+
+    .social-icons a:hover { border-color: var(--color-text-white); color: var(--color-text-white); }
+
+    .footer-bottom { border-top: 1px solid var(--color-white-10); text-align: center; padding: var(--space-4) var(--space-8); }
+
+    .footer-bottom p { color: var(--color-white-40); margin: 0; }
+
+    /* Stack columns on mobile, center-align content */
+    @media (max-width: 768px) {
+        .footer-inner { grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
+        .social-icons { justify-content: center; }
     }
 </style>
