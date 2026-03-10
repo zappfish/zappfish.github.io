@@ -14,11 +14,11 @@ const sections = navItems
             </div>
         </a>
 
-        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
             <span></span><span></span><span></span>
         </button>
 
-        <nav id="main-nav">
+        <nav id="main-nav" aria-label="Site navigation">
             <ul>
             {sections.map(({ label, path }) =>
                 <li><a href={path}>{label}</a></li>
@@ -33,7 +33,13 @@ const sections = navItems
         const currentPath = window.location.pathname
         document.querySelectorAll('#main-nav li').forEach(li => {
             const a = li.querySelector('a')
-            li.classList.toggle('active', a?.pathname === currentPath)
+            const isActive = a?.pathname === currentPath
+            li.classList.toggle('active', isActive)
+            if (isActive) {
+                a?.setAttribute('aria-current', 'page')
+            } else {
+                a?.removeAttribute('aria-current')
+            }
         })
     }
 
@@ -65,7 +71,7 @@ const sections = navItems
 
 <style>
     .nav-bar {
-        background: var(--color-bg-white);
+        background: var(--color-bg-base);
         border-bottom: 1px solid var(--color-border);
         display: flex;
         justify-content: space-between;
@@ -98,12 +104,14 @@ const sections = navItems
         display: none;
         flex-direction: column;
         justify-content: space-between;
-        width: 24px;
-        height: 18px;
+        /* Accessibility — 44×44px touch target (WCAG 2.5.5); padding fills the area,
+           content-box stays 24×18px so the bar visuals are unchanged */
+        width: 44px;
+        height: 44px;
+        padding: 13px 10px;
         background: none;
         border: none;
         cursor: pointer;
-        padding: 0;
         z-index: 10;
     }
 
@@ -131,7 +139,7 @@ const sections = navItems
             top: 100%;
             left: 0;
             right: 0;
-            background: var(--color-bg-white);
+            background: var(--color-bg-base);
             border-top: 1px solid var(--color-border);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 100;

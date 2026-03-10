@@ -4,22 +4,25 @@ import Header from "./Header.astro"
 import Hero from "./Hero.astro"
 import Footer from "./Footer.astro"
 import "../styles/global.css" // design tokens + base styles for all pages
-const { frontmatter } = Astro.props;
+const { frontmatter, title: propTitle } = Astro.props
+const pageTitle = frontmatter?.title ?? propTitle ?? ''
 ---
 <!doctype html>
 <html lang="en" transition:animate="none">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- enables responsive layout on mobile -->
-        <title>Zebrafish Toxicology Phenotype Atlas Project - {frontmatter.title}</title>
+        <title>Zebrafish Toxicology Phenotype Atlas Project - {pageTitle}</title>
         <!-- client-side navigation, no full-reload flicker -->
         <ClientRouter />
     </head>
     <body>
+        {/* Accessibility — skip link lets keyboard users jump past the nav directly to page content */}
+        <a href="#main-content" class="skip-nav">Skip to main content</a>
         <div id="main">
             <Header />
-            <Hero title={frontmatter.title} />
-            <main><slot /></main>
+            {Astro.slots.has('hero') ? <slot name="hero" /> : <Hero title={pageTitle} />}
+            <main id="main-content"><slot /></main>
             <Footer />
         </div>
     </body>
@@ -28,7 +31,23 @@ const { frontmatter } = Astro.props;
 <style>
     html, body { margin: 0; width: 100%; height: 100%; }
 
-    main { width: 100%; margin: auto; max-width: 1280px; padding: var(--space-8) var(--space-16); }
+    /* Accessibility — visually hidden until focused by keyboard; appears top-left on Tab */
+    .skip-nav {
+        position: absolute;
+        top: -100%;
+        left: var(--space-4);
+        z-index: 9999;
+        padding: var(--space-2) var(--space-4);
+        background: var(--color-primary);
+        color: var(--color-text-white);
+        border-radius: 0 0 4px 4px;
+        font-weight: var(--font-weight-bold);
+        text-decoration: none;
+        transition: top 0.15s;
+    }
+    .skip-nav:focus-visible { top: 0; }
+
+    main { width: 100%; margin: auto; max-width: 1280px; padding: var(--space-2) var(--space-16) var(--space-8); }
 
     /* Match nav-bar side padding on mobile */
     @media (max-width: 768px) {
