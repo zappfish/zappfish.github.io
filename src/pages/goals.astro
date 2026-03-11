@@ -1,6 +1,7 @@
 ---
 import Main from '../layouts/Main.astro'
 import Hero from '../layouts/Hero.astro'
+import SectionCard from '../components/ui/SectionCard.astro'
 import IconTarget from '../components/icons/IconTarget.astro'
 import IconFlask from '../components/icons/IconFlask.astro'
 import IconStar from '../components/icons/IconStar.astro'
@@ -19,50 +20,35 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
 
     <section class="mission">
         <div class="section-label">Our Mission</div>
-        <p>The Zebrafish Atlas Phenotype Project (ZAPP) is a community driven effort focused on standardizing zebrafish toxicology data and phenotypic outcome reporting. ZAPP’s success depends on active participation from the zebrafish research and toxicology community to ensure that ZAPP remains fit for purpose, sustainable, and effective in improving the integration and reuse of toxicological and phenotypic data.</p>
+        <p>The Zebrafish Atlas Phenotype Project (ZAPP) is a community driven effort focused on standardizing zebrafish toxicology data and phenotypic outcome reporting. ZAPP's success depends on active participation from the zebrafish research and toxicology community to ensure that ZAPP remains fit for purpose, sustainable, and effective in improving the integration and reuse of toxicological and phenotypic data.</p>
     </section>
 
     <section class="aims">
-        <div class="aims-card">
-            <div class="aims-card-header">
-                <div class="section-icon section-icon--teal">
-                    <IconTarget />
-                </div>
-                <h2>What ZAPP Aims to Achieve</h2>
+        <SectionCard title="What ZAPP Aims to Achieve" iconColor="teal">
+            <IconTarget slot="icon" />
+            {/* Scoping anchor: ensures .aims-body and ul share the same Astro scope hash, preventing styles from silently dropping on SSR hard-refresh across slot boundaries. */}
+            <div class="aims-body">
+                <ul>
+                    <li>Develop a <strong>data model</strong> and standards to report zebrafish exposure experiments and resulting phenotypes</li>
+                    <li>Create an <strong>annotation toolkit</strong> that enables consistent data annotation following the data model and standards. This annotation toolkit will allow standards adoption without prior knowledge of ontologies or data modeling.</li>
+                    <li>Build a web-based, community-curated <strong>phenotype atlas</strong> that serves as a visual reference for zebrafish phenotypes</li>
+                </ul>
             </div>
-            <ul>
-                <li>Develop a <strong>data model</strong> and standards to report zebrafish exposure experiments and resulting phenotypes</li>
-                <li>Create an <strong>annotation toolkit</strong> that enables consistent data annotation following the data model and standards. This annotation toolkit will allow standards adoption without prior knowledge of ontologies or data modeling.</li>
-                <li>Build a web-based, community-curated <strong>phenotype atlas</strong> that serves as a visual reference for zebrafish phenotypes</li>
-            </ul>
-        </div>
+        </SectionCard>
     </section>
 
     <section class="workflow">
-        <div class="workflow-card">
-            <div class="aims-card-header">
-                <div class="section-icon section-icon--teal">
-                    <IconFlask />
-                </div>
-                <h2>ZAPP Workflow &amp; Data Pipeline</h2>
-            </div>
+        <SectionCard title="ZAPP Workflow &amp; Data Pipeline" iconColor="teal">
+            <IconFlask slot="icon" />
             <div class="workflow-diagram">
                 <img src="/images/goals-workflow.jpg" alt="ZAPP data workflow: zebrafish exposure data collection, toxicophenotype annotation using standards, submission to the Zebrafish Phenotype Atlas with FAIR data standards" />
             </div>
-        </div>
+        </SectionCard>
     </section>
 
     <section class="deliverables">
-        <div class="deliverables-card">
-            <div class="aims-card-header">
-                <div class="section-icon section-icon--dark">
-                    <IconStar />
-                </div>
-                <div>
-                    <h2>Key Deliverables</h2>
-                    <p class="section-subtitle">Our project focuses on three major deliverables that will transform zebrafish toxicology research</p>
-                </div>
-            </div>
+        <SectionCard title="Key Deliverables" subtitle="Our project focuses on three major deliverables that will transform zebrafish toxicology research" iconColor="dark">
+            <IconStar slot="icon" />
             <div class="deliverables-body">
                 <div class="deliverable">
                     <h3><span class="deliverable-icon"><IconDatabase /></span>Data Model and Standards for Toxicological and Phenotypic data</h3>
@@ -87,7 +73,7 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
                     <p>FAIR API access to the data will be provided for third-party resources</p>
                 </div>
             </div>
-        </div>
+        </SectionCard>
     </section>
 
     <section class="action-cards">
@@ -140,62 +126,16 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
         flex-shrink: 0;
     }
 
-    .section-header { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-6); }
-    .section-header h2, .section-header > div h2 { margin-bottom: var(--space-1); }
-    .section-subtitle { font-size: var(--font-size-base); color: var(--color-text-muted); margin: 0; }
+    /* aims card body */
+    .aims-body ul { padding: var(--space-8) var(--space-8) var(--space-8) var(--space-12); margin-bottom: 0; }
+    .aims-body li { font-size: var(--font-size-body); line-height: var(--line-height-base); margin-bottom: var(--space-3); }
+    .aims-body li:last-child { margin-bottom: 0; }
 
-    .section-icon {
-        flex-shrink: 0;
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-    }
-    .section-icon :global(svg) { width: 20px; height: 20px; color: #fff; }
-    .section-icon--green { background: var(--color-accent); }
-    .section-icon--teal  { background: var(--color-primary-dark); }
-    .section-icon--dark  { background: var(--color-primary); }
-
-    .aims-card {
-        background: var(--color-bg-surface);
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-        overflow: hidden;
-    }
-    .aims-card-header {
-        display: flex;
-        align-items: center;
-        gap: var(--space-4);
-        padding: var(--space-3) var(--space-6);
-        background: linear-gradient(135deg, rgba(42, 157, 138, 0.12) 0%, rgba(26, 83, 92, 0.08) 100%);
-        border-bottom: 1px solid var(--color-border);
-    }
-    .aims-card-header h2 { margin-bottom: 0; }
-    .aims-card-header .section-subtitle { margin-top: var(--space-1); }
-    .aims-card-header .section-icon { width: 28px; height: 28px; border-radius: 6px; }
-    .aims-card-header .section-icon :global(svg) { width: 14px; height: 14px; }
-    .aims-card ul { padding: var(--space-8) var(--space-8) var(--space-8) var(--space-12); margin-bottom: 0; }
-    .aims-card li { font-size: var(--font-size-body); line-height: var(--line-height-base); margin-bottom: var(--space-3); }
-    .aims-card li:last-child { margin-bottom: 0; }
-
-    .workflow-card {
-        background: var(--color-bg-surface);
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-        overflow: hidden;
-    }
+    /* workflow card body */
     .workflow-diagram { padding: var(--space-6); background: var(--color-bg-white); }
     .workflow-diagram img { width: 100%; height: auto; display: block; }
 
-    .deliverables-card {
-        background: var(--color-bg-surface);
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-        overflow: hidden;
-    }
+    /* deliverables card body */
     .deliverables-body { padding: var(--space-8) var(--space-12); }
     .deliverable { margin-bottom: var(--space-4); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); }
     .deliverable a {
@@ -284,30 +224,6 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
     .action-card p { font-size: var(--font-size-base); color: var(--color-text-muted); margin-bottom: var(--space-4); line-height: var(--line-height-base); }
     .action-link { font-size: var(--font-size-base); font-weight: var(--font-weight-bold); color: var(--color-accent); text-decoration: none; }
     .action-link:hover { text-decoration: underline; }
-
-    .cta-band {
-        background: var(--color-primary-dark);
-        text-align: center;
-        padding: var(--space-16) var(--space-8);
-        border-radius: 12px;
-        margin-bottom: 0;
-    }
-    .cta-band h2 { color: var(--color-text-white); margin-bottom: var(--space-4); }
-    .cta-band p { color: var(--color-white-65); max-width: 540px; margin: 0 auto var(--space-8); }
-
-    .cta-btn {
-        display: inline-block;
-        padding: var(--space-3) var(--space-8);
-        background: transparent;
-        color: var(--color-text-white);
-        border: 2px solid var(--color-text-white);
-        border-radius: 4px;
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-base);
-        text-decoration: none;
-        transition: background 0.15s, color 0.15s;
-    }
-    .cta-btn:hover { background: var(--color-text-white); color: var(--color-primary-dark); }
 
     @media (max-width: 768px) { .action-cards { grid-template-columns: 1fr; } }
 </style>
