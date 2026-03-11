@@ -1,0 +1,105 @@
+---
+import IconMicroscope from '../icons/IconMicroscope.astro'
+import IconFlask from '../icons/IconFlask.astro'
+import IconDatabase from '../icons/IconDatabase.astro'
+import IconMap from '../icons/IconMap.astro'
+import IconShield from '../icons/IconShield.astro'
+
+const icons: Record<string, any> = {
+    microscope: IconMicroscope,
+    flask:      IconFlask,
+    database:   IconDatabase,
+    map:        IconMap,
+    shield:     IconShield,
+}
+
+const communityTypes = [
+    { label: 'Zebrafish researchers',               icon: 'microscope' },
+    { label: 'Toxicologists',                       icon: 'flask'      },
+    { label: 'Data standards and ontology experts', icon: 'database'   },
+    { label: 'Atlas experts',                       icon: 'map'        },
+    { label: 'Regulators',                          icon: 'shield'     },
+]
+---
+
+<div class="who-card">
+    <h2>Who is the Zebrafish Toxics Phenotype Atlas community and how can one join this community?</h2>
+    <div class="community-types">
+        {communityTypes.map(type => {
+            const Icon = icons[type.icon]
+            return (
+                <div class="community-card">
+                    <div class="community-card-icon"><Icon /></div>
+                    <span class="community-card-label">{type.label}</span>
+                </div>
+            )
+        })}
+    </div>
+    <div class="join-cta">
+        <p>Join the Zebrafish Toxicology Phenotype Atlas community by filling out <a href="/get-involved/">this form</a>.</p>
+    </div>
+</div>
+
+<style>
+    .who-card {
+        background: var(--color-bg-surface);
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+        overflow: hidden;
+    }
+
+    .who-card h2 {
+        padding: var(--space-8) var(--space-6) var(--space-3);
+        margin-bottom: 0;
+        font-size: var(--font-size-h2);
+        color: var(--color-primary);
+        text-align: center;
+    }
+
+    .community-types {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-4);
+        justify-content: center;
+        padding: 0 var(--space-6) var(--space-4);
+    }
+
+    .community-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-6) var(--space-4);
+        min-width: 120px;
+        flex: 1;
+        max-width: 160px;
+    }
+
+    .community-card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #e6f5f3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-accent);
+    }
+    .community-card-icon :global(svg) { width: 24px; height: 24px; }
+
+    .community-card-label {
+        font-size: var(--font-size-base);
+        color: var(--color-text-dark);
+        text-align: center;
+        font-weight: var(--font-weight-bold);
+    }
+
+    .join-cta {
+        background: var(--color-primary);
+        padding: var(--space-3) var(--space-6);
+        text-align: center;
+    }
+    .join-cta p { margin-bottom: 0; color: var(--color-text-white); font-size: var(--font-size-base); }
+    .join-cta a { color: var(--color-accent); font-weight: var(--font-weight-bold); text-decoration: underline; }
+    .join-cta a:hover { color: #fff; }
+</style>
