@@ -36,7 +36,8 @@ const communityTypes = [
         })}
     </div>
     <div class="join-cta">
-        <p>Join the Zebrafish Toxicology Phenotype Atlas community by filling out <a href="/get-involved/">this form</a>.</p>
+        <p>Ready to join the Zebrafish Toxicology Phenotype Atlas community?</p>
+        <a href="/get-involved/" class="join-btn">Join Now</a>
     </div>
 </div>
 
@@ -51,7 +52,6 @@ const communityTypes = [
     .who-card h2 {
         padding: var(--space-8) var(--space-6) var(--space-3);
         margin-bottom: 0;
-        font-size: var(--font-size-h2);
         color: var(--color-primary);
         text-align: center;
     }
@@ -68,8 +68,8 @@ const communityTypes = [
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: var(--space-3);
-        padding: var(--space-6) var(--space-4);
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4);
         min-width: 120px;
         flex: 1;
         max-width: 160px;
@@ -96,10 +96,26 @@ const communityTypes = [
 
     .join-cta {
         background: var(--color-primary);
-        padding: var(--space-3) var(--space-6);
-        text-align: center;
+        padding: var(--space-6) var(--space-8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-6);
     }
-    .join-cta p { margin-bottom: 0; color: var(--color-text-white); font-size: var(--font-size-base); }
-    .join-cta a { color: var(--color-accent); font-weight: var(--font-weight-bold); text-decoration: underline; }
-    .join-cta a:hover { color: #fff; }
+    .join-cta p { margin-bottom: 0; color: var(--color-text-white); }
+    .join-btn {
+        display: inline-block;
+        white-space: nowrap;
+        padding: var(--space-3) var(--space-8);
+        background: var(--color-accent);
+        color: var(--color-text-white);
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        transition: background 0.15s;
+        flex-shrink: 0;
+    }
+    .join-btn:hover { background: var(--color-accent-hover); }
+    .join-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 </style>

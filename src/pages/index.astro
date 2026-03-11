@@ -56,7 +56,6 @@ import { featureItems } from '../config/features'
 <style>
     /* ── About section ── */
     .about h2, .features h2, .blog-preview h2 { text-align: center; }
-    .about h2 { margin-bottom: var(--space-6); }
 
     .about-body {
         padding: var(--space-8) var(--space-12);
@@ -76,6 +75,7 @@ import { featureItems } from '../config/features'
     }
 
     /* ── Feature cards ── */
+    .features { padding-bottom: var(--space-6); }
     .feature-cards {
         display: grid;
         grid-template-columns: repeat(4, 1fr);

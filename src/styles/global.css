@@ -88,7 +88,7 @@ time, mark, audio, video {
 
     /* ── White overlays — text/borders on dark backgrounds (footer) ── */
     --color-white-65:  rgba(255, 255, 255, 0.80);  /* muted text             */
-    --color-white-40:  rgba(255, 255, 255, 0.40);  /* copyright / fine print */
+    --color-white-40:  rgba(255, 255, 255, 0.65);  /* copyright / fine print */
     --color-white-30:  rgba(255, 255, 255, 0.30);  /* subtle borders         */
     --color-white-10:  rgba(255, 255, 255, 0.10);  /* hairline dividers      */
 
@@ -120,7 +120,7 @@ time, mark, audio, video {
     --line-height-tight: 1.2;    /* headings */
     --line-height-base:  1.6;    /* body copy */
 
-    --heading-margin-bottom:  var(--space-8);   /* space below headings  (was 6) */
+    --heading-margin-bottom:  var(--space-6);   /* space below headings  */
     --body-margin-bottom:     var(--space-2);   /* space below p and ul  */
     --list-padding-left:      var(--space-8);   /* list indentation      */
     --section-margin-bottom:  var(--space-8);   /* space between sections*/
