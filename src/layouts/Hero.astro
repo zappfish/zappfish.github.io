@@ -87,8 +87,9 @@ const { title, image, imageLeft, imageRight } = Astro.props
         margin: 0;
     }
 
-    .hero--image h1 { font-size: 2.5rem; margin-bottom: var(--space-3); }
-    .hero--image .hero-subtitle { font-size: 1.2rem; }
+    .hero--image h1,
+    .hero--fish h1  { font-size: var(--font-size-display); margin-bottom: var(--space-3); }
+    .hero--image .hero-subtitle { font-size: var(--font-size-h3); }
 
     h1 { color: var(--color-primary); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8); }
 
