@@ -1,0 +1,185 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import SectionCard from '../components/ui/SectionCard.astro'
+import ActionCard from '../components/ui/ActionCard.astro'
+import Deliverable from '../components/ui/Deliverable.astro'
+import IconTarget from '../components/icons/IconTarget.astro'
+import IconFlask from '../components/icons/IconFlask.astro'
+import IconStar from '../components/icons/IconStar.astro'
+import IconAlertTriangle from '../components/icons/IconAlertTriangle.astro'
+import IconCalendar from '../components/icons/IconCalendar.astro'
+import IconDatabase from '../components/icons/IconDatabase.astro'
+import IconFileText from '../components/icons/IconFileText.astro'
+import IconWorkflow from '../components/icons/IconWorkflow.astro'
+---
+
+<Main title="Goals">
+
+    <Hero title="Goals" image="/images/goals.jpeg" slot="hero">
+        <p class="hero-subtitle">Building and promoting adoption of standards for zebrafish toxicology research</p>
+    </Hero>
+
+    <section class="mission">
+        <div class="section-label">Our Mission</div>
+        <p>The Zebrafish Atlas Phenotype Project (ZAPP) is a community driven effort focused on standardizing zebrafish toxicology data and phenotypic outcome reporting. ZAPP's success depends on active participation from the zebrafish research and toxicology community to ensure that ZAPP remains fit for purpose, sustainable, and effective in improving the integration and reuse of toxicological and phenotypic data.</p>
+    </section>
+
+    <section class="aims">
+        <SectionCard title="What ZAPP Aims to Achieve" iconColor="teal">
+            <IconTarget slot="icon" />
+            {/* Scoping anchor: ensures .aims-body and ul share the same Astro scope hash, preventing styles from silently dropping on SSR hard-refresh across slot boundaries. */}
+            <div class="aims-body">
+                <ul>
+                    <li>Develop a <strong>data model</strong> and standards to report zebrafish exposure experiments and resulting phenotypes</li>
+                    <li>Create an <strong>annotation toolkit</strong> that enables consistent data annotation following the data model and standards. This annotation toolkit will allow standards adoption without prior knowledge of ontologies or data modeling.</li>
+                    <li>Build a web-based, community-curated <strong>phenotype atlas</strong> that serves as a visual reference for zebrafish phenotypes</li>
+                </ul>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="workflow">
+        <SectionCard title="ZAPP Workflow &amp; Data Pipeline" iconColor="teal">
+            <IconFlask slot="icon" />
+            <div class="workflow-diagram">
+                <img src="/images/goals-workflow.jpg" alt="ZAPP data workflow: zebrafish exposure data collection, toxicophenotype annotation using standards, submission to the Zebrafish Phenotype Atlas with FAIR data standards" />
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="deliverables">
+        <SectionCard title="Key Deliverables" subtitle="Our project focuses on three major deliverables that will transform zebrafish toxicology research" iconColor="dark">
+            <IconStar slot="icon" />
+            <div class="deliverables-body">
+
+                <Deliverable title="Data Model and Standards for Toxicological and Phenotypic data">
+                    <IconDatabase slot="icon" />
+                    {/* Scoping anchor: ensures .deliverable-body and its descendants share the same Astro scope hash, preventing styles from silently dropping on SSR hard-refresh across slot boundaries. */}
+                    <div class="deliverable-body">
+                        <p>We are creating a <a href="https://linkml.io/linkml/" target="_blank" rel="noopener noreferrer">LinkML</a>-based data model, based on existing toxicological data structures to support comprehensive representation of toxicological exposures, including time course, toxicants, concentrations, fish information, and phenotypic endpoints. The LinkML schema is developed with community input across multiple toxicology use cases and designed for use across organisms. More information about the data model can be found <a href="https://github.com/zappfish/zebrafish-toxicology-atlas-schema" target="_blank" rel="noopener noreferrer">here</a>.</p>
+                        <p>In addition, we improve standards to represent all data, including (but not limited to):</p>
+                        <ul class="callout-list">
+                            <li><a href="https://github.com/obophenotype/zebrafish-phenotype-ontology" target="_blank" rel="noopener noreferrer">The Zebrafish Phenotype Ontology</a> (ZP) — to represent zebrafish phenotypes</li>
+                            <li><a href="https://github.com/EnvironmentOntology/environmental-exposure-ontology" target="_blank" rel="noopener noreferrer">The Environmental conditions, treatments and exposures ontology</a> (ECTO) — to represent exposure and exposure description (e.g. route and regimen) terms</li>
+                        </ul>
+                    </div>
+                </Deliverable>
+
+                <Deliverable title="Annotation Toolkit for Toxicological and Phenotypic data">
+                    <IconFileText slot="icon" />
+                    <div class="deliverable-body">
+                        <p>We aim to develop a community-driven annotation toolkit aligned with the data model to support standardized data annotation for toxicological exposures and resulting phenotypes, and submission to the ZAPP Atlas.</p>
+                        <p>Tutorials and curation guidelines will be provided to ensure consistent annotation across contributors</p>
+                    </div>
+                </Deliverable>
+
+                <Deliverable title="Phenotype Atlas Web application">
+                    <IconWorkflow slot="icon" />
+                    <div class="deliverable-body">
+                        <p>We will collect images and standardized metadata of morphological phenotypes from toxicology studies using the annotation toolkit. These data will instantiate a zebrafish phenotype atlas and provide visual standards for phenotypes.</p>
+                        <p>The open source web-based phenotype atlas will support exploration and querying of exposures and phenotypes, display representative images and link to relevant external resources</p>
+                        <p>FAIR API access to the data will be provided for third-party resources</p>
+                    </div>
+                </Deliverable>
+
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="action-cards">
+        <ActionCard
+            title="Contribute Data"
+            description="Submit your zebrafish toxicology data and phenotype observations to help build the atlas."
+            href="/get-involved/"
+            linkLabel="Get Involved"
+        >
+            <IconAlertTriangle slot="icon" />
+        </ActionCard>
+        <ActionCard
+            title="Upcoming Workshops"
+            description="Join our workshops to learn about data annotation standards and contribute to the community."
+            href="/events/"
+            linkLabel="View Workshops"
+        >
+            <IconCalendar slot="icon" />
+        </ActionCard>
+    </section>
+
+</Main>
+
+<style>
+    .hero-subtitle { color: var(--color-text-white); margin: 0; opacity: 0.92; }
+
+    .section-label {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-6);
+    }
+    .section-label::before {
+        content: '';
+        display: block;
+        width: 28px;
+        height: 2px;
+        background: var(--color-accent);
+        flex-shrink: 0;
+    }
+
+    /* aims card body */
+    .aims-body ul { padding: var(--space-8) var(--space-8) var(--space-8) var(--space-12); margin-bottom: 0; }
+    .aims-body li { font-size: var(--font-size-body); line-height: var(--line-height-base); margin-bottom: var(--space-3); }
+    .aims-body li:last-child { margin-bottom: 0; }
+
+    /* workflow card body */
+    .workflow-diagram { padding: var(--space-6); background: var(--color-bg-white); }
+    .workflow-diagram img { width: 100%; height: auto; display: block; }
+
+    /* deliverables card body */
+    .deliverables-body { padding: var(--space-8) var(--space-12); }
+
+    /* deliverable slot content — scoped to .deliverable-body to avoid cross-boundary issues */
+    .deliverable-body a {
+        text-decoration: none !important;
+        color: var(--color-accent);
+        font-weight: var(--font-weight-medium);
+        transition: color 0.2s ease;
+    }
+    .deliverable-body a:hover {
+        color: var(--color-accent-hover);
+        text-decoration: underline !important;
+        text-underline-offset: 2px;
+    }
+
+    .callout-list { list-style: none; padding: 0; margin-top: var(--space-3); }
+    .callout-list li {
+        position: relative;
+        padding: var(--space-2) var(--space-4) var(--space-2) calc(var(--space-4) + 1.5rem);
+        margin-bottom: var(--space-1);
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-base);
+        background: var(--color-bg-surface);
+        border-radius: 4px;
+    }
+    .callout-list li::before {
+        content: '✓';
+        position: absolute;
+        left: var(--space-4);
+        top: var(--space-2);
+        color: var(--color-accent);
+        font-size: 1.1rem;
+        font-weight: var(--font-weight-bold);
+        line-height: var(--line-height-base);
+    }
+    .callout-list li:last-child { margin-bottom: 0; }
+
+    /* action cards grid — layout lives here, card styles live in ActionCard.astro */
+    .action-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+
+    @media (max-width: 768px) { .action-cards { grid-template-columns: 1fr; } }
+</style>
