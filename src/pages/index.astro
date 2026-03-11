@@ -55,31 +55,14 @@ import { featureItems } from '../config/features'
 
 <style>
     /* ── About section ── */
-    .about { margin-top: var(--space-12); }
-
-    .about h2 { text-align: center; margin-bottom: var(--space-6); }
+    .about h2, .features h2, .blog-preview h2 { text-align: center; }
+    .about h2 { margin-bottom: var(--space-6); }
 
     .about-body {
         padding: var(--space-8) var(--space-12);
     }
 
     .about-body p:last-child { margin-bottom: 0; }
-
-    .about-body a {
-        color: var(--color-primary);
-        text-decoration: none;
-        font-weight: var(--font-weight-bold);
-        background-image: linear-gradient(var(--color-accent), var(--color-accent));
-        background-size: 0% 2px;
-        background-repeat: no-repeat;
-        background-position: left bottom;
-        transition: background-size 0.3s ease, color 0.2s ease;
-    }
-
-    .about-body a:hover {
-        color: var(--color-accent);
-        background-size: 100% 2px;
-    }
 
     /* ── Hero CTA buttons ── */
     .hero-ctas {
@@ -92,9 +75,6 @@ import { featureItems } from '../config/features'
         flex-wrap: wrap;
     }
 
-    /* ── Features section ── */
-    .features h2 { text-align: center; }
-
     /* ── Feature cards ── */
     .feature-cards {
         display: grid;
@@ -103,8 +83,6 @@ import { featureItems } from '../config/features'
     }
 
     /* ── Blog preview ── */
-    .blog-preview h2 { text-align: center; }
-
     .blog-coming-soon {
         text-align: center;
         padding: var(--space-12) var(--space-8);
