@@ -88,7 +88,7 @@ time, mark, audio, video {
 
     /* ── White overlays — text/borders on dark backgrounds (footer) ── */
     --color-white-65:  rgba(255, 255, 255, 0.80);  /* muted text             */
-    --color-white-40:  rgba(255, 255, 255, 0.40);  /* copyright / fine print */
+    --color-white-40:  rgba(255, 255, 255, 0.65);  /* copyright / fine print */
     --color-white-30:  rgba(255, 255, 255, 0.30);  /* subtle borders         */
     --color-white-10:  rgba(255, 255, 255, 0.10);  /* hairline dividers      */
 
@@ -108,21 +108,22 @@ time, mark, audio, video {
     --font-weight-normal: 400;
     --font-weight-bold:   700;
 
-    --font-size-sm:   0.875rem;  /* 14 px — fine print, captions         */
-    --font-size-base: 1rem;      /* 16 px — UI labels, nav links         */
-    --font-size-body: 1.125rem;  /* 18 px — body copy, paragraphs        */
-    --font-size-h4:   1.2rem;    /* ~19.2 px — small section headings    */
-    --font-size-h3:   1.25rem;   /* 20 px — subsection headings          */
-    --font-size-h2:   1.45rem;   /* ~23.2 px — section headings          */
-    --font-size-h1:   1.75rem;   /* 28 px — page titles                  */
+    --font-size-sm:      0.75rem;   /* 12 px — fine print, captions         */
+    --font-size-base:    0.875rem;  /* 14 px — UI labels, nav links         */
+    --font-size-body:    1.125rem;  /* 18 px — body copy, paragraphs        */
+    --font-size-h4:      1.05rem;   /* ~17 px — small section headings      */
+    --font-size-h3:      1.125rem;  /* 18 px — subsection headings          */
+    --font-size-h2:      1.3rem;    /* ~21 px — section headings            */
+    --font-size-h1:      1.6rem;    /* ~26 px — page titles                 */
+    --font-size-display: 2rem;      /* 32 px — hero headings                */
 
     --line-height-tight: 1.2;    /* headings */
-    --line-height-base:  1.8;    /* body copy */
+    --line-height-base:  1.7;    /* body copy */
 
-    --heading-margin-bottom:  var(--space-8);   /* space below headings  (was 6) */
-    --body-margin-bottom:     var(--space-4);   /* space below p and ul  */
+    --heading-margin-bottom:  var(--space-6);   /* space below headings  */
+    --body-margin-bottom:     var(--space-2);   /* space below p and ul  */
     --list-padding-left:      var(--space-8);   /* list indentation      */
-    --section-margin-bottom:  var(--space-12);  /* space between sections*/
+    --section-margin-bottom:  var(--space-8);   /* space between sections*/
 }
 
 
@@ -143,7 +144,8 @@ strong {
 }
 
 p,
-summary {
+summary,
+li {
     font-size: var(--font-size-body);
     line-height: var(--line-height-base);
 }

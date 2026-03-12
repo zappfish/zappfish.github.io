@@ -1,0 +1,109 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import CommunityRoles from '../components/community/CommunityRoles.astro'
+import CommunityWho from '../components/community/CommunityWho.astro'
+import SABMembers from '../components/community/SABMembers.astro'
+---
+
+<Main title="Community">
+
+    <Hero title="Community" image="/images/goals.jpeg" slot="hero">
+        <p class="hero-subtitle">Join a global network of researchers, educators, and innovators advancing science through zebrafish research</p>
+    </Hero>
+
+    <section class="intro">
+        <div class="section-label">Community</div>
+        <p>The Community plays an integral role in the success of this project.</p>
+    </section>
+
+    <section class="roles">
+        <CommunityRoles />
+    </section>
+
+    <section class="who-is">
+        <CommunityWho />
+    </section>
+
+    <section class="sab">
+        <SABMembers />
+    </section>
+
+    <section class="upcoming">
+        <div class="upcoming-item">
+            <span class="upcoming-label">Upcoming</span>
+            <span class="upcoming-sep" aria-hidden="true">&rsaquo;</span>
+            <span class="upcoming-title">Governance</span>
+        </div>
+        <div class="upcoming-item">
+            <span class="upcoming-label">Upcoming</span>
+            <span class="upcoming-sep" aria-hidden="true">&rsaquo;</span>
+            <span class="upcoming-title">Submit data</span>
+        </div>
+    </section>
+
+</Main>
+
+<style>
+    .hero-subtitle { color: var(--color-text-white); margin: 0; opacity: 0.92; }
+
+    /* ── Section label ── */
+    .section-label {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-3);
+    }
+    .section-label::before {
+        content: '';
+        display: block;
+        width: 28px;
+        height: 2px;
+        background: var(--color-accent);
+        flex-shrink: 0;
+    }
+
+    /* ── Upcoming ── */
+    .upcoming {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        border-top: 2px solid var(--color-border);
+        padding-top: var(--space-6);
+    }
+
+    .upcoming-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        font-size: var(--font-size-h3);
+        background: var(--color-bg-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        padding: var(--space-4) var(--space-6);
+    }
+
+    .upcoming-label {
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-white);
+        text-transform: uppercase;
+        font-size: var(--font-size-sm);
+        letter-spacing: 0.05em;
+        background: var(--color-accent);
+        padding: var(--space-1) var(--space-3);
+        border-radius: 4px;
+    }
+
+    .upcoming-sep { color: var(--color-accent); font-size: 1.4rem; }
+
+    .upcoming-title {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-h3);
+    }
+</style>
