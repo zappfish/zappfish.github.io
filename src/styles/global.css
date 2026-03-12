@@ -118,7 +118,7 @@ time, mark, audio, video {
     --font-size-display: 2rem;      /* 32 px — hero headings                */
 
     --line-height-tight: 1.2;    /* headings */
-    --line-height-base:  1.6;    /* body copy */
+    --line-height-base:  1.7;    /* body copy */
 
     --heading-margin-bottom:  var(--space-6);   /* space below headings  */
     --body-margin-bottom:     var(--space-2);   /* space below p and ul  */
@@ -144,7 +144,8 @@ strong {
 }
 
 p,
-summary {
+summary,
+li {
     font-size: var(--font-size-body);
     line-height: var(--line-height-base);
 }
