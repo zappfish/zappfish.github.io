@@ -9,8 +9,8 @@ const { title, image, imageLeft, imageRight } = Astro.props
 ---
 <div class:list={['hero', { 'hero--image': !!image, 'hero--fish': !!imageLeft || !!imageRight }]}
      style={image ? `background-image: url('${image}')` : undefined}>
-    {imageLeft && <img src={imageLeft} alt="" aria-hidden="true" class="hero-fish hero-fish--left" style="position:absolute" />}
-    {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" style="position:absolute" />}
+    {imageLeft  && <img src={imageLeft}  alt="" aria-hidden="true" class="hero-fish hero-fish--left" />}
+    {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" />}
     <div class="hero-inner">
         <h1>{title}</h1>
         <slot />
@@ -45,11 +45,15 @@ const { title, image, imageLeft, imageRight } = Astro.props
             linear-gradient(to bottom, rgba(70, 90, 110, 0.35), transparent 30%, transparent 70%, rgba(70, 90, 110, 0.25));
     }
 
-    /* White h1 on any dark/colored hero background */
+    /* White, larger h1 on any colored hero background */
     .hero--image h1,
-    .hero--fish h1 { color: var(--color-text-white); }
+    .hero--fish h1 {
+        color: var(--color-text-white);
+        font-size: var(--font-size-display);
+        margin-bottom: var(--space-3);
+    }
 
-    /* Flanking fish images on left/right */
+    /* Fish images — both on the right, both facing right */
     .hero-fish {
         position: absolute;
         top: 50%;
@@ -62,8 +66,8 @@ const { title, image, imageLeft, imageRight } = Astro.props
         mix-blend-mode: multiply;
     }
 
-    .hero-fish--left  { left: 4%; }
-    .hero-fish--right { right: 4%; }
+    .hero-fish--left  { right: 26%; }
+    .hero-fish--right { right: 3%; transform: translateY(-50%) scaleX(-1); }
 
     /* Fish layout — blue-gray overlay with edge vignette */
     .hero--fish {
@@ -82,13 +86,10 @@ const { title, image, imageLeft, imageRight } = Astro.props
     }
 
     .hero--image .hero-inner {
-        text-align: center;
         max-width: 68%;
         margin: 0;
     }
 
-    .hero--image h1,
-    .hero--fish h1  { font-size: var(--font-size-display); margin-bottom: var(--space-3); }
     .hero--image .hero-subtitle { font-size: var(--font-size-h3); }
 
     h1 { color: var(--color-primary); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8); }
