@@ -4,6 +4,9 @@ import Hero from '../layouts/Hero.astro'
 import CommunityRoles from '../components/community/CommunityRoles.astro'
 import CommunityWho from '../components/community/CommunityWho.astro'
 import SABMembers from '../components/community/SABMembers.astro'
+import ActionCard from '../components/ui/ActionCard.astro'
+import IconShield from '../components/icons/IconShield.astro'
+import IconDatabase from '../components/icons/IconDatabase.astro'
 ---
 
 <Main title="Community">
@@ -29,17 +32,13 @@ import SABMembers from '../components/community/SABMembers.astro'
         <SABMembers />
     </section>
 
-    <section class="upcoming">
-        <div class="upcoming-item">
-            <span class="upcoming-label">Upcoming</span>
-            <span class="upcoming-sep" aria-hidden="true">&rsaquo;</span>
-            <span class="upcoming-title">Governance</span>
-        </div>
-        <div class="upcoming-item">
-            <span class="upcoming-label">Upcoming</span>
-            <span class="upcoming-sep" aria-hidden="true">&rsaquo;</span>
-            <span class="upcoming-title">Submit data</span>
-        </div>
+    <section class="action-cards">
+        <ActionCard title="Governance" description="Coming Soon" href="#">
+            <IconShield slot="icon" />
+        </ActionCard>
+        <ActionCard title="Submit Data" description="Coming Soon" href="#">
+            <IconDatabase slot="icon" />
+        </ActionCard>
     </section>
 
 </Main>
@@ -47,42 +46,7 @@ import SABMembers from '../components/community/SABMembers.astro'
 <style>
     .hero-subtitle { color: var(--color-text-white); margin: 0; opacity: 0.92; }
 
-    /* ── Upcoming ── */
-    .upcoming {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-3);
-        border-top: 2px solid var(--color-border);
-        padding-top: var(--space-6);
-    }
+    .action-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
 
-    .upcoming-item {
-        display: flex;
-        align-items: center;
-        gap: var(--space-4);
-        font-size: var(--font-size-h3);
-        background: var(--color-bg-surface);
-        border: 1px solid var(--color-border);
-        border-radius: 6px;
-        padding: var(--space-4) var(--space-6);
-    }
-
-    .upcoming-label {
-        font-weight: var(--font-weight-bold);
-        color: var(--color-text-white);
-        text-transform: uppercase;
-        font-size: var(--font-size-sm);
-        letter-spacing: 0.05em;
-        background: var(--color-accent);
-        padding: var(--space-1) var(--space-3);
-        border-radius: 4px;
-    }
-
-    .upcoming-sep { color: var(--color-accent); font-size: 1.4rem; }
-
-    .upcoming-title {
-        color: var(--color-primary);
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-h3);
-    }
+    @media (max-width: 768px) { .action-cards { grid-template-columns: 1fr; } }
 </style>

@@ -3,7 +3,7 @@ interface Props {
     title: string
     description: string
     href: string
-    linkLabel: string
+    linkLabel?: string
 }
 const { title, description, href, linkLabel } = Astro.props
 ---
@@ -14,7 +14,7 @@ const { title, description, href, linkLabel } = Astro.props
     <div>
         <h3>{title}</h3>
         <p>{description}</p>
-        <a href={href} class="action-link">{linkLabel} &rsaquo;</a>
+        {linkLabel && <a href={href} class="action-link">{linkLabel} &rsaquo;</a>}
     </div>
 </div>
 
