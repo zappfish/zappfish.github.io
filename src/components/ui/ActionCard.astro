@@ -1,0 +1,47 @@
+---
+interface Props {
+    title: string
+    description: string
+    href: string
+    linkLabel: string
+}
+const { title, description, href, linkLabel } = Astro.props
+---
+<div class="action-card">
+    <div class="action-card-icon">
+        <slot name="icon" />
+    </div>
+    <div>
+        <h3>{title}</h3>
+        <p>{description}</p>
+        <a href={href} class="action-link">{linkLabel} &rsaquo;</a>
+    </div>
+</div>
+
+<style>
+    .action-card {
+        background: var(--color-bg-surface);
+        border-radius: 10px;
+        padding: var(--space-8);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+        display: flex;
+        gap: var(--space-4);
+        align-items: flex-start;
+    }
+    .action-card-icon {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: var(--color-bg-base);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-primary);
+    }
+    .action-card-icon :global(svg) { width: 18px; height: 18px; }
+    .action-card h3 { font-size: var(--font-size-h3); margin-bottom: var(--space-2); }
+    .action-card p { color: var(--color-text-muted); margin-bottom: var(--space-4); line-height: var(--line-height-base); }
+    .action-link { font-weight: var(--font-weight-bold); color: var(--color-accent); text-decoration: none; }
+    .action-link:hover { text-decoration: underline; }
+</style>

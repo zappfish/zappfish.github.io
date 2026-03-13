@@ -1,41 +1,51 @@
 ---
 import { getCollection } from "astro:content";
-import MainLayout from "../layouts/Main.astro";
-import Person from "../components/Person.astro";
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import Person from '../components/Person.astro'
 
-const pis = await getCollection("pis")
+const pis  = await getCollection("pis")
 const team = await getCollection("team")
-
+const everyone = [...pis, ...team]
 ---
 
-<MainLayout frontmatter={{ title: "Meet the team" }}>
-    <section>
-    {pis.map(person => (
-    <div class="person">
-        <Person person={person} />
-    </div>
-    ))}
+<Main title="Meet the Team">
+
+    <Hero title="Meet the Team" image="/images/zebrafish-hero.jpg" slot="hero">
+        <p class="hero-subtitle">The people behind ZAPP — researchers and developers advancing zebrafish toxicology standards</p>
+    </Hero>
+
+    <section class="intro">
+        <div class="section-label">Our Team</div>
+        <p>ZAPP is driven by a dedicated team of researchers, developers, and community coordinators committed to building open standards for zebrafish toxicology data.</p>
     </section>
 
-    <section>
-    {team.map(person => (
-    <div class="person">
-        <Person person={person} />
-    </div>
-    ))}
-    </section>
-</MainLayout>
+    {everyone.length > 0 && (
+        <section class="team">
+            <div class="team-grid">
+                {everyone.map(person => (
+                    <Person person={person} />
+                ))}
+            </div>
+        </section>
+    )}
+
+</Main>
 
 <style>
-    .person {
-        padding: 10px;
-        flex-basis: 33%;
-        text-align: center;
+    .hero-subtitle { color: var(--color-text-white); margin: 0; opacity: 0.92; }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-6);
     }
 
-    section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
+    @media (max-width: 1024px) {
+        .team-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+        .team-grid { grid-template-columns: repeat(2, 1fr); }
     }
 </style>

@@ -3,6 +3,7 @@ import Main from '../layouts/Main.astro'
 import Hero from '../layouts/Hero.astro'
 import HeroCTAItem from '../components/ui/HeroCTAItem.astro'
 import FeatureCard from '../components/ui/FeatureCard.astro'
+import SectionCard from '../components/ui/SectionCard.astro'
 import { featureItems } from '../config/features'
 ---
 
@@ -18,10 +19,12 @@ import { featureItems } from '../config/features'
 
     <section class="about">
         <h2>About ZAPP</h2>
-        <div class="about-card">
-            <p>Zebrafish as an animal model have greatly advanced toxicology and environmental studies, however, the lack of standards to report toxicological exposure and phenotypic outcomes impedes comparative studies.</p>
-            <p>Zebrafish Toxicology Phenotype Atlas Project, known as ZAPP or Zebrafish Atlas Phenotype Project, is a community-driven initiative whose mission is to develop and promote the adoption of standards for describing zebrafish phenotypes, including but not limited to those resulting from toxicological exposures. As part of this effort, the project will create a phenotype atlas of annotated images and build tools that support standardized annotation. ZAPP engages stakeholders, including zebrafish researchers and the toxicology community, to help shape these standards and ensure their relevance and long-term sustainability.</p>
-        </div>
+        <SectionCard>
+            <div class="about-body">
+                <p>Zebrafish as an animal model have greatly advanced toxicology and environmental studies, however, the lack of standards to report toxicological exposure and phenotypic outcomes impedes comparative studies.</p>
+                <p>Zebrafish Toxicology Phenotype Atlas Project, known as ZAPP or Zebrafish Atlas Phenotype Project, is a community-driven initiative whose mission is to develop and promote the adoption of standards for describing zebrafish phenotypes, including but not limited to those resulting from toxicological exposures. As part of this effort, the project will create a phenotype atlas of annotated images and build tools that support standardized annotation. ZAPP engages stakeholders, including zebrafish researchers and the toxicology community, to help shape these standards and ensure their relevance and long-term sustainability.</p>
+            </div>
+        </SectionCard>
     </section>
 
     <section class="features">
@@ -52,34 +55,13 @@ import { featureItems } from '../config/features'
 
 <style>
     /* ── About section ── */
-    .about { margin-top: var(--space-12); }
+    .about h2, .features h2, .blog-preview h2 { text-align: center; }
 
-    .about h2 { text-align: center; margin-bottom: var(--space-6); }
-
-    .about-card {
-        background: var(--color-bg-surface);
-        border-radius: 10px;
+    .about-body {
         padding: var(--space-8) var(--space-12);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
     }
 
-    .about-card p:last-child { margin-bottom: 0; }
-
-    .about-card a {
-        color: var(--color-primary);
-        text-decoration: none;
-        font-weight: var(--font-weight-bold);
-        background-image: linear-gradient(var(--color-accent), var(--color-accent));
-        background-size: 0% 2px;
-        background-repeat: no-repeat;
-        background-position: left bottom;
-        transition: background-size 0.3s ease, color 0.2s ease;
-    }
-
-    .about-card a:hover {
-        color: var(--color-accent);
-        background-size: 100% 2px;
-    }
+    .about-body p:last-child { margin-bottom: 0; }
 
     /* ── Hero CTA buttons ── */
     .hero-ctas {
@@ -92,10 +74,8 @@ import { featureItems } from '../config/features'
         flex-wrap: wrap;
     }
 
-    /* ── Features section ── */
-    .features h2 { text-align: center; }
-
     /* ── Feature cards ── */
+    .features { padding-bottom: var(--space-6); }
     .feature-cards {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -103,8 +83,6 @@ import { featureItems } from '../config/features'
     }
 
     /* ── Blog preview ── */
-    .blog-preview h2 { text-align: center; }
-
     .blog-coming-soon {
         text-align: center;
         padding: var(--space-12) var(--space-8);
