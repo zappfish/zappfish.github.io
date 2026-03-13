@@ -1,5 +1,6 @@
 ---
 import { navItems } from "../config/nav"
+import NavDropdown from "../components/NavDropdown.astro"
 const sections = navItems
 ---
 <!-- transition:persist keeps nav mounted across navigations — no flicker.
@@ -20,8 +21,10 @@ const sections = navItems
 
         <nav id="main-nav" aria-label="Site navigation">
             <ul>
-            {sections.map(({ label, path }) =>
-                <li><a href={path}>{label}</a></li>
+            {sections.map((item) =>
+                'children' in item
+                    ? <NavDropdown label={item.label} items={item.children!} />
+                    : <li><a href={item.path}>{item.label}</a></li>
             )}
             </ul>
         </nav>
@@ -29,17 +32,14 @@ const sections = navItems
 </header>
 
 <script>
-    function updateActiveLink() {
+    const updateActiveLink = () => {
         const currentPath = window.location.pathname
-        document.querySelectorAll('#main-nav li').forEach(li => {
+        document.querySelectorAll('#main-nav li:not(.nav-dropdown)').forEach(li => {
             const a = li.querySelector('a')
             const isActive = a?.pathname === currentPath
             li.classList.toggle('active', isActive)
-            if (isActive) {
-                a?.setAttribute('aria-current', 'page')
-            } else {
-                a?.removeAttribute('aria-current')
-            }
+            if (isActive) a?.setAttribute('aria-current', 'page')
+            else          a?.removeAttribute('aria-current')
         })
     }
 
@@ -55,17 +55,25 @@ const sections = navItems
         })
     }
 
-    // Close menu when clicking a nav link or outside the nav
+    // Close mobile nav on outside click or leaf-link click
     document.addEventListener('click', ({ target }) => {
         const el = target as HTMLElement
-        if ((nav?.contains(el) && el.closest('a')) || (!nav?.contains(el) && !hamburger?.contains(el))) {
+        const inNav = nav?.contains(el)
+        const inHamburger = hamburger?.contains(el)
+
+        if (!inNav && !inHamburger) {
+            nav?.classList.remove('open')
+            hamburger?.classList.remove('open')
+            hamburger?.setAttribute('aria-expanded', 'false')
+        }
+
+        if (inNav && el.closest('a') && !el.closest('.nav-dropdown')) {
             nav?.classList.remove('open')
             hamburger?.classList.remove('open')
             hamburger?.setAttribute('aria-expanded', 'false')
         }
     })
 
-    // astro:page-load fires on both initial load and every client-side navigation.
     document.addEventListener('astro:page-load', updateActiveLink)
 </script>
 
@@ -99,13 +107,11 @@ const sections = navItems
 
     nav ul li.active a { color: var(--color-primary); font-weight: var(--font-weight-bold); }
 
-    /* ── Hamburger button — hidden on desktop ── */
+    /* ── Hamburger — hidden on desktop ── */
     .hamburger {
         display: none;
         flex-direction: column;
         justify-content: space-between;
-        /* Accessibility — 44×44px touch target (WCAG 2.5.5); padding fills the area,
-           content-box stays 24×18px so the bar visuals are unchanged */
         width: 44px;
         height: 44px;
         padding: 13px 10px;
@@ -124,7 +130,6 @@ const sections = navItems
         transition: transform 0.2s, opacity 0.2s;
     }
 
-    /* Animate to × when open */
     .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -160,6 +165,6 @@ const sections = navItems
             border-bottom: 1px solid var(--color-border);
         }
 
-        #main-nav ul li:last-child a { border-bottom: none; }
+        #main-nav ul li:last-child > a { border-bottom: none; }
     }
 </style>
