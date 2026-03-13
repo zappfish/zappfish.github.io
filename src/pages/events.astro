@@ -11,22 +11,20 @@ const events = eventsUnsorted.sort((a, b) => {
     return dateA.getTime() - dateB.getTime();
 });
 
-// Function to create a URL-friendly ID from the event title
-function createEventId(title: string): string {
-    return title.toLowerCase()
+// Create a URL-friendly ID from the event title
+const createEventId = (title: string): string =>
+    title.toLowerCase()
         .replace(/[^\w\s-]/g, '')
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-')
-        .trim();
-}
+        .trim()
 
-// Function to check if an event date is in the past
-function isPastEvent(dateString: string): boolean {
-    const eventDate = new Date(dateString);
-    const today = new Date();
-    // Set today to start of day for fair comparison
-    today.setHours(0, 0, 0, 0);
-    return eventDate < today;
+// Check if an event date is in the past
+const isPastEvent = (dateString: string): boolean => {
+    const eventDate = new Date(dateString)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    return eventDate < today
 }
 
 ---
