@@ -25,16 +25,10 @@ const { label, items } = Astro.props
             d.querySelector('button')?.setAttribute('aria-expanded', 'false')
         })
 
-    const initDropdowns = () => {
-        const currentPath = window.location.pathname
-
+    // Attach click listeners once per element
+    const attachListeners = () => {
         document.querySelectorAll<HTMLElement>('.nav-dropdown:not([data-dd-init])').forEach(el => {
             el.dataset.ddInit = 'true'
-
-            const isActive = [...el.querySelectorAll<HTMLAnchorElement>('.dropdown a')]
-                .some(a => a.pathname === currentPath)
-            el.classList.toggle('active', isActive)
-
             el.querySelector('button')?.addEventListener('click', (e) => {
                 e.stopPropagation()
                 const opening = !el.classList.contains('open')
@@ -45,11 +39,22 @@ const { label, items } = Astro.props
         })
     }
 
+    // Re-run on every navigation to keep active state current
+    const updateActive = () => {
+        const currentPath = window.location.pathname
+        document.querySelectorAll<HTMLElement>('.nav-dropdown').forEach(el => {
+            const isActive = [...el.querySelectorAll<HTMLAnchorElement>('.dropdown a')]
+                .some(a => a.getAttribute('href') !== '#' && a.pathname === currentPath)
+            el.classList.toggle('active', isActive)
+        })
+    }
+
     document.addEventListener('click', ({ target }) => {
-        if (!(target as HTMLElement).closest('.nav-dropdown')) closeAll()
+        const el = target as HTMLElement
+        if (!el.closest('.nav-dropdown') || el.closest('.dropdown a')) closeAll()
     })
     document.addEventListener('keydown', ({ key }) => { if (key === 'Escape') closeAll() })
-    document.addEventListener('astro:page-load', initDropdowns)
+    document.addEventListener('astro:page-load', () => { attachListeners(); updateActive() })
 </script>
 
 <style>
@@ -69,8 +74,7 @@ const { label, items } = Astro.props
         transition: color 0.15s;
     }
 
-    .nav-dropdown > button:hover,
-    .nav-dropdown.open  > button { color: var(--color-accent); }
+    .nav-dropdown > button:hover { color: var(--color-accent); }
     .nav-dropdown.active > button { color: var(--color-primary); font-weight: var(--font-weight-bold); }
 
     .chevron { flex-shrink: 0; transition: transform 0.2s ease; }

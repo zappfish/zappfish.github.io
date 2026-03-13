@@ -4,15 +4,16 @@ export type NavItem =
     | { label: string; path?: never; children: { label: string; path: string }[] }
 
 export const navItems: NavItem[] = [
-    { label: "Home",          path: "/" },
-    { label: "Goals",         path: "/goals/" },
-    { label: "Community",     path: "/community/" },
-    { label: "Meet the Team", path: "/team/" },
-    { label: "Get Involved",  path: "/get-involved/" },
-    { label: "Events",        path: "/events/" },
-    { label: "FAQ",           path: "/faqs/" },
-    { label: "Sample", children: [
-        { label: "Item 1", path: "/" },
-        { label: "Item 2", path: "/" },
+    { label: "Home",        path: "/" },
+    { label: "About",       children: [
+        { label: "Goals",   path: "/goals/" },
+        { label: "SAB",     path: "#" },
+        { label: "Team",    path: "/team/" },
     ]},
+    { label: "Get Involved", children: [
+        { label: "Community",   path: "/community/" },
+        { label: "Contact Us",  path: "#" },
+    ]},
+    { label: "FAQ",         path: "/faqs/" },
+    { label: "Resources",   path: "#" },
 ]
