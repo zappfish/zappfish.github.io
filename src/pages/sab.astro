@@ -1,0 +1,19 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import SABMembers from '../components/community/SABMembers.astro'
+---
+
+<Main title="Scientific Advisory Board">
+
+    <Hero title="Scientific Advisory Board" image="/images/zebrafish-hero.jpg" slot="hero" />
+
+    <section class="intro">
+        <div class="section-label">Scientific Advisory Board</div>
+    </section>
+
+    <section class="sab">
+        <SABMembers />
+    </section>
+
+</Main>

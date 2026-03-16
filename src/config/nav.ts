@@ -7,7 +7,7 @@ export const navItems: NavItem[] = [
     { label: "Home",        path: "/" },
     { label: "About",       children: [
         { label: "Goals",   path: "/goals/" },
-        { label: "SAB",     path: "#" },
+        { label: "SAB",     path: "/sab/" },
         { label: "Team",    path: "/team/" },
     ]},
     { label: "Get Involved", children: [

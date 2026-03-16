@@ -83,7 +83,9 @@ time, mark, audio, video {
     --color-text-white:    #ffffff;   /* text on dark backgrounds             */
     --color-border:        #e0ddd6;   /* dividers, card borders               */
 
-    /* ── Hero image overlay ── */
+    /* ── Hero ── */
+    --color-hero-image-bg: #5b8fa3;                   /* solid bg for image hero     */
+    --color-hero-default-bg: #dde4eb;                 /* light blue-gray default hero */
     --color-hero-overlay:  rgba(20, 60, 120, 0.20);  /* deep blue overlay over hero */
 
     /* ── White overlays — text/borders on dark backgrounds (footer) ── */
@@ -97,8 +99,10 @@ time, mark, audio, video {
     --space-2:   8px;
     --space-3:  12px;
     --space-4:  16px;
+    --space-5:  20px;
     --space-6:  24px;
     --space-8:  32px;
+    --space-10: 40px;
     --space-12: 48px;
     --space-16: 64px;
 
