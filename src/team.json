@@ -19,30 +19,6 @@
   ],
 
   "team": [
-    { 
-      "id": "patrick-golden",
-      "name": "Patrick Golden",
-      "image": "./images/team/patrick-golden.jpg",
-      "project_role": null,
-      "institution": "University of North Carolina at Chapel Hill",
-      "institution_role": "Scientific Software Engineer"
-     },
-      { 
-      "id": "meesiing-ngu",
-      "name": "MeeSiing Ngu",
-      "image": "./images/team/meesiing-ngu.png",
-      "project_role": null,
-      "institution": "University of North Carolina at Chapel Hill",
-      "institution_role": "Biocurator"
-     },
-     { 
-      "id": "melissa-haendel",
-      "name": "Melissa Haendel",
-      "image": "./images/team/melissa-haendel.jpg",
-      "project_role": null,
-      "institution": "University of North Carolina at Chapel Hill",
-      "institution_role": "Professor"
-     },
     {
       "id": "aaron-odell",
       "name": "Aaron Odell",
@@ -60,6 +36,14 @@
       "institution_role": "Associate Professor"
     },
     {
+      "id": "divya-varun",
+      "name": "Divya Varun",
+      "image": "./images/team/divya-varun.jpg",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "UI Developer"
+    },
+    {
       "id": "jonathan-hamm",
       "name": "Jonathan Hamm",
       "image": "./images/team/jonathan-hamm.jpg",
@@ -74,15 +58,39 @@
       "project_role": null,
       "institution": "University of North Carolina at Chapel Hill",
       "institution_role": "Scientific Software Engineer"
-     },
-    { 
+    },
+    {
+      "id": "meesiing-ngu",
+      "name": "MeeSiing Ngu",
+      "image": "./images/team/meesiing-ngu.png",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Biocurator"
+    },
+    {
+      "id": "melissa-haendel",
+      "name": "Melissa Haendel",
+      "image": "./images/team/melissa-haendel.jpg",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Professor"
+    },
+    {
+      "id": "patrick-golden",
+      "name": "Patrick Golden",
+      "image": "./images/team/patrick-golden.jpg",
+      "project_role": null,
+      "institution": "University of North Carolina at Chapel Hill",
+      "institution_role": "Scientific Software Engineer"
+    },
+    {
       "id": "raeden-gray",
       "name": "Raéden Gray",
       "image": "./images/team/raeden-gray.jpg",
       "project_role": null,
       "institution": "University of Colorado Anschutz Medical Campus",
       "institution_role": "Post-Doctoral Fellow"
-     },
+    },
     {
       "id": "sarah-gehrke",
       "name": "Sarah Gehrke",
@@ -90,14 +98,6 @@
       "project_role": null,
       "institution": "University of North Carolina at Chapel Hill",
       "institution_role": "Project Manager"
-    },
-     {
-      "id": "divya-varun",
-      "name": "Divya Varun",
-      "image": "./images/team/divya-varun.jpg",
-      "project_role": null,
-      "institution": "University of North Carolina at Chapel Hill",
-      "institution_role": "UI Developer"
     }
   ]
 }
