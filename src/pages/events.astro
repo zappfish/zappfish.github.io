@@ -1,113 +1,278 @@
 ---
-import { getCollection, render } from "astro:content";
-import MainLayout from "../layouts/Main.astro";
+import { getCollection, render } from "astro:content"
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
 
 const eventsUnsorted = await getCollection("events")
 
-// Sort events by date (earliest first)
-const events = eventsUnsorted.sort((a, b) => {
-    const dateA = new Date(a.data.date);
-    const dateB = new Date(b.data.date);
-    return dateA.getTime() - dateB.getTime();
-});
+const today = new Date()
+today.setHours(0, 0, 0, 0)
 
-// Create a URL-friendly ID from the event title
-const createEventId = (title: string): string =>
-    title.toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim()
+const events = eventsUnsorted.sort((a, b) =>
+    new Date(a.data.date).getTime() - new Date(b.data.date).getTime()
+)
 
-// Check if an event date is in the past
-const isPastEvent = (dateString: string): boolean => {
-    const eventDate = new Date(dateString)
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    return eventDate < today
-}
-
+const upcoming = events.filter(e => new Date(e.data.date) >= today)
+const past     = [...events].filter(e => new Date(e.data.date) < today).reverse()
 ---
 
-<MainLayout frontmatter={{ title: "Events" }}>
-    <nav class="events-navigation">
-        <h2>Quick Navigation</h2>
-        <ul>
-            {events.map(entry => {
-                const eventId = createEventId(entry.data.title);
-                return (
-                    <li>
-                        <a href={`#${eventId}`}>{entry.data.title}</a>
-                    </li>
-                );
-            })}
-        </ul>
-    </nav>
+<Main title="Events">
 
-    {events.map(async entry => {
-        const { Content } = await render(entry)
-        const eventId = createEventId(entry.data.title);
-        const isPast = isPastEvent(entry.data.date);
+    <Hero title="Events" image="/images/zebrafish-hero.jpg" slot="hero">
+        <p class="hero-subtitle">Community workshops and scientific meetings advancing zebrafish toxicology research</p>
+    </Hero>
 
-        return (
-        <section id={eventId} class={`event-section ${isPast ? 'past-event' : 'upcoming-event'}`}>
-            <h2>{entry.data.title}</h2>
-            {!isPast && <p><strong>Day: </strong>{entry.data.date}</p>}
-            {!isPast && <p><strong>Time: </strong>{entry.data.time}</p>}
-            {!isPast && <p><strong>Location: </strong>{entry.data.location}</p>}
-            <p><strong>Topic: </strong>{entry.data.topic}</p>
-            {!isPast && <p><strong>Sign up for this event <a href={entry.data.signup}>here</a></strong></p>}
-            <Content />
-        </section>
-        )
-    })}
-</MainLayout>
+    <section class="intro">
+        <div class="section-label">Workshops &amp; Meetings</div>
+    </section>
+
+    <section class="events">
+        <div class="tab-bar" role="tablist">
+            <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="upcoming">Upcoming Events</button>
+            <button class="tab-btn"        role="tab" aria-selected="false" data-tab="past">Past Events</button>
+        </div>
+
+        <div class="tab-panel" id="tab-upcoming">
+            {upcoming.length === 0
+                ? <p class="empty">No upcoming events at this time. Check back soon!</p>
+                : await Promise.all(upcoming.map(async entry => {
+                    const { Content } = await render(entry)
+                    return (
+                        <article class="event-card">
+                            <div class="event-header">
+                                <span class="event-badge upcoming">Upcoming</span>
+                                <span class="event-date">{entry.data.date}</span>
+                            </div>
+                            <h2 class="event-title">{entry.data.title}</h2>
+                            <div class="event-topic">
+                                <span class="topic-tag">{entry.data.topic}</span>
+                            </div>
+                            <div class="event-meta-row">
+                                <span class="meta-item">{entry.data.time}</span>
+                                <span class="meta-divider" aria-hidden="true" />
+                                <span class="meta-item">{entry.data.location}</span>
+                            </div>
+                            {entry.data.signup && entry.data.signup !== 'Closed' &&
+                                <a class="signup-btn" href={entry.data.signup}>Sign Up</a>
+                            }
+                            <div class="event-content"><Content /></div>
+                        </article>
+                    )
+                }))
+            }
+        </div>
+
+        <div class="tab-panel hidden" id="tab-past">
+            {past.length === 0
+                ? <p class="empty">No past events.</p>
+                : await Promise.all(past.map(async entry => {
+                    const { Content } = await render(entry)
+                    return (
+                        <article class="event-card past">
+                            <div class="event-header">
+                                <span class="event-badge past-badge">Past</span>
+                                <span class="event-date">{entry.data.date}</span>
+                            </div>
+                            <h2 class="event-title">{entry.data.title}</h2>
+                            <div class="event-topic">
+                                <span class="topic-tag">{entry.data.topic}</span>
+                            </div>
+                            <div class="event-content"><Content /></div>
+                        </article>
+                    )
+                }))
+            }
+        </div>
+    </section>
+
+</Main>
+
+<script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.tab-btn')
+    const panels  = document.querySelectorAll<HTMLElement>('.tab-panel')
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.dataset.tab
+            buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
+            panels.forEach(p  => p.classList.add('hidden'))
+            btn.classList.add('active')
+            btn.setAttribute('aria-selected', 'true')
+            document.getElementById(`tab-${target}`)?.classList.remove('hidden')
+        })
+    })
+</script>
 
 <style>
-    .events-navigation {
-        background-color: #f5f5f5;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-    }
-
-    .events-navigation h2 {
-        margin-top: 0;
-        font-size: 1.25rem;
-        color: #333;
-    }
-
-    .events-navigation ul {
-        list-style: none;
-        padding: 0;
+    .hero-subtitle {
+        color: var(--color-text-white);
+        opacity: 0.92;
         margin: 0;
+        font-size: var(--font-size-body);
     }
 
-    .events-navigation li {
-        margin: 0.5rem 0;
+    /* ── Tabs ── */
+    .tab-bar {
+        display: flex;
+        gap: var(--space-2);
+        margin-bottom: var(--space-8);
+        border-bottom: 2px solid var(--color-border);
+        padding-bottom: 0;
     }
 
-    .events-navigation a {
-        color: #0066cc;
+    .tab-btn {
+        padding: var(--space-3) var(--space-6);
+        font: inherit;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-muted);
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        cursor: pointer;
+        transition: color 0.15s, border-color 0.15s;
+    }
+
+    .tab-btn:hover { color: var(--color-accent); }
+
+    .tab-btn.active {
+        color: var(--color-primary);
+        border-bottom-color: var(--color-accent);
+    }
+
+    .tab-panel.hidden { display: none; }
+
+    /* ── Event card ── */
+    .event-card {
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        padding: var(--space-6) var(--space-8);
+        margin-bottom: var(--space-6);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .event-card.past { background: var(--color-bg-surface); }
+
+    .event-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+
+    .event-badge {
+        display: inline-block;
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 2px var(--space-3);
+        border-radius: 4px;
+    }
+
+    .event-badge.upcoming {
+        background: var(--color-accent);
+        color: var(--color-text-white);
+    }
+
+    .event-badge.past-badge {
+        background: var(--color-bg-light);
+        color: var(--color-text-muted);
+        border: 1px solid var(--color-border);
+    }
+
+    .event-date {
+        font-size: var(--font-size-base);
+        color: var(--color-text-muted);
+        font-weight: var(--font-weight-bold);
+    }
+
+    .event-title {
+        font-size: var(--font-size-h2);
+        color: var(--color-primary);
+        margin-bottom: var(--space-4);
+    }
+
+    .event-topic {
+        margin-bottom: var(--space-4);
+    }
+
+    .topic-tag {
+        display: inline-block;
+        font-size: var(--font-size-base);
+        color: var(--color-primary);
+        background: var(--color-bg-light);
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        padding: 2px var(--space-3);
+    }
+
+    .event-meta-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        margin-bottom: var(--space-5);
+    }
+
+    .meta-item {
+        font-size: var(--font-size-base);
+        color: var(--color-text-muted);
+    }
+
+    .meta-divider {
+        width: 1px;
+        height: 14px;
+        background: var(--color-border);
+        flex-shrink: 0;
+    }
+
+    .signup-btn {
+        display: inline-block;
+        margin-bottom: var(--space-6);
+        padding: var(--space-3) var(--space-6);
+        background: var(--color-accent);
+        color: var(--color-text-white);
+        border-radius: 6px;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
         text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s;
+        transition: background 0.15s;
     }
 
-    .events-navigation a:hover {
-        color: #004499;
-        text-decoration: underline;
+    .signup-btn:hover { background: var(--color-accent-hover); }
+
+    /* ── Rendered markdown content ── */
+    .event-content {
+        border-top: 1px solid var(--color-border);
+        padding-top: var(--space-6);
+        margin-top: var(--space-4);
     }
 
-    .event-section {
-        scroll-margin-top: 2rem;
-        padding-top: 1rem;
+    .event-content :global(strong) {
+        color: var(--color-primary);
+        font-size: var(--font-size-body);
+        display: block;
+        margin-top: var(--space-5);
+        margin-bottom: var(--space-3);
     }
 
-    .event-section:not(:last-child) {
-        border-bottom: 2px solid #eee;
-        padding-bottom: 2rem;
-        margin-bottom: 2rem;
+    .event-content :global(ul) {
+        padding-left: var(--list-padding-left);
+        margin-bottom: var(--space-4);
+    }
+
+    .event-content :global(a) {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+
+    .event-content :global(a:hover) { text-decoration: underline; }
+
+    .empty {
+        color: var(--color-text-muted);
+        font-size: var(--font-size-body);
+        padding: var(--space-8) 0;
     }
 </style>
