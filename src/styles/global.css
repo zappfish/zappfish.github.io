@@ -82,23 +82,44 @@ time, mark, audio, video {
     --color-text-muted:    #666666;   /* captions, secondary labels           */
     --color-text-white:    #ffffff;   /* text on dark backgrounds             */
     --color-border:        #e0ddd6;   /* dividers, card borders               */
+    --color-accent-tint:   #e6f5f3;   /* very light teal — icon bg, tints     */
 
-    /* ── Hero image overlay ── */
-    --color-hero-overlay:  rgba(20, 60, 120, 0.20);  /* deep blue overlay over hero */
+    /* ── Hero ── */
+    --color-hero-image-bg:    #5b8fa3;                  /* solid bg for image hero      */
+    --color-hero-default-bg:  #dde4eb;                  /* light blue-gray default hero */
+    --color-hero-overlay:     rgba(20, 60, 120, 0.20);  /* deep blue overlay over hero  */
+    --color-hero-fish-base:   rgb(195, 205, 215);        /* fish hero bg base            */
+    --color-hero-fish-dark:   rgba(70, 90, 110, 0.50);  /* fish hero dark overlay       */
+    --color-hero-fish-mid:    rgba(70, 90, 110, 0.35);  /* fish hero mid overlay        */
+    --color-hero-fish-light:  rgba(70, 90, 110, 0.25);  /* fish hero light overlay      */
 
     /* ── White overlays — text/borders on dark backgrounds (footer) ── */
     --color-white-65:  rgba(255, 255, 255, 0.80);  /* muted text             */
-    --color-white-40:  rgba(255, 255, 255, 0.40);  /* copyright / fine print */
+    --color-white-40:  rgba(255, 255, 255, 0.65);  /* copyright / fine print */
     --color-white-30:  rgba(255, 255, 255, 0.30);  /* subtle borders         */
     --color-white-10:  rgba(255, 255, 255, 0.10);  /* hairline dividers      */
+
+    /* Shadows */
+    --shadow-card:    0 4px 20px rgba(0, 0, 0, 0.10);  /* standard card shadow  */
+    --shadow-subtle:  0 2px 12px rgba(0, 0, 0, 0.07);  /* subtle / tight shadow */
+
+    /* Border radius */
+    --radius-sm:  4px;
+    --radius-md:  8px;
+    --radius-lg:  10px;
+
+    /* Transitions */
+    --transition-fast: 0.15s;
 
     /* Spacing — 8px grid */
     --space-1:   4px;
     --space-2:   8px;
     --space-3:  12px;
     --space-4:  16px;
+    --space-5:  20px;
     --space-6:  24px;
     --space-8:  32px;
+    --space-10: 40px;
     --space-12: 48px;
     --space-16: 64px;
 
@@ -108,21 +129,22 @@ time, mark, audio, video {
     --font-weight-normal: 400;
     --font-weight-bold:   700;
 
-    --font-size-sm:   0.875rem;  /* 14 px — fine print, captions         */
-    --font-size-base: 1rem;      /* 16 px — UI labels, nav links         */
-    --font-size-body: 1.125rem;  /* 18 px — body copy, paragraphs        */
-    --font-size-h4:   1.2rem;    /* ~19.2 px — small section headings    */
-    --font-size-h3:   1.25rem;   /* 20 px — subsection headings          */
-    --font-size-h2:   1.45rem;   /* ~23.2 px — section headings          */
-    --font-size-h1:   1.75rem;   /* 28 px — page titles                  */
+    --font-size-sm:      0.75rem;   /* 12 px — fine print, captions         */
+    --font-size-ui:      0.875rem;  /* 14 px — UI labels, nav links         */
+    --font-size-body:    1.125rem;  /* 18 px — body copy, paragraphs        */
+    --font-size-h4:      1.05rem;   /* ~17 px — small section headings      */
+    --font-size-h3:      1.125rem;  /* 18 px — subsection headings          */
+    --font-size-h2:      1.3rem;    /* ~21 px — section headings            */
+    --font-size-h1:      1.6rem;    /* ~26 px — page titles                 */
+    --font-size-display: 2rem;      /* 32 px — hero headings                */
 
     --line-height-tight: 1.2;    /* headings */
-    --line-height-base:  1.8;    /* body copy */
+    --line-height-base:  1.7;    /* body copy */
 
-    --heading-margin-bottom:  var(--space-8);   /* space below headings  (was 6) */
-    --body-margin-bottom:     var(--space-4);   /* space below p and ul  */
+    --heading-margin-bottom:  var(--space-6);   /* space below headings  */
+    --body-margin-bottom:     var(--space-2);   /* space below p and ul  */
     --list-padding-left:      var(--space-8);   /* list indentation      */
-    --section-margin-bottom:  var(--space-12);  /* space between sections*/
+    --section-margin-bottom:  var(--space-8);   /* space between sections*/
 }
 
 
@@ -143,7 +165,8 @@ strong {
 }
 
 p,
-summary {
+summary,
+li {
     font-size: var(--font-size-body);
     line-height: var(--line-height-base);
 }
@@ -155,6 +178,26 @@ ol {
 
 section {
     margin-bottom: var(--section-margin-bottom);
+}
+
+.section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+}
+.section-label::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: var(--color-accent);
+    flex-shrink: 0;
 }
 
 h1, h2, h3, h4 {

@@ -1,0 +1,143 @@
+---
+interface Props {
+    label: string
+    items: { label: string; path: string }[]
+}
+const { label, items } = Astro.props
+---
+<li class="nav-dropdown">
+    <button type="button" aria-haspopup="true" aria-expanded="false">
+        {label}
+        <svg class="chevron" aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M1.5 3.5L5 7l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+    <ul class="dropdown">
+        {items.map(({ label, path }) => <li><a href={path}>{label}</a></li>)}
+    </ul>
+</li>
+
+<script>
+    const closeAll = (except?: HTMLElement) =>
+        document.querySelectorAll<HTMLElement>('.nav-dropdown').forEach(d => {
+            if (d === except) return
+            d.classList.remove('open')
+            d.querySelector('button')?.setAttribute('aria-expanded', 'false')
+        })
+
+    // Attach click listeners once per element
+    const attachListeners = () => {
+        document.querySelectorAll<HTMLElement>('.nav-dropdown:not([data-dd-init])').forEach(el => {
+            el.dataset.ddInit = 'true'
+            el.querySelector('button')?.addEventListener('click', (e) => {
+                e.stopPropagation()
+                const opening = !el.classList.contains('open')
+                closeAll(el)
+                el.classList.toggle('open', opening)
+                el.querySelector('button')?.setAttribute('aria-expanded', String(opening))
+            })
+        })
+    }
+
+    // Re-run on every navigation to keep active state current
+    const updateActive = () => {
+        const currentPath = window.location.pathname
+        document.querySelectorAll<HTMLElement>('.nav-dropdown').forEach(el => {
+            const isActive = [...el.querySelectorAll<HTMLAnchorElement>('.dropdown a')]
+                .some(a => a.getAttribute('href') !== '#' && a.pathname === currentPath)
+            el.classList.toggle('active', isActive)
+        })
+    }
+
+    document.addEventListener('click', ({ target }) => {
+        const el = target as HTMLElement
+        if (!el.closest('.nav-dropdown') || el.closest('.dropdown a')) closeAll()
+    })
+    document.addEventListener('keydown', ({ key }) => { if (key === 'Escape') closeAll() })
+    document.addEventListener('astro:page-load', () => { attachListeners(); updateActive() })
+</script>
+
+<style>
+    .nav-dropdown { position: relative; }
+
+    .nav-dropdown > button {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: var(--space-2);
+        color: var(--color-text-dark);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font: inherit;
+        white-space: nowrap;
+        transition: color 0.15s;
+    }
+
+    .nav-dropdown > button:hover { color: var(--color-accent); }
+    .nav-dropdown.active > button { color: var(--color-primary); font-weight: var(--font-weight-bold); }
+
+    .chevron { flex-shrink: 0; transition: transform 0.2s ease; }
+    .nav-dropdown.open .chevron { transform: rotate(180deg); }
+
+    .dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        flex-direction: column;
+        min-width: 180px;
+        list-style: none;
+        margin: 0;
+        padding: var(--space-1) 0;
+        background: var(--color-bg-base);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        z-index: 200;
+        animation: dd-in 0.15s ease;
+    }
+
+    @keyframes dd-in {
+        from { opacity: 0; transform: translateY(-4px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-dropdown.open .dropdown { display: flex; }
+
+    .dropdown li a {
+        display: block;
+        padding: var(--space-2) var(--space-4);
+        color: var(--color-text-dark);
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.15s, background 0.15s;
+    }
+
+    .dropdown li a:hover { color: var(--color-accent); background: var(--color-bg-subtle, rgba(0,0,0,0.04)); }
+
+    @media (max-width: 768px) {
+        .nav-dropdown > button {
+            display: block;
+            width: 100%;
+            padding: var(--space-3) var(--space-8);
+            text-align: left;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .dropdown {
+            position: static;
+            border: none;
+            border-top: 1px solid var(--color-border);
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
+            animation: none;
+            background: var(--color-bg-subtle, rgba(0,0,0,0.03));
+        }
+
+        .dropdown li a { padding-left: calc(var(--space-8) + var(--space-4)); border-bottom: 1px solid var(--color-border); }
+        .dropdown li:last-child a { border-bottom: none; }
+    }
+</style>

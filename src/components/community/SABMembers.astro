@@ -1,0 +1,82 @@
+---
+import SectionCard from '../ui/SectionCard.astro'
+import IconStar from '../icons/IconStar.astro'
+
+const members = [
+    { name: 'Jonathan Hamm', affiliation: 'Inovit',                                                                                   chair: true  },
+    { name: 'Philip Holmes', affiliation: 'National Institute of Environmental Health Sciences/National Institutes of Health',          chair: false },
+    { name: 'Charles Lovely', affiliation: 'University of Louisville',                                                                 chair: false },
+    { name: 'Chris Mungall', affiliation: 'Lawrence Berkeley National Laboratory',                                                     chair: false },
+    { name: 'Stephanie Padilla', affiliation: 'U.S. Environmental Protection Agency',                                                  chair: false },
+    { name: 'Robyn Tanguay', affiliation: 'Oregon State University',                                                                   chair: false },
+    { name: 'Monte Westerfield', affiliation: 'University of Oregon',                                                                  chair: false },
+]
+---
+
+<SectionCard title="Scientific Advisory Board (SAB)" iconColor="teal">
+    <IconStar slot="icon" aria-hidden="true" />
+    <div class="sab-body">
+        <p class="sab-description">A Scientific Advisory Board (SAB) chaired by Jonathan Hamm meets annually to serve in an advisory capacity to ZAPP leadership about the status and direction of ZAPP. The board provides strategic observations and feedback on existing and proposed activities and partnerships, including prioritization of new development, external funding opportunities, operational issues, and long-term planning.</p>
+        <div class="sab-grid">
+            {members.map(member => (
+                <div class="sab-member">
+                    <div class="sab-member-header">
+                        <strong>{member.name}</strong>
+                        {member.chair && <span class="chair-tag">Chair</span>}
+                    </div>
+                    {member.affiliation && <span class="sab-affiliation">{member.affiliation}</span>}
+                </div>
+            ))}
+        </div>
+    </div>
+</SectionCard>
+
+<style>
+    .sab-body { padding: var(--space-4) var(--space-6); }
+
+    .sab-description {
+        margin-bottom: var(--space-6);
+        color: var(--color-text-dark);
+    }
+
+    .sab-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .sab-member {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        padding: var(--space-4) var(--space-6);
+        background: var(--color-bg-surface);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-border);
+        transition: box-shadow var(--transition-fast);
+    }
+    .sab-member:focus-within { box-shadow: 0 0 0 2px var(--color-accent); }
+
+    .sab-member-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+    }
+    .sab-member strong { color: var(--color-primary); font-size: var(--font-size-body); }
+
+    .chair-tag {
+        display: inline-block;
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        border: 1px solid var(--color-accent);
+        border-radius: var(--radius-sm);
+        padding: 1px var(--space-2);
+    }
+
+    .sab-affiliation { font-size: var(--font-size-ui); color: var(--color-text-muted); line-height: var(--line-height-base); }
+
+</style>
