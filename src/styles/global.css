@@ -113,7 +113,7 @@ time, mark, audio, video {
     --font-weight-bold:   700;
 
     --font-size-sm:      0.75rem;   /* 12 px — fine print, captions         */
-    --font-size-base:    0.875rem;  /* 14 px — UI labels, nav links         */
+    --font-size-ui:    0.875rem;  /* 14 px — UI labels, nav links         */
     --font-size-body:    1.125rem;  /* 18 px — body copy, paragraphs        */
     --font-size-h4:      1.05rem;   /* ~17 px — small section headings      */
     --font-size-h3:      1.125rem;  /* 18 px — subsection headings          */

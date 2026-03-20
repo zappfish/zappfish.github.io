@@ -4,8 +4,9 @@ interface Props {
     description: string
     href: string
     linkLabel?: string
+    comingSoon?: boolean
 }
-const { title, description, href, linkLabel } = Astro.props
+const { title, description, href, linkLabel, comingSoon } = Astro.props
 ---
 <div class="action-card">
     <div class="action-card-icon">
@@ -13,7 +14,7 @@ const { title, description, href, linkLabel } = Astro.props
     </div>
     <div class="action-card-body">
         <h3>{title}</h3>
-        <p>{description}</p>
+        <p class={comingSoon ? 'coming-soon' : ''}>{description}</p>
         {linkLabel && <a href={href} class="action-link">{linkLabel} &rsaquo;</a>}
     </div>
 </div>
@@ -43,19 +44,20 @@ const { title, description, href, linkLabel } = Astro.props
     .action-card h3 { font-size: var(--font-size-h3); margin-bottom: var(--space-2); }
     .action-card-body { flex: 1; display: flex; flex-direction: column; }
     .action-card p {
-        display: inline-block;
-        align-self: center;
-        color: var(--color-text-muted);
-        background: transparent;
-        border: 1px dashed rgba(0,0,0,0.25);
-        border-radius: 20px;
-        padding: 2px 12px;
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-bold);
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
+        color: var(--color-text-dark);
+        font-size: var(--font-size-body);
         line-height: var(--line-height-base);
         margin-bottom: var(--space-2);
+    }
+    p.coming-soon {
+        display: inline-block;
+        align-self: center;
+        border: 1px dashed rgba(0,0,0,0.3);
+        border-radius: 20px;
+        padding: 2px var(--space-4);
+        font-size: var(--font-size-ui);
+        color: var(--color-text-muted) !important;
+        text-align: center;
     }
     .action-link { font-weight: var(--font-weight-bold); color: var(--color-accent); text-decoration: none; }
     .action-link:hover { text-decoration: underline; }
