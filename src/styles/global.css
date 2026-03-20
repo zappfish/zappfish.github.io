@@ -82,17 +82,34 @@ time, mark, audio, video {
     --color-text-muted:    #666666;   /* captions, secondary labels           */
     --color-text-white:    #ffffff;   /* text on dark backgrounds             */
     --color-border:        #e0ddd6;   /* dividers, card borders               */
+    --color-accent-tint:   #e6f5f3;   /* very light teal — icon bg, tints     */
 
     /* ── Hero ── */
-    --color-hero-image-bg: #5b8fa3;                   /* solid bg for image hero     */
-    --color-hero-default-bg: #dde4eb;                 /* light blue-gray default hero */
-    --color-hero-overlay:  rgba(20, 60, 120, 0.20);  /* deep blue overlay over hero */
+    --color-hero-image-bg:    #5b8fa3;                  /* solid bg for image hero      */
+    --color-hero-default-bg:  #dde4eb;                  /* light blue-gray default hero */
+    --color-hero-overlay:     rgba(20, 60, 120, 0.20);  /* deep blue overlay over hero  */
+    --color-hero-fish-base:   rgb(195, 205, 215);        /* fish hero bg base            */
+    --color-hero-fish-dark:   rgba(70, 90, 110, 0.50);  /* fish hero dark overlay       */
+    --color-hero-fish-mid:    rgba(70, 90, 110, 0.35);  /* fish hero mid overlay        */
+    --color-hero-fish-light:  rgba(70, 90, 110, 0.25);  /* fish hero light overlay      */
 
     /* ── White overlays — text/borders on dark backgrounds (footer) ── */
     --color-white-65:  rgba(255, 255, 255, 0.80);  /* muted text             */
     --color-white-40:  rgba(255, 255, 255, 0.65);  /* copyright / fine print */
     --color-white-30:  rgba(255, 255, 255, 0.30);  /* subtle borders         */
     --color-white-10:  rgba(255, 255, 255, 0.10);  /* hairline dividers      */
+
+    /* Shadows */
+    --shadow-card:    0 4px 20px rgba(0, 0, 0, 0.10);  /* standard card shadow  */
+    --shadow-subtle:  0 2px 12px rgba(0, 0, 0, 0.07);  /* subtle / tight shadow */
+
+    /* Border radius */
+    --radius-sm:  4px;
+    --radius-md:  8px;
+    --radius-lg:  10px;
+
+    /* Transitions */
+    --transition-fast: 0.15s;
 
     /* Spacing — 8px grid */
     --space-1:   4px;
@@ -113,7 +130,7 @@ time, mark, audio, video {
     --font-weight-bold:   700;
 
     --font-size-sm:      0.75rem;   /* 12 px — fine print, captions         */
-    --font-size-ui:    0.875rem;  /* 14 px — UI labels, nav links         */
+    --font-size-ui:      0.875rem;  /* 14 px — UI labels, nav links         */
     --font-size-body:    1.125rem;  /* 18 px — body copy, paragraphs        */
     --font-size-h4:      1.05rem;   /* ~17 px — small section headings      */
     --font-size-h3:      1.125rem;  /* 18 px — subsection headings          */

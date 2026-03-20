@@ -107,8 +107,6 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
 </Main>
 
 <style>
-    .hero-subtitle { color: var(--color-text-white); margin: 0; opacity: 0.92; }
-
     /* aims card body */
     .aims-body ul { padding: var(--space-8) var(--space-8) var(--space-8) var(--space-12); margin-bottom: 0; }
     .aims-body li { margin-bottom: var(--space-3); }
@@ -123,14 +121,14 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
 
     /* deliverable slot content — scoped to .deliverable-body to avoid cross-boundary issues */
     .deliverable-body a {
-        text-decoration: none !important;
+        text-decoration: none;
         color: var(--color-accent);
-        font-weight: var(--font-weight-medium);
-        transition: color 0.2s ease;
+        font-weight: var(--font-weight-bold);
+        transition: color var(--transition-fast);
     }
     .deliverable-body a:hover {
         color: var(--color-accent-hover);
-        text-decoration: underline !important;
+        text-decoration: underline;
         text-underline-offset: 2px;
     }
 
@@ -148,7 +146,7 @@ import IconWorkflow from '../components/icons/IconWorkflow.astro'
         left: var(--space-4);
         top: var(--space-2);
         color: var(--color-accent);
-        font-size: 1.1rem;
+        font-size: var(--font-size-body);
         font-weight: var(--font-weight-bold);
         line-height: var(--line-height-base);
     }

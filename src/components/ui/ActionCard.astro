@@ -22,9 +22,9 @@ const { title, description, href, linkLabel, comingSoon } = Astro.props
 <style>
     .action-card {
         background: var(--color-bg-surface);
-        border-radius: 10px;
+        border-radius: var(--radius-lg);
         padding: var(--space-8);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+        box-shadow: var(--shadow-card);
         display: flex;
         gap: var(--space-4);
         align-items: flex-start;
@@ -49,14 +49,14 @@ const { title, description, href, linkLabel, comingSoon } = Astro.props
         line-height: var(--line-height-base);
         margin-bottom: var(--space-2);
     }
-    p.coming-soon {
+    .action-card p.coming-soon {
         display: inline-block;
         align-self: center;
         border: 1px dashed rgba(0,0,0,0.3);
         border-radius: 20px;
         padding: 2px var(--space-4);
         font-size: var(--font-size-ui);
-        color: var(--color-text-muted) !important;
+        color: var(--color-text-muted);
         text-align: center;
     }
     .action-link { font-weight: var(--font-weight-bold); color: var(--color-accent); text-decoration: none; }
