@@ -128,8 +128,22 @@ const isTeal = variant === 'teal' || !!image
 
     h1 { color: var(--color-primary); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8); }
 
-    @media (max-width: 1250px) {
+    @media (max-width: 1100px) {
         .hero-photo { display: none; }
+        .hero--has-photo {
+            background: var(--color-hero-image-bg);
+            justify-content: center;
+            min-height: 0;
+            max-height: none;
+            padding: var(--space-4) var(--space-12);
+        }
+        .hero--has-photo::after { display: none; }
+        .hero--has-photo h1 {
+            font-size: var(--font-size-display);
+            margin-bottom: var(--space-2);
+        }
+        .hero--has-photo .hero-inner,
+        .hero--teal.hero--has-photo .hero-inner,
         .hero--teal .hero-inner {
             max-width: 960px;
             margin: 0 auto;
