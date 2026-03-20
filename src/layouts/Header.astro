@@ -67,7 +67,7 @@ const sections = navItems
             hamburger?.setAttribute('aria-expanded', 'false')
         }
 
-        if (inNav && el.closest('a') && !el.closest('.nav-dropdown')) {
+        if (inNav && el.closest('a')) {
             nav?.classList.remove('open')
             hamburger?.classList.remove('open')
             hamburger?.setAttribute('aria-expanded', 'false')
