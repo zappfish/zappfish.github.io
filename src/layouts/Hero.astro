@@ -38,7 +38,7 @@ const isTeal = variant === 'teal' || !!image
         gap: var(--space-10);
         min-height: 0;
         max-height: none;
-        padding: var(--space-6) var(--space-12);
+        padding: var(--space-4) var(--space-12);
     }
 
     .hero--teal h1 {
@@ -46,6 +46,10 @@ const isTeal = variant === 'teal' || !!image
         font-size: var(--font-size-display);
         letter-spacing: -0.01em;
         margin-bottom: var(--space-2);
+    }
+
+    .hero--has-photo {
+        min-height: 220px;
     }
 
     .hero--has-photo h1 {
@@ -59,20 +63,30 @@ const isTeal = variant === 'teal' || !!image
     }
 
     .hero--teal.hero--has-photo .hero-inner {
-        max-width: 50%;
-        margin: 0;
+        max-width: 55%;
+        margin: 0 auto 0 15%;
         text-align: left;
+        z-index: 2;
     }
 
     .hero-photo {
-        flex-shrink: 0;
-        width: 320px;
-        height: 200px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: auto;
         object-fit: cover;
-        border-radius: 16px;
-        box-shadow: 0 12px 40px rgba(0,0,0,0.25);
         transform: scaleX(-1);
+        z-index: 0;
+    }
+
+    .hero--has-photo::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, var(--color-hero-image-bg) 30%, rgba(91,143,163,0.7) 55%, transparent 75%);
         z-index: 1;
+        pointer-events: none;
     }
 
     /* Fish images */
