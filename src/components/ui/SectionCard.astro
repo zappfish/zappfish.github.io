@@ -32,8 +32,8 @@ const hasHeader = !!title || hasIcon
 <style>
     .section-card {
         background: var(--color-bg-surface);
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
         overflow: hidden;
     }
 
@@ -47,7 +47,7 @@ const hasHeader = !!title || hasIcon
     }
 
     .section-card-header h2 { margin-bottom: 0; }
-    .section-subtitle { font-size: var(--font-size-base); color: var(--color-text-muted); margin: var(--space-1) 0 0; }
+    .section-subtitle { font-size: var(--font-size-ui); color: var(--color-text-muted); margin: var(--space-1) 0 0; }
 
     .section-icon {
         flex-shrink: 0;
@@ -57,9 +57,9 @@ const hasHeader = !!title || hasIcon
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: var(--color-text-white);
     }
-    .section-icon :global(svg) { width: 14px; height: 14px; color: #fff; }
+    .section-icon :global(svg) { width: 14px; height: 14px; color: var(--color-text-white); }
     .section-icon--green { background: var(--color-accent); }
     .section-icon--teal  { background: var(--color-primary-dark); }
     .section-icon--dark  { background: var(--color-primary); }

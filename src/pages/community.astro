@@ -10,7 +10,7 @@ import IconDatabase from '../components/icons/IconDatabase.astro'
 
 <Main title="Community">
 
-    <Hero title="Community" image="/images/zebrafish-hero.jpg" slot="hero" />
+    <Hero title="Community" variant="teal" slot="hero" />
 
     <section class="intro">
         <div class="section-label">Community</div>
@@ -32,10 +32,10 @@ import IconDatabase from '../components/icons/IconDatabase.astro'
     </section>
 
     <section class="action-cards">
-        <ActionCard title="Governance" description="Coming Soon" href="#">
+        <ActionCard title="Governance" description="Coming Soon" href="#" comingSoon>
             <IconShield slot="icon" />
         </ActionCard>
-        <ActionCard title="Submit Data" description="Coming Soon" href="#">
+        <ActionCard title="Submit Data" description="Coming Soon" href="#" comingSoon>
             <IconDatabase slot="icon" />
         </ActionCard>
     </section>
@@ -43,8 +43,6 @@ import IconDatabase from '../components/icons/IconDatabase.astro'
 </Main>
 
 <style>
-    .hero-subtitle { color: var(--color-text-white); margin: 0; opacity: 0.92; }
-
     .action-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
 
     .roles-heading { text-align: center; margin-top: var(--space-12); margin-bottom: var(--space-4); }
@@ -67,7 +65,7 @@ import IconDatabase from '../components/icons/IconDatabase.astro'
         color: var(--color-text-white);
         text-decoration: none;
         border-radius: 4px;
-        font-size: var(--font-size-base);
+        font-size: var(--font-size-ui);
         font-weight: var(--font-weight-bold);
         transition: background 0.15s;
         flex-shrink: 0;

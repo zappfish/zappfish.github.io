@@ -1,13 +1,15 @@
 ---
 interface Props {
     title: string
+    variant?: 'default' | 'teal'
     image?: string
     imageLeft?: string
     imageRight?: string
 }
-const { title, image, imageLeft, imageRight } = Astro.props
+const { title, variant = 'default', image, imageLeft, imageRight } = Astro.props
+const isTeal = variant === 'teal' || !!image
 ---
-<div class:list={['hero', { 'hero--image': !!image, 'hero--fish': !!imageLeft || !!imageRight }]}>
+<div class:list={['hero', { 'hero--teal': isTeal, 'hero--has-photo': !!image, 'hero--fish': !!imageLeft || !!imageRight }]}>
     {imageLeft  && <img src={imageLeft}  alt="" aria-hidden="true" class="hero-fish hero-fish--left" />}
     {imageRight && <img src={imageRight} alt="" aria-hidden="true" class="hero-fish hero-fish--right" />}
     <div class="hero-inner">
@@ -30,35 +32,64 @@ const { title, image, imageLeft, imageRight } = Astro.props
         align-items: center;
     }
 
-    /* Hero with solid background and side-by-side text + photo */
-    .hero--image {
+    .hero--teal {
         background: var(--color-hero-image-bg);
         justify-content: center;
         gap: var(--space-10);
-        min-height: 180px;
+        min-height: 0;
         max-height: none;
         padding: var(--space-4) var(--space-12);
     }
 
-    .hero--image h1 {
+    .hero--teal h1 {
         color: var(--color-text-white);
-        font-size: clamp(2rem, 4vw, 3rem);
+        font-size: var(--font-size-display);
         letter-spacing: -0.01em;
         margin-bottom: var(--space-2);
     }
 
-    .hero-photo {
-        flex-shrink: 0;
-        width: 320px;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 16px;
-        box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-      
-        z-index: 1;
+    .hero--has-photo {
+        min-height: 220px;
     }
 
-    /* Fish images — both on the right */
+    .hero--has-photo h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero--teal:not(.hero--has-photo) .hero-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .hero--teal.hero--has-photo .hero-inner {
+        max-width: 55%;
+        margin: 0 auto 0 15%;
+        text-align: left;
+        z-index: 2;
+    }
+
+    .hero-photo {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 35%;
+        object-fit: cover;
+        transform: scaleX(-1);
+        z-index: 0;
+    }
+
+    .hero--has-photo::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, var(--color-hero-image-bg) 25%, rgba(91,143,163,0.5) 45%, transparent 60%);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* Fish images */
     .hero-fish {
         position: absolute;
         top: 50%;
@@ -74,12 +105,11 @@ const { title, image, imageLeft, imageRight } = Astro.props
     .hero-fish--left  { right: 26%; }
     .hero-fish--right { right: 3%; transform: translateY(-50%) scaleX(-1); }
 
-    /* Fish layout — blue-gray overlay with edge vignette */
     .hero--fish {
         background:
-            linear-gradient(to right, rgba(70, 90, 110, 0.50) 0%, transparent 40%, transparent 60%, rgba(70, 90, 110, 0.50) 100%),
-            linear-gradient(to bottom, rgba(70, 90, 110, 0.35), transparent 30%, transparent 70%, rgba(70, 90, 110, 0.25)),
-            rgb(195, 205, 215);
+            linear-gradient(to right, var(--color-hero-fish-dark) 0%, transparent 40%, transparent 60%, var(--color-hero-fish-dark) 100%),
+            linear-gradient(to bottom, var(--color-hero-fish-mid), transparent 30%, transparent 70%, var(--color-hero-fish-light)),
+            var(--color-hero-fish-base);
     }
 
     .hero--fish h1 {
@@ -96,17 +126,25 @@ const { title, image, imageLeft, imageRight } = Astro.props
         width: 100%;
     }
 
-    .hero--image .hero-inner {
-        max-width: 50%;
-        margin: 0;
-        text-align: left;
-    }
-
     h1 { color: var(--color-primary); font-weight: var(--font-weight-bold); margin-bottom: var(--space-8); }
 
-    @media (max-width: 1250px) {
+    @media (max-width: 1100px) {
         .hero-photo { display: none; }
-        .hero--image .hero-inner {
+        .hero--has-photo {
+            background: var(--color-hero-image-bg);
+            justify-content: center;
+            min-height: 0;
+            max-height: none;
+            padding: var(--space-4) var(--space-12);
+        }
+        .hero--has-photo::after { display: none; }
+        .hero--has-photo h1 {
+            font-size: var(--font-size-display);
+            margin-bottom: var(--space-2);
+        }
+        .hero--has-photo .hero-inner,
+        .hero--teal.hero--has-photo .hero-inner,
+        .hero--teal .hero-inner {
             max-width: 960px;
             margin: 0 auto;
             text-align: center;
