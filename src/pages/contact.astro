@@ -17,8 +17,7 @@ const CONTACT_EMAIL = 'info@zappfish.org'
 
         <div class="contact-info">
             <p class="contact-lead">
-                Have questions about the project, want to collaborate, or need help getting involved?
-                We'd love to hear from you.
+                Have questions about the project, want to collaborate, or need help getting involved? — We'd love to hear from you.
             </p>
             <div class="contact-email-block">
                 <span class="contact-label">Email us directly</span>
@@ -174,13 +173,13 @@ const CONTACT_EMAIL = 'info@zappfish.org'
     .contact-form {
         display: flex;
         flex-direction: column;
-        gap: var(--space-5);
+        gap: var(--space-4);
     }
 
     .field {
         display: flex;
         flex-direction: column;
-        gap: var(--space-2);
+        gap: var(--space-1);
     }
 
     .field label {
@@ -224,8 +223,9 @@ const CONTACT_EMAIL = 'info@zappfish.org'
     .field-error {
         font-size: var(--font-size-sm);
         color: var(--color-error, #c0392b);
-        min-height: 1em;
     }
+
+    .field-error:empty { display: none; }
 
     /* ── Form footer ── */
     .form-footer {
