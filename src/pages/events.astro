@@ -20,17 +20,17 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
 
     <Hero title="Events" variant="teal" slot="hero" />
 
-    <section class="intro">
+    <section class="intro" aria-label="Workshops and Meetings">
         <div class="section-label">Workshops &amp; Meetings</div>
     </section>
 
-    <section class="events">
-        <div class="tab-bar" role="tablist">
-            <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="past">Past Events</button>
-            <button class="tab-btn"        role="tab" aria-selected="false" data-tab="upcoming">Upcoming Events</button>
+    <section class="events" aria-label="Events list">
+        <div class="tab-bar" role="tablist" aria-label="Event filters">
+            <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="tab-past"     id="tab-btn-past"     data-tab="past">Past Events</button>
+            <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-upcoming" id="tab-btn-upcoming" data-tab="upcoming">Upcoming Events</button>
         </div>
 
-        <div class="tab-panel hidden" id="tab-upcoming">
+        <div class="tab-panel hidden" id="tab-upcoming" role="tabpanel" aria-labelledby="tab-btn-upcoming">
             {upcoming.length === 0
                 ? <p class="empty">No upcoming events at this time. Check back soon!</p>
                 : await Promise.all(upcoming.map(async entry => {
@@ -57,7 +57,7 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
             }
         </div>
 
-        <div class="tab-panel" id="tab-past">
+        <div class="tab-panel" id="tab-past" role="tabpanel" aria-labelledby="tab-btn-past">
             {past.length === 0
                 ? <p class="empty">No past events.</p>
                 : await Promise.all(past.map(async entry => {
@@ -80,20 +80,27 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
 </Main>
 
 <script>
-    const buttons = document.querySelectorAll<HTMLButtonElement>('.tab-btn')
+    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.tab-btn'))
     const panels  = document.querySelectorAll<HTMLElement>('.tab-panel')
 
     function switchTab(target: string) {
         buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
         panels.forEach(p => p.classList.add('hidden'))
-        document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
-            ?.classList.add('active')
-        document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
-            ?.setAttribute('aria-selected', 'true')
+        const btn = document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
+        btn?.classList.add('active')
+        btn?.setAttribute('aria-selected', 'true')
         document.getElementById(`tab-${target}`)?.classList.remove('hidden')
     }
 
-    buttons.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab!)))
+    buttons.forEach((btn, i) => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab!))
+        btn.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { buttons[(i + 1) % buttons.length].focus(); buttons[(i + 1) % buttons.length].click() }
+            if (e.key === 'ArrowLeft')  { buttons[(i - 1 + buttons.length) % buttons.length].focus(); buttons[(i - 1 + buttons.length) % buttons.length].click() }
+            if (e.key === 'Home') { buttons[0].focus(); buttons[0].click() }
+            if (e.key === 'End')  { buttons[buttons.length - 1].focus(); buttons[buttons.length - 1].click() }
+        })
+    })
 </script>
 
 <style>
