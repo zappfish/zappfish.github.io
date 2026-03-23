@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content"
 import Main from '../layouts/Main.astro'
 import Hero from '../layouts/Hero.astro'
+import IconCalendar from '../components/icons/IconCalendar.astro'
 
 const eventsUnsorted = await getCollection("events")
 
@@ -37,22 +38,21 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
                     const { Content } = await render(entry)
                     return (
                         <article class="event-card">
-                            <div class="event-header">
-                                <span class="event-badge upcoming">Upcoming</span>
-                                <span class="event-date">{entry.data.date}</span>
+                            <div class="event-card-header">
+                                <span class="event-date"><IconCalendar />{entry.data.date}</span>
+                                <h2 class="event-title">{entry.data.title}</h2>
+                                <div class="event-topic">
+                                    <span class="topic-tag">Topic: {entry.data.topic}</span>
+                                </div>
+                                <div class="event-meta-row">
+                                    <span class="meta-item">{entry.data.time}</span>
+                                    <span class="meta-divider" aria-hidden="true" />
+                                    <span class="meta-item">{entry.data.location}</span>
+                                </div>
+                                {entry.data.signup && entry.data.signup !== 'Closed' &&
+                                    <a class="signup-btn" href={entry.data.signup}>Sign Up</a>
+                                }
                             </div>
-                            <h2 class="event-title">{entry.data.title}</h2>
-                            <div class="event-topic">
-                                <span class="topic-tag">{entry.data.topic}</span>
-                            </div>
-                            <div class="event-meta-row">
-                                <span class="meta-item">{entry.data.time}</span>
-                                <span class="meta-divider" aria-hidden="true" />
-                                <span class="meta-item">{entry.data.location}</span>
-                            </div>
-                            {entry.data.signup && entry.data.signup !== 'Closed' &&
-                                <a class="signup-btn" href={entry.data.signup}>Sign Up</a>
-                            }
                             <div class="event-content"><Content /></div>
                         </article>
                     )
@@ -66,14 +66,13 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
                 : await Promise.all(past.map(async entry => {
                     const { Content } = await render(entry)
                     return (
-                        <article class="event-card past">
-                            <div class="event-header">
-                                <span class="event-badge past-badge">Past</span>
-                                <span class="event-date">{entry.data.date}</span>
-                            </div>
-                            <h2 class="event-title">{entry.data.title}</h2>
-                            <div class="event-topic">
-                                <span class="topic-tag">{entry.data.topic}</span>
+                        <article class="event-card">
+                            <div class="event-card-header">
+                                <span class="event-date"><IconCalendar />{entry.data.date}</span>
+                                <h2 class="event-title">{entry.data.title}</h2>
+                                <div class="event-topic">
+                                    <span class="topic-tag">Topic: {entry.data.topic}</span>
+                                </div>
                             </div>
                             <div class="event-content"><Content /></div>
                         </article>
@@ -106,13 +105,6 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
 </script>
 
 <style>
-    .hero-subtitle {
-        color: var(--color-text-white);
-        opacity: 0.92;
-        margin: 0;
-        font-size: var(--font-size-body);
-    }
-
     /* ── Tabs ── */
     .tab-bar {
         display: flex;
@@ -148,45 +140,33 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         background: var(--color-bg-white);
         border: 1px solid var(--color-border);
         border-radius: 10px;
-        padding: var(--space-6) var(--space-8);
         margin-bottom: var(--space-6);
         box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        overflow: hidden;
     }
 
-    .event-card.past { background: var(--color-bg-surface); }
-
-    .event-header {
-        display: flex;
-        align-items: center;
-        gap: var(--space-4);
-        margin-bottom: var(--space-4);
-    }
-
-    .event-badge {
-        display: inline-block;
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-bold);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        padding: 2px var(--space-3);
-        border-radius: 4px;
-    }
-
-    .event-badge.upcoming {
-        background: var(--color-accent);
-        color: var(--color-text-white);
-    }
-
-    .event-badge.past-badge {
-        background: var(--color-bg-light);
-        color: var(--color-text-muted);
-        border: 1px solid var(--color-border);
+    .event-card-header {
+        border-left: 4px solid var(--color-accent);
+        background: var(--color-bg-surface);
+        padding: var(--space-6) var(--space-8) var(--space-6) calc(var(--space-8) - 4px);
     }
 
     .event-date {
-        font-size: var(--font-size-base);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--font-size-sm);
         color: var(--color-text-muted);
         font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: var(--space-3);
+    }
+
+    .event-date :global(svg) {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
     }
 
     .event-title {
@@ -196,7 +176,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     }
 
     .event-topic {
-        margin-bottom: var(--space-4);
+        margin-bottom: 0;
     }
 
     .topic-tag {
@@ -246,36 +226,165 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     /* ── Rendered markdown content ── */
     .event-content {
         border-top: 1px solid var(--color-border);
-        padding-top: var(--space-6);
-        margin-top: var(--space-4);
+        padding: var(--space-6) var(--space-8);
     }
 
     .event-content :global(strong) {
         color: var(--color-primary);
         font-size: var(--font-size-body);
+        font-weight: var(--font-weight-bold);
         display: block;
-        margin-top: var(--space-5);
-        margin-bottom: var(--space-3);
-    }
-
-    .event-content :global(ul) {
-        padding-left: var(--list-padding-left);
+        margin-top: 0;
         margin-bottom: var(--space-4);
     }
 
-    .event-content :global(li) {
+    .event-content :global(strong + strong),
+    .event-content :global(ul + strong),
+    .event-content :global(p + strong) {
+        margin-top: var(--space-6);
+    }
+
+    .event-content :global(p) {
+        margin-bottom: var(--space-3);
+    }
+
+    /* Goals list — teal checkmarks */
+    .event-content :global(ul:not(:last-of-type)) {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: var(--space-4);
+    }
+
+    .event-content :global(ul:not(:last-of-type) li) {
         position: relative;
         list-style: none;
         padding-left: var(--space-6);
-        margin-bottom: var(--space-2);
+        margin-bottom: var(--space-3);
     }
 
-    .event-content :global(li::before) {
+    .event-content :global(ul:not(:last-of-type) li::before) {
         content: '✓';
         position: absolute;
         left: 0;
         color: var(--color-accent);
         font-weight: var(--font-weight-bold);
+    }
+
+    /* Resources heading — top of bordered box */
+    /* Resources heading — styled icon box */
+    .event-content :global(p:has(+ ul:last-of-type)) {
+        border: 1px solid var(--color-border);
+        border-bottom: none;
+        border-radius: 8px 8px 0 0;
+        background: var(--color-bg-surface);
+        padding: var(--space-4) var(--space-5) var(--space-4);
+        margin-top: var(--space-8);
+        margin-bottom: -1px !important;
+    }
+
+    .event-content :global(p:has(+ ul:last-of-type) > strong) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: 0;
+    }
+
+    .event-content :global(p:has(+ ul:last-of-type) > strong::before) {
+        content: '📄';
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: var(--color-primary);
+        color: white;
+        border-radius: 8px;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    /* Resources list — 2-column card grid */
+    .event-content :global(ul:last-of-type) {
+        list-style: none;
+        padding: var(--space-2) var(--space-5) var(--space-4);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3);
+        margin-top: 0;
+        margin-bottom: var(--space-4);
+        background: var(--color-bg-surface);
+        border: 1px solid var(--color-border);
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+    }
+
+    .event-content :global(ul:last-of-type li) {
+        display: grid;
+        grid-template-columns: 36px 1fr;
+        column-gap: var(--space-3);
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-text-dark);
+    }
+
+    .event-content :global(ul:last-of-type li::before) {
+        content: '';
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        align-self: center;
+        width: 36px;
+        height: 36px;
+        background-color: var(--color-accent-tint);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 18px 18px;
+        border-radius: 8px;
+    }
+
+    /* Meeting summary — file-text icon */
+    .event-content :global(ul:last-of-type li:nth-child(1)::before) {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cline x1='10' y1='9' x2='8' y2='9'/%3E%3C/svg%3E");
+    }
+
+    /* Recording — video icon */
+    .event-content :global(ul:last-of-type li:nth-child(2)::before) {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='23 7 16 12 23 17 23 7'/%3E%3Crect x='1' y='5' width='15' height='14' rx='2' ry='2'/%3E%3C/svg%3E");
+    }
+
+    /* Code of conduct — shield icon */
+    .event-content :global(ul:last-of-type li:nth-child(3)::before) {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E");
+    }
+
+    /* Slide deck — presentation icon */
+    .event-content :global(ul:last-of-type li:nth-child(4)::before) {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='3' width='20' height='14' rx='2'/%3E%3Cline x1='8' y1='21' x2='16' y2='21'/%3E%3Cline x1='12' y1='17' x2='12' y2='21'/%3E%3C/svg%3E");
+    }
+
+    .event-content :global(ul:last-of-type li a),
+    .event-content :global(ul:last-of-type li em) {
+        display: block;
+        font-size: var(--font-size-ui);
+        font-weight: normal;
+        font-style: normal;
+        text-transform: none;
+        letter-spacing: 0;
+        color: var(--color-text-muted);
+        margin-top: var(--space-1);
+    }
+
+    .event-content :global(ul:last-of-type li a) {
+        color: var(--color-accent);
+    }
+
+    .event-content :global(ul:last-of-type li a::after) {
+        content: ' →';
     }
 
     .event-content :global(a) {
@@ -284,6 +393,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     }
 
     .event-content :global(a:hover) { text-decoration: underline; }
+
 
 
     .empty {
