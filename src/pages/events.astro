@@ -18,9 +18,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
 
 <Main title="Events">
 
-    <Hero title="Events" image="/images/zebrafish-hero.jpg" slot="hero">
-        <p class="hero-subtitle">Community workshops and scientific meetings advancing zebrafish toxicology research</p>
-    </Hero>
+    <Hero title="Events" variant="teal" slot="hero" />
 
     <section class="intro">
         <div class="section-label">Workshops &amp; Meetings</div>
@@ -28,11 +26,11 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
 
     <section class="events">
         <div class="tab-bar" role="tablist">
-            <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="upcoming">Upcoming Events</button>
-            <button class="tab-btn"        role="tab" aria-selected="false" data-tab="past">Past Events</button>
+            <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="past">Past Events</button>
+            <button class="tab-btn"        role="tab" aria-selected="false" data-tab="upcoming">Upcoming Events</button>
         </div>
 
-        <div class="tab-panel" id="tab-upcoming">
+        <div class="tab-panel hidden" id="tab-upcoming">
             {upcoming.length === 0
                 ? <p class="empty">No upcoming events at this time. Check back soon!</p>
                 : await Promise.all(upcoming.map(async entry => {
@@ -62,7 +60,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
             }
         </div>
 
-        <div class="tab-panel hidden" id="tab-past">
+        <div class="tab-panel" id="tab-past">
             {past.length === 0
                 ? <p class="empty">No past events.</p>
                 : await Promise.all(past.map(async entry => {
@@ -85,22 +83,26 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         </div>
     </section>
 
+
 </Main>
 
 <script>
     const buttons = document.querySelectorAll<HTMLButtonElement>('.tab-btn')
     const panels  = document.querySelectorAll<HTMLElement>('.tab-panel')
 
+    function switchTab(target: string) {
+        buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
+        panels.forEach(p  => p.classList.add('hidden'))
+        const btn = document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
+        btn?.classList.add('active')
+        btn?.setAttribute('aria-selected', 'true')
+        document.getElementById(`tab-${target}`)?.classList.remove('hidden')
+    }
+
     buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const target = btn.dataset.tab
-            buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
-            panels.forEach(p  => p.classList.add('hidden'))
-            btn.classList.add('active')
-            btn.setAttribute('aria-selected', 'true')
-            document.getElementById(`tab-${target}`)?.classList.remove('hidden')
-        })
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab!))
     })
+
 </script>
 
 <style>
@@ -114,31 +116,29 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     /* ── Tabs ── */
     .tab-bar {
         display: flex;
-        gap: var(--space-2);
+        gap: var(--space-3);
         margin-bottom: var(--space-8);
-        border-bottom: 2px solid var(--color-border);
-        padding-bottom: 0;
     }
 
     .tab-btn {
-        padding: var(--space-3) var(--space-6);
+        padding: var(--space-2) var(--space-6);
         font: inherit;
         font-size: var(--font-size-base);
         font-weight: var(--font-weight-bold);
         color: var(--color-text-muted);
         background: none;
-        border: none;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -2px;
+        border: 1.5px solid var(--color-border);
+        border-radius: 999px;
         cursor: pointer;
-        transition: color 0.15s, border-color 0.15s;
+        transition: color 0.15s, background 0.15s, border-color 0.15s;
     }
 
-    .tab-btn:hover { color: var(--color-accent); }
+    .tab-btn:hover { color: var(--color-accent); border-color: var(--color-accent); }
 
     .tab-btn.active {
-        color: var(--color-primary);
-        border-bottom-color: var(--color-accent);
+        background: var(--color-accent);
+        color: var(--color-text-white);
+        border-color: var(--color-accent);
     }
 
     .tab-panel.hidden { display: none; }
@@ -192,7 +192,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     .event-title {
         font-size: var(--font-size-h2);
         color: var(--color-primary);
-        margin-bottom: var(--space-4);
+        margin-bottom: var(--space-3);
     }
 
     .event-topic {
@@ -263,12 +263,28 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         margin-bottom: var(--space-4);
     }
 
+    .event-content :global(li) {
+        position: relative;
+        list-style: none;
+        padding-left: var(--space-6);
+        margin-bottom: var(--space-2);
+    }
+
+    .event-content :global(li::before) {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--color-accent);
+        font-weight: var(--font-weight-bold);
+    }
+
     .event-content :global(a) {
         color: var(--color-accent);
         text-decoration: none;
     }
 
     .event-content :global(a:hover) { text-decoration: underline; }
+
 
     .empty {
         color: var(--color-text-muted);
