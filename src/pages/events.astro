@@ -5,17 +5,15 @@ import Hero from '../layouts/Hero.astro'
 import SectionCard from '../components/ui/SectionCard.astro'
 import IconCalendar from '../components/icons/IconCalendar.astro'
 
-const eventsUnsorted = await getCollection("events")
+const allEvents = await getCollection("events")
 
 const today = new Date()
 today.setHours(0, 0, 0, 0)
 
-const events = eventsUnsorted.sort((a, b) =>
-    new Date(a.data.date).getTime() - new Date(b.data.date).getTime()
-)
-
+const events   = allEvents.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime())
 const upcoming = events.filter(e => new Date(e.data.date) >= today)
-const past     = [...events].filter(e => new Date(e.data.date) < today).reverse()
+const past     = events.filter(e => new Date(e.data.date) < today).reverse()
+
 ---
 
 <Main title="Events">
@@ -79,7 +77,6 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         </div>
     </section>
 
-
 </Main>
 
 <script>
@@ -88,17 +85,15 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
 
     function switchTab(target: string) {
         buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
-        panels.forEach(p  => p.classList.add('hidden'))
-        const btn = document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
-        btn?.classList.add('active')
-        btn?.setAttribute('aria-selected', 'true')
+        panels.forEach(p => p.classList.add('hidden'))
+        document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
+            ?.classList.add('active')
+        document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
+            ?.setAttribute('aria-selected', 'true')
         document.getElementById(`tab-${target}`)?.classList.remove('hidden')
     }
 
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.tab!))
-    })
-
+    buttons.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab!)))
 </script>
 
 <style>
@@ -133,21 +128,13 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     .tab-panel.hidden { display: none; }
 
     /* ── Event card ── */
-    .event-card {
-        margin-bottom: var(--space-6);
-    }
+    .event-card { margin-bottom: var(--space-6); }
 
     .event-body {
         padding: var(--space-2) var(--space-8) var(--space-6);
     }
 
-    .event-title {
-        font-size: var(--font-size-h2);
-        color: var(--color-primary);
-        margin-bottom: var(--space-3);
-    }
-
-.event-meta-row {
+    .event-meta-row {
         display: flex;
         align-items: center;
         gap: var(--space-4);
@@ -184,14 +171,13 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     /* ── Rendered markdown content ── */
     .event-content {
         padding: var(--space-3) var(--space-8);
-        background: var(--color-bg-surface);
     }
 
     .event-content :global(strong) {
+        display: block;
         color: var(--color-primary);
         font-size: var(--font-size-body);
         font-weight: var(--font-weight-bold);
-        display: block;
         margin-top: 0;
         margin-bottom: var(--space-4);
     }
@@ -202,9 +188,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         margin-top: var(--space-6);
     }
 
-    .event-content :global(p) {
-        margin-bottom: var(--space-3);
-    }
+    .event-content :global(p) { margin-bottom: var(--space-3); }
 
     /* Goals list — teal checkmarks */
     .event-content :global(ul:not(:last-of-type)) {
@@ -215,9 +199,9 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
 
     .event-content :global(ul:not(:last-of-type) li) {
         position: relative;
-        list-style: none;
         padding-left: var(--space-6);
         margin-bottom: var(--space-3);
+        list-style: none;
     }
 
     .event-content :global(ul:not(:last-of-type) li::before) {
@@ -228,14 +212,14 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         font-weight: var(--font-weight-bold);
     }
 
-    /* Resources heading — top of bordered box */
-    /* Resources heading — styled icon box */
+    /* ── Resources section ── */
+    /* Heading row — bordered box top */
     .event-content :global(p:has(+ ul:last-of-type)) {
         border: 1px solid var(--color-border);
         border-bottom: none;
         border-radius: 8px 8px 0 0;
         background: var(--color-bg-white);
-        padding: var(--space-4) var(--space-5) var(--space-4);
+        padding: var(--space-4) var(--space-5);
         margin-top: var(--space-8);
         margin-bottom: -1px !important;
     }
@@ -250,6 +234,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
     .event-content :global(p:has(+ ul:last-of-type) > strong::before) {
         content: '';
         display: inline-flex;
+        flex-shrink: 0;
         width: 32px;
         height: 32px;
         background-color: var(--color-primary);
@@ -258,18 +243,16 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         background-position: center;
         background-size: 18px 18px;
         border-radius: 8px;
-        flex-shrink: 0;
     }
 
-    /* Resources list — 2-column card grid */
+    /* Resource cards — 2-column grid */
     .event-content :global(ul:last-of-type) {
         list-style: none;
-        padding: var(--space-2) var(--space-5) var(--space-4);
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--space-3);
-        margin-top: 0;
-        margin-bottom: var(--space-4);
+        padding: var(--space-2) var(--space-5) var(--space-4);
+        margin: 0 0 var(--space-4);
         background: var(--color-bg-white);
         border: 1px solid var(--color-border);
         border-top: none;
@@ -280,10 +263,10 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         display: grid;
         grid-template-columns: 36px 1fr;
         column-gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
         background: var(--color-bg-white);
         border: 1px solid var(--color-border);
         border-radius: 8px;
-        padding: var(--space-3) var(--space-4);
         font-size: var(--font-size-sm);
         font-weight: var(--font-weight-bold);
         text-transform: uppercase;
@@ -291,6 +274,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         color: var(--color-text-dark);
     }
 
+    /* Per-item icon base */
     .event-content :global(ul:last-of-type li::before) {
         content: '';
         grid-column: 1;
@@ -305,26 +289,27 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         border-radius: 8px;
     }
 
-    /* Meeting summary — file-text icon */
+    /* Meeting summary */
     .event-content :global(ul:last-of-type li:nth-child(1)::before) {
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cline x1='10' y1='9' x2='8' y2='9'/%3E%3C/svg%3E");
     }
 
-    /* Recording — video icon */
+    /* Recording */
     .event-content :global(ul:last-of-type li:nth-child(2)::before) {
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='23 7 16 12 23 17 23 7'/%3E%3Crect x='1' y='5' width='15' height='14' rx='2' ry='2'/%3E%3C/svg%3E");
     }
 
-    /* Code of conduct — shield icon */
+    /* Code of conduct */
     .event-content :global(ul:last-of-type li:nth-child(3)::before) {
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E");
     }
 
-    /* Slide deck — presentation icon */
+    /* Slide deck */
     .event-content :global(ul:last-of-type li:nth-child(4)::before) {
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='3' width='20' height='14' rx='2'/%3E%3Cline x1='8' y1='21' x2='16' y2='21'/%3E%3Cline x1='12' y1='17' x2='12' y2='21'/%3E%3C/svg%3E");
     }
 
+    /* Resource link / subtext */
     .event-content :global(ul:last-of-type li a),
     .event-content :global(ul:last-of-type li em) {
         display: block;
@@ -337,9 +322,7 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         margin-top: var(--space-1);
     }
 
-    .event-content :global(ul:last-of-type li a) {
-        color: var(--color-accent);
-    }
+    .event-content :global(ul:last-of-type li a) { color: var(--color-accent); }
 
     .event-content :global(ul:last-of-type li a::after) {
         content: '';
@@ -353,14 +336,8 @@ const past     = [...events].filter(e => new Date(e.data.date) < today).reverse(
         vertical-align: middle;
     }
 
-    .event-content :global(a) {
-        color: var(--color-accent);
-        text-decoration: none;
-    }
-
+    .event-content :global(a) { color: var(--color-accent); text-decoration: none; }
     .event-content :global(a:hover) { text-decoration: underline; }
-
-
 
     .empty {
         color: var(--color-text-muted);
