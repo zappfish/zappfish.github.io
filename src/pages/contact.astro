@@ -27,8 +27,6 @@ const CONTACT_EMAIL = 'info@zappfish.org'
         </div>
 
         <form class="contact-form" method="POST" novalidate aria-label="Contact form">
-            <p class="required-note"><span aria-hidden="true">*</span> Required fields</p>
-
             <div class="field">
                 <label for="name">Name <span aria-hidden="true">*</span></label>
                 <input
@@ -177,12 +175,6 @@ const CONTACT_EMAIL = 'info@zappfish.org'
         display: flex;
         flex-direction: column;
         gap: var(--space-5);
-    }
-
-    .required-note {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-muted);
-        margin: 0;
     }
 
     .field {
