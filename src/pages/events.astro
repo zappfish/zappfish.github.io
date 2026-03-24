@@ -46,7 +46,7 @@ const pastCards     = await renderCards(past, false)
             {upcoming.length === 0
                 ? <p class="empty">No upcoming events at this time. Check back soon!</p>
                 : <>
-                    <div class="event-index-card"><SectionCard title="Quick Navigation" iconColor="teal">
+                    <div class="event-index-card"><SectionCard iconColor="teal">
                             <nav class="event-index" aria-label="Upcoming events index">
                                 <ol>
                                     {upcoming.map(e => (
@@ -89,7 +89,7 @@ const pastCards     = await renderCards(past, false)
             {past.length === 0
                 ? <p class="empty">No past events.</p>
                 : <>
-                    <div class="event-index-card"><SectionCard title="Quick Navigation" iconColor="teal">
+                    <div class="event-index-card"><SectionCard iconColor="teal">
                             <nav class="event-index" aria-label="Past events index">
                                 <ol>
                                     {past.map(e => (
