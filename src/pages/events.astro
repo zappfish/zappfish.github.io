@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content"
+import type { CollectionEntry } from "astro:content"
 import Main from '../layouts/Main.astro'
 import Hero from '../layouts/Hero.astro'
 import SectionCard from '../components/ui/SectionCard.astro'
@@ -10,10 +11,21 @@ const allEvents = await getCollection("events")
 const today = new Date()
 today.setHours(0, 0, 0, 0)
 
-const events   = allEvents.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime())
-const upcoming = events.filter(e => new Date(e.data.date) >= today)
-const past     = events.filter(e => new Date(e.data.date) < today).reverse()
+const sorted   = allEvents.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime())
+const upcoming = sorted.filter(e => new Date(e.data.date) >= today)
+const past     = sorted.filter(e => new Date(e.data.date) < today).reverse()
 
+type Event = CollectionEntry<"events">
+
+async function renderCards(entries: Event[], showMeta: boolean) {
+    return Promise.all(entries.map(async entry => {
+        const { Content } = await render(entry)
+        return { entry, Content, showMeta }
+    }))
+}
+
+const upcomingCards = await renderCards(upcoming, true)
+const pastCards     = await renderCards(past, false)
 ---
 
 <Main title="Events">
@@ -33,18 +45,34 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
         <div class="tab-panel hidden" id="tab-upcoming" role="tabpanel" aria-labelledby="tab-btn-upcoming">
             {upcoming.length === 0
                 ? <p class="empty">No upcoming events at this time. Check back soon!</p>
-                : await Promise.all(upcoming.map(async entry => {
-                    const { Content } = await render(entry)
-                    return (
-                        <div class="event-card">
+                : <>
+                    <div class="event-index-card"><SectionCard title="Quick Navigation" iconColor="teal">
+                            <nav class="event-index" aria-label="Upcoming events index">
+                                <ol>
+                                    {upcoming.map(e => (
+                                        <li>
+                                            <a href={`#event-${e.id}`}>
+                                                <span class="index-title">{e.data.title}</span>
+                                                <span class="index-date">{e.data.date}</span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ol>
+                            </nav>
+                        </SectionCard>
+                    </div>
+                    {upcomingCards.map(({ entry, Content, showMeta }) => (
+                        <div class="event-card" id={`event-${entry.id}`}>
                             <SectionCard title={entry.data.title} subtitle={`${entry.data.topic} · ${entry.data.date}`} iconColor="teal">
                                 <IconCalendar slot="icon" />
                                 <div class="event-body">
-                                    <div class="event-meta-row">
-                                        <span class="meta-item">{entry.data.time}</span>
-                                        <span class="meta-divider" aria-hidden="true" />
-                                        <span class="meta-item">{entry.data.location}</span>
-                                    </div>
+                                    {showMeta && (
+                                        <div class="event-meta-row">
+                                            <span class="meta-item">{entry.data.time}</span>
+                                            <span class="meta-divider" aria-hidden="true" />
+                                            <span class="meta-item">{entry.data.location}</span>
+                                        </div>
+                                    )}
                                     {entry.data.signup && entry.data.signup !== 'Closed' &&
                                         <a class="signup-btn" href={entry.data.signup}>Sign Up</a>
                                     }
@@ -52,18 +80,32 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
                                 </div>
                             </SectionCard>
                         </div>
-                    )
-                }))
+                    ))}
+                </>
             }
         </div>
 
         <div class="tab-panel" id="tab-past" role="tabpanel" aria-labelledby="tab-btn-past">
             {past.length === 0
                 ? <p class="empty">No past events.</p>
-                : await Promise.all(past.map(async entry => {
-                    const { Content } = await render(entry)
-                    return (
-                        <div class="event-card">
+                : <>
+                    <div class="event-index-card"><SectionCard title="Quick Navigation" iconColor="teal">
+                            <nav class="event-index" aria-label="Past events index">
+                                <ol>
+                                    {past.map(e => (
+                                        <li>
+                                            <a href={`#event-${e.id}`}>
+                                                <span class="index-title">{e.data.title}</span>
+                                                <span class="index-date">{e.data.date}</span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ol>
+                            </nav>
+                        </SectionCard>
+                    </div>
+                    {pastCards.map(({ entry, Content }) => (
+                        <div class="event-card" id={`event-${entry.id}`}>
                             <SectionCard title={entry.data.title} subtitle={`${entry.data.topic} · ${entry.data.date}`} iconColor="teal">
                                 <IconCalendar slot="icon" />
                                 <div class="event-body">
@@ -71,8 +113,8 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
                                 </div>
                             </SectionCard>
                         </div>
-                    )
-                }))
+                    ))}
+                </>
             }
         </div>
     </section>
@@ -92,18 +134,65 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
         document.getElementById(`tab-${target}`)?.classList.remove('hidden')
     }
 
+    function navigate(index: number) {
+        const btn = buttons[index]
+        btn.focus()
+        switchTab(btn.dataset.tab!)
+    }
+
     buttons.forEach((btn, i) => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab!))
         btn.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') { buttons[(i + 1) % buttons.length].focus(); buttons[(i + 1) % buttons.length].click() }
-            if (e.key === 'ArrowLeft')  { buttons[(i - 1 + buttons.length) % buttons.length].focus(); buttons[(i - 1 + buttons.length) % buttons.length].click() }
-            if (e.key === 'Home') { buttons[0].focus(); buttons[0].click() }
-            if (e.key === 'End')  { buttons[buttons.length - 1].focus(); buttons[buttons.length - 1].click() }
+            if (e.key === 'ArrowRight') navigate((i + 1) % buttons.length)
+            if (e.key === 'ArrowLeft')  navigate((i - 1 + buttons.length) % buttons.length)
+            if (e.key === 'Home')       navigate(0)
+            if (e.key === 'End')        navigate(buttons.length - 1)
         })
     })
 </script>
 
 <style>
+    /* ── Event index ── */
+    .event-index-card { margin-bottom: var(--space-8); }
+    .event-index { margin: 0; }
+
+    .event-index ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .event-index li { border-bottom: 1px solid var(--color-border); }
+    .event-index li:last-child { border-bottom: none; }
+
+    .event-index a {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: var(--space-4);
+        padding: var(--space-3) var(--space-5);
+        text-decoration: none;
+        color: var(--color-text-body);
+        transition: background 0.15s, color 0.15s;
+    }
+
+    .event-index a:hover { background: var(--color-bg-light); }
+    .event-index a:hover .index-title { text-decoration: underline; text-underline-offset: 3px; }
+
+    .index-title {
+        font-size: var(--font-size-ui);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+    }
+
+    .index-date {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
     /* ── Tabs ── */
     .tab-bar {
         display: flex;
@@ -176,9 +265,7 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
     .signup-btn:hover { background: var(--color-accent-hover); }
 
     /* ── Rendered markdown content ── */
-    .event-content {
-        padding: var(--space-3) var(--space-8);
-    }
+    .event-content { padding: var(--space-3) var(--space-8); }
 
     .event-content :global(strong) {
         display: block;
@@ -191,9 +278,7 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
 
     .event-content :global(strong + strong),
     .event-content :global(ul + strong),
-    .event-content :global(p + strong) {
-        margin-top: var(--space-6);
-    }
+    .event-content :global(p + strong) { margin-top: var(--space-6); }
 
     .event-content :global(p) { margin-bottom: var(--space-3); }
 
@@ -208,7 +293,6 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
         position: relative;
         padding-left: var(--space-6);
         margin-bottom: var(--space-3);
-        list-style: none;
     }
 
     .event-content :global(ul:not(:last-of-type) li::before) {
@@ -220,12 +304,11 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
     }
 
     /* ── Resources section ── */
-    /* Heading row — bordered box top */
     .event-content :global(p:has(+ ul:last-of-type)) {
         border: 1px solid var(--color-border);
         border-bottom: none;
         border-radius: 8px 8px 0 0;
-        background: var(--color-bg-white);
+        background: var(--color-bg-surface);
         padding: var(--space-4) var(--space-5);
         margin-top: var(--space-8);
         margin-bottom: -1px !important;
@@ -244,8 +327,8 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
         flex-shrink: 0;
         width: 32px;
         height: 32px;
-        background-color: var(--color-primary);
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cline x1='10' y1='9' x2='8' y2='9'/%3E%3C/svg%3E");
+        background-color: var(--color-accent-tint);
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232a9d8a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cline x1='10' y1='9' x2='8' y2='9'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: center;
         background-size: 18px 18px;
@@ -260,7 +343,7 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
         gap: var(--space-3);
         padding: var(--space-2) var(--space-5) var(--space-4);
         margin: 0 0 var(--space-4);
-        background: var(--color-bg-white);
+        background: var(--color-bg-surface);
         border: 1px solid var(--color-border);
         border-top: none;
         border-radius: 0 0 8px 8px;
@@ -271,7 +354,7 @@ const past     = events.filter(e => new Date(e.data.date) < today).reverse()
         grid-template-columns: 36px 1fr;
         column-gap: var(--space-3);
         padding: var(--space-3) var(--space-4);
-        background: var(--color-bg-white);
+        background: var(--color-bg-surface);
         border: 1px solid var(--color-border);
         border-radius: 8px;
         font-size: var(--font-size-sm);
