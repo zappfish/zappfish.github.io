@@ -1,0 +1,371 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import IconMail from '../components/icons/IconMail.astro'
+import IconStar from '../components/icons/IconStar.astro'
+import IconCalendar from '../components/icons/IconCalendar.astro'
+import IconLink from '../components/icons/IconLink.astro'
+
+const CONTACT_EMAIL = 'info@zappfish.org'
+
+const faqs = [
+    {
+        category: 'Getting Started',
+        question: 'Who can join the Zebrafish Toxicology Phenotype Atlas community?',
+        answer: 'Everyone is welcome to join the Zebrafish Toxicology Phenotype Atlas community. We encourage participation from researchers, clinicians, students, industry professionals, and anyone interested in zebrafish toxicology research.',
+    },
+    {
+        category: 'Getting Started',
+        question: 'How can one join the Zebrafish Toxicology Phenotype Atlas community?',
+        answer: 'Join the Zebrafish Toxicology Phenotype Atlas community by filling out the sign-up form <a href="https://tislab.org/ZebraPhenoAtlas-signup">here</a>.',
+    },
+    {
+        category: 'Data Submission',
+        question: 'How can one submit data to the Zebrafish Toxicology Phenotype Atlas?',
+        answer: 'Data will be submitted through a custom annotation toolkit designed to ensure consistency and reuse. The toolkit is under development and will be released to the community soon. Join the ZAPP community to receive announcements and workshop updates.',
+    },
+    {
+        category: 'Data Submission',
+        question: 'How will my contribution to the Zebrafish Toxicology Phenotype Atlas be reported?',
+        answer: 'All content in the Zebrafish Toxicology Phenotype Atlas will be fully provenanced and attributed to the group or group member who submitted the content. Persistent identifiers such as ORCID will be used.',
+    },
+    {
+        category: 'Access & Licensing',
+        question: 'Who will have access to the Zebrafish Toxicology Phenotype Atlas?',
+        answer: 'The atlas is intended for open access. Licensing and terms of use are still being discussed, but our intention is to use an open license (such as CC BY) to maximize accessibility, reuse, and transparency.',
+    },
+    {
+        category: 'Access & Licensing',
+        question: 'Does the Zebrafish Toxicology Phenotype Atlas have a sustainability plan?',
+        answer: "ZAPP's sustainability follows an open source development model. The atlas, annotation toolkit, and data model are developed as open source software with a defined process for ongoing updates as knowledge evolves.",
+    },
+]
+
+const categories = ['All', ...new Set(faqs.map(f => f.category))]
+---
+
+<Main title="FAQs">
+
+    <Hero title="Frequently Asked Questions" variant="teal" slot="hero" />
+
+    <section class="intro" aria-label="FAQs">
+        <div class="section-label">Frequently Asked Questions</div>
+    </section>
+
+    <!-- Filter tabs -->
+    <div class="filter-bar" role="tablist" aria-label="FAQ categories">
+        {categories.map((cat, i) => (
+            <button
+                class={`filter-btn${i === 0 ? ' active' : ''}`}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+                data-category={cat}
+            >{cat}</button>
+        ))}
+        <span class="question-count" aria-live="polite"><span id="faq-count">{faqs.length}</span> questions</span>
+    </div>
+
+    <div class="faq-layout">
+
+        <!-- Left sidebar -->
+        <aside class="faq-sidebar" aria-label="Help and quick links">
+
+            <div class="sidebar-card">
+                <div class="sidebar-icon"><IconMail /></div>
+                <p class="sidebar-title">Still have questions?</p>
+                <p class="sidebar-desc">Can't find what you're looking for? Contact us directly.</p>
+                <a class="sidebar-btn" href={`mailto:${CONTACT_EMAIL}`}>
+                    Email Us
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <div class="sidebar-card">
+                <p class="sidebar-title">Quick Links</p>
+                <ul class="quick-links">
+                    <li>
+                        <a href="/community/" class="quick-link">
+                            <span class="quick-link-icon"><IconStar /></span>
+                            Join Community
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/events/" class="quick-link">
+                            <span class="quick-link-icon"><IconCalendar /></span>
+                            Workshops
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/get-involved/" class="quick-link">
+                            <span class="quick-link-icon"><IconLink /></span>
+                            Get Involved
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </aside>
+
+        <!-- FAQ accordion -->
+        <div class="faq-list" role="list">
+            {faqs.map((faq, i) => (
+                <div class="faq-item" role="listitem" data-category={faq.category}>
+                    <button
+                        class="faq-trigger"
+                        aria-expanded="false"
+                        aria-controls={`faq-answer-${i}`}
+                        id={`faq-btn-${i}`}
+                    >
+                        <span class="faq-meta">
+                            <span class="faq-category">{faq.category}</span>
+                            <span class="faq-question">{faq.question}</span>
+                        </span>
+                        <span class="faq-icon" aria-hidden="true">
+                            <svg class="icon-plus"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            <svg class="icon-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                    </button>
+                    <div class="faq-answer" id={`faq-answer-${i}`} role="region" aria-labelledby={`faq-btn-${i}`} hidden>
+                        <p set:html={faq.answer} />
+                    </div>
+                </div>
+            ))}
+        </div>
+
+    </div>
+
+</Main>
+
+<script>
+    // ── Accordion ──
+    document.querySelectorAll<HTMLButtonElement>('.faq-trigger').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true'
+            const answerId = btn.getAttribute('aria-controls')!
+            const answer   = document.getElementById(answerId)!
+            const item     = btn.closest('.faq-item')!
+
+            btn.setAttribute('aria-expanded', String(!expanded))
+            answer.hidden = expanded
+            item.classList.toggle('is-open', !expanded)
+        })
+    })
+
+    // ── Filter tabs ──
+    const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter-btn'))
+    const faqItems   = Array.from(document.querySelectorAll<HTMLElement>('.faq-item'))
+    const countEl    = document.getElementById('faq-count')!
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cat = btn.dataset.category!
+
+            filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
+            btn.classList.add('active')
+            btn.setAttribute('aria-selected', 'true')
+
+            let visible = 0
+            faqItems.forEach(item => {
+                const show = cat === 'All' || item.dataset.category === cat
+                item.hidden = !show
+                if (show) visible++
+            })
+            countEl.textContent = String(visible)
+        })
+    })
+</script>
+
+<style>
+    /* ── Filter bar ── */
+    .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        padding: var(--space-4) var(--space-6);
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        margin-bottom: var(--space-8);
+    }
+
+    .filter-btn {
+        padding: var(--space-2) var(--space-5);
+        font: inherit;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-muted);
+        background: none;
+        border: 1.5px solid var(--color-border);
+        border-radius: 999px;
+        cursor: pointer;
+        transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+
+    .filter-btn:hover     { color: var(--color-accent); border-color: var(--color-accent); }
+    .filter-btn.active    { background: var(--color-accent); color: var(--color-text-white); border-color: var(--color-accent); }
+
+    .question-count {
+        margin-left: auto;
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+
+    /* ── Layout ── */
+    .faq-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: var(--space-8);
+        align-items: start;
+        padding-bottom: var(--space-16);
+    }
+
+    @media (max-width: 768px) {
+        .faq-layout { grid-template-columns: 1fr; }
+        .faq-sidebar { display: contents; }
+    }
+
+    /* ── Sidebar ── */
+    .faq-sidebar { display: flex; flex-direction: column; gap: var(--space-4); }
+
+    .sidebar-card {
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        padding: var(--space-5);
+    }
+
+    .sidebar-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-accent-tint);
+        color: var(--color-accent);
+        border-radius: 8px;
+        margin-bottom: var(--space-3);
+    }
+
+    .sidebar-icon :global(svg) { width: 18px; height: 18px; }
+
+    .sidebar-title {
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin-bottom: var(--space-2);
+    }
+
+    .sidebar-desc {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-4);
+    }
+
+    .sidebar-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        width: 100%;
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-primary);
+        color: var(--color-text-white);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.15s;
+    }
+
+    .sidebar-btn:hover { background: var(--color-primary-dark); }
+
+    .quick-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+
+    .quick-link {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--font-size-base);
+        color: var(--color-text-body);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.15s, color 0.15s;
+    }
+
+    .quick-link:hover { background: var(--color-bg-light); color: var(--color-accent); }
+
+    .quick-link-icon {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-accent-tint);
+        color: var(--color-accent);
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+    .quick-link-icon :global(svg) { width: 14px; height: 14px; }
+
+    /* ── FAQ accordion ── */
+    .faq-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+    .faq-item {
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: border-color 0.15s;
+    }
+
+    .faq-item.is-open { border-color: var(--color-accent); }
+
+    .faq-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        width: 100%;
+        padding: var(--space-5) var(--space-6);
+        font: inherit;
+        text-align: left;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .faq-meta { display: flex; flex-direction: column; gap: var(--space-1); }
+
+    .faq-category {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-accent);
+    }
+
+    .faq-question {
+        font-size: var(--font-size-body);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+    }
+
+    .faq-icon { flex-shrink: 0; width: 20px; height: 20px; color: var(--color-text-muted); }
+    .faq-icon svg { width: 20px; height: 20px; }
+    .icon-minus { display: none; }
+    .is-open .icon-plus  { display: none; }
+    .is-open .icon-minus { display: block; }
+
+    .faq-answer {
+        padding: 0 var(--space-6) var(--space-5);
+        font-size: var(--font-size-body);
+        color: var(--color-text-body);
+        line-height: 1.7;
+    }
+
+    .faq-answer :global(a) { color: var(--color-accent); }
+    .faq-answer :global(a:hover) { text-decoration: underline; }
+</style>
