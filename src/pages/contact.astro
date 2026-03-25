@@ -4,10 +4,12 @@ import Hero from '../layouts/Hero.astro'
 import IconMail from '../components/icons/IconMail.astro'
 import IconMessageSquare from '../components/icons/IconMessageSquare.astro'
 import IconUsers from '../components/icons/IconUsers.astro'
+import IconFileText from '../components/icons/IconFileText.astro'
 
-const CONTACT_EMAIL = 'info@zappfish.org'
-const SLACK_URL     = 'https://docs.google.com/forms/d/e/1FAIpQLSdpQuXJSVGJgvYCFycwXSkIce_urbVIubZI_j69Rtuv6TSP4Q/viewform?pli=1'
-const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil_aW0eTlRVewu154UOYGDEzGGoBb0la0Kg/viewform'
+const CONTACT_EMAIL  = 'info@zappfish.org'
+const SLACK_URL      = 'https://docs.google.com/forms/d/e/1FAIpQLSdpQuXJSVGJgvYCFycwXSkIce_urbVIubZI_j69Rtuv6TSP4Q/viewform?pli=1'
+const MAILING_URL    = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil_aW0eTlRVewu154UOYGDEzGGoBb0la0Kg/viewform'
+const HELPDESK_URL   = 'https://github.com/zappfish/helpdesk/issues'
 ---
 
 <Main title="Contact Us">
@@ -53,6 +55,15 @@ const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil
                         <span class="channel-title">Drop us a line directly</span>
                     </div>
                     <a class="channel-cta" href={`mailto:${CONTACT_EMAIL}`}>Send email</a>
+                </div>
+
+                <div class="channel-card">
+                    <div class="channel-icon"><IconFileText /></div>
+                    <div class="channel-body">
+                        <span class="contact-label">Have a specific question?</span>
+                        <span class="channel-title">Submit a helpdesk ticket</span>
+                    </div>
+                    <a class="channel-cta" href={HELPDESK_URL} target="_blank" rel="noopener noreferrer">Open ticket</a>
                 </div>
             </div>
         </div>
