@@ -122,33 +122,37 @@ const pastCards     = await renderCards(past, false)
 </Main>
 
 <script>
-    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.tab-btn'))
-    const panels  = document.querySelectorAll<HTMLElement>('.tab-panel')
+    const initTabs = () => {
+        const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.tab-btn'))
+        const panels  = document.querySelectorAll<HTMLElement>('.tab-panel')
 
-    function switchTab(target: string) {
-        buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
-        panels.forEach(p => p.classList.add('hidden'))
-        const btn = document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
-        btn?.classList.add('active')
-        btn?.setAttribute('aria-selected', 'true')
-        document.getElementById(`tab-${target}`)?.classList.remove('hidden')
-    }
+        const switchTab = (target: string) => {
+            buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
+            panels.forEach(p => p.classList.add('hidden'))
+            const btn = document.querySelector<HTMLButtonElement>(`.tab-btn[data-tab="${target}"]`)
+            btn?.classList.add('active')
+            btn?.setAttribute('aria-selected', 'true')
+            document.getElementById(`tab-${target}`)?.classList.remove('hidden')
+        }
 
-    function navigate(index: number) {
-        const btn = buttons[index]
-        btn.focus()
-        switchTab(btn.dataset.tab!)
-    }
+        const navigate = (index: number) => {
+            const btn = buttons[index]
+            btn.focus()
+            switchTab(btn.dataset.tab!)
+        }
 
-    buttons.forEach((btn, i) => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.tab!))
-        btn.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') navigate((i + 1) % buttons.length)
-            if (e.key === 'ArrowLeft')  navigate((i - 1 + buttons.length) % buttons.length)
-            if (e.key === 'Home')       navigate(0)
-            if (e.key === 'End')        navigate(buttons.length - 1)
+        buttons.forEach((btn, i) => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab!))
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') navigate((i + 1) % buttons.length)
+                if (e.key === 'ArrowLeft')  navigate((i - 1 + buttons.length) % buttons.length)
+                if (e.key === 'Home')       navigate(0)
+                if (e.key === 'End')        navigate(buttons.length - 1)
+            })
         })
-    })
+    }
+
+    document.addEventListener('astro:page-load', initTabs)
 </script>
 
 <style>
