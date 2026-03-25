@@ -18,7 +18,7 @@ const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil
         <div class="section-label">Get in Touch</div>
     </section>
 
-    <section class="contact-layout" aria-label="Contact information and form">
+    <section class="contact-layout" aria-label="Contact information">
 
         <div class="contact-info">
             <p class="contact-lead">
@@ -28,34 +28,36 @@ const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil
             <h2 class="sub-heading">Other ways to connect</h2>
 
             <div class="contact-channels">
-                <a class="channel-card" href={SLACK_URL} target="_blank" rel="noopener noreferrer">
+                <div class="channel-card">
                     <div class="channel-icon"><IconMessageSquare /></div>
                     <div class="channel-body">
                         <span class="contact-label">Join the conversation</span>
                         <span class="channel-title">Chat with us on ZebrafishRocks!</span>
                     </div>
-                    <span class="channel-cta">Join Slack</span>
-                </a>
+                    <a class="channel-cta" href={SLACK_URL} target="_blank" rel="noopener noreferrer">Join Slack</a>
+                </div>
 
-                <a class="channel-card" href={MAILING_URL} target="_blank" rel="noopener noreferrer">
+                <div class="channel-card">
                     <div class="channel-icon"><IconUsers /></div>
                     <div class="channel-body">
                         <span class="contact-label">Stay updated</span>
                         <span class="channel-title">Join our mailing list</span>
                     </div>
-                    <span class="channel-cta">Sign up</span>
-                </a>
+                    <a class="channel-cta" href={MAILING_URL} target="_blank" rel="noopener noreferrer">Sign up</a>
+                </div>
 
-                <a class="channel-card channel-card--muted" href={`mailto:${CONTACT_EMAIL}`}>
+                <div class="channel-card">
                     <div class="channel-icon"><IconMail /></div>
                     <div class="channel-body">
-                        <span class="contact-label">reach us by email</span>
-                        <span class="channel-title">{CONTACT_EMAIL}</span>
+                        <span class="contact-label">Prefer email?</span>
+                        <span class="channel-title">Drop us a line directly</span>
                     </div>
-                </a>
+                    <a class="channel-cta" href={`mailto:${CONTACT_EMAIL}`}>Send email</a>
+                </div>
             </div>
         </div>
 
+        <!-- Form hidden until API is ready
         <div>
             <h2 class="sub-heading">Prefer to send us a message?</h2>
             <form class="contact-form" method="POST" novalidate aria-label="Contact form">
@@ -92,6 +94,7 @@ const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil
                 </div>
             </form>
         </div>
+        -->
 
     </section>
 
@@ -133,15 +136,9 @@ const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil
 
 <style>
     .contact-layout {
-        display: grid;
-        grid-template-columns: 1fr 1.4fr;
-        gap: var(--space-16);
-        align-items: start;
+        max-width: 560px;
+        margin: 0 auto;
         padding-bottom: var(--space-16);
-    }
-
-    @media (max-width: 720px) {
-        .contact-layout { grid-template-columns: 1fr; gap: var(--space-10); }
     }
 
     .contact-lead {
@@ -174,9 +171,9 @@ const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil
         outline-offset: 3px;
     }
 
-    .channel-card:hover       { border-color: var(--color-accent); box-shadow: 0 2px 12px rgba(42,157,138,0.12); }
-    .channel-card:focus-visible { outline: 2px solid var(--color-accent); }
-    .channel-card--muted      { border-style: dashed; }
+    a.channel-card:hover       { border-color: var(--color-accent); box-shadow: 0 2px 12px rgba(42,157,138,0.12); }
+    a.channel-card:focus-visible { outline: 2px solid var(--color-accent); }
+
 
     .channel-icon {
         flex-shrink: 0;
@@ -213,7 +210,11 @@ const MAILING_URL   = 'https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil
         font-weight: var(--font-weight-bold);
         border-radius: 6px;
         white-space: nowrap;
+        text-decoration: none;
     }
+
+    .channel-cta:hover { background: var(--color-accent-hover); }
+    .channel-cta:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 
     /* ── Form ── */
     .contact-form { display: flex; flex-direction: column; gap: var(--space-4); }
