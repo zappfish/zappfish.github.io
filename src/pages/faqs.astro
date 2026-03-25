@@ -4,44 +4,10 @@ import Hero from '../layouts/Hero.astro'
 import IconMail from '../components/icons/IconMail.astro'
 import IconStar from '../components/icons/IconStar.astro'
 import IconCalendar from '../components/icons/IconCalendar.astro'
-import IconLink from '../components/icons/IconLink.astro'
+import { faqs, CATEGORIES } from '../data/faqs'
 
 const CONTACT_EMAIL = 'info@zappfish.org'
-
-const faqs = [
-    {
-        category: 'Getting Started',
-        question: 'Who can join the Zebrafish Toxicology Phenotype Atlas community?',
-        answer: 'Everyone is welcome to join the Zebrafish Toxicology Phenotype Atlas community. We encourage participation from researchers, clinicians, students, industry professionals, and anyone interested in zebrafish toxicology research.',
-    },
-    {
-        category: 'Getting Started',
-        question: 'How can one join the Zebrafish Toxicology Phenotype Atlas community?',
-        answer: 'Join the Zebrafish Toxicology Phenotype Atlas community by filling out the sign-up form <a href="https://tislab.org/ZebraPhenoAtlas-signup">here</a>.',
-    },
-    {
-        category: 'Data Submission',
-        question: 'How can one submit data to the Zebrafish Toxicology Phenotype Atlas?',
-        answer: 'Data will be submitted through a custom annotation toolkit designed to ensure consistency and reuse. The toolkit is under development and will be released to the community soon. Join the ZAPP community to receive announcements and workshop updates.',
-    },
-    {
-        category: 'Data Submission',
-        question: 'How will my contribution to the Zebrafish Toxicology Phenotype Atlas be reported?',
-        answer: 'All content in the Zebrafish Toxicology Phenotype Atlas will be fully provenanced and attributed to the group or group member who submitted the content. Persistent identifiers such as ORCID will be used.',
-    },
-    {
-        category: 'Access & Licensing',
-        question: 'Who will have access to the Zebrafish Toxicology Phenotype Atlas?',
-        answer: 'The atlas is intended for open access. Licensing and terms of use are still being discussed, but our intention is to use an open license (such as CC BY) to maximize accessibility, reuse, and transparency.',
-    },
-    {
-        category: 'Access & Licensing',
-        question: 'Does the Zebrafish Toxicology Phenotype Atlas have a sustainability plan?',
-        answer: "ZAPP's sustainability follows an open source development model. The atlas, annotation toolkit, and data model are developed as open source software with a defined process for ongoing updates as knowledge evolves.",
-    },
-]
-
-const categories = ['All', ...new Set(faqs.map(f => f.category))]
+const categories = ['All', ...CATEGORIES]
 ---
 
 <Main title="FAQs">
@@ -84,7 +50,7 @@ const categories = ['All', ...new Set(faqs.map(f => f.category))]
                 <p class="sidebar-title">Quick Links</p>
                 <ul class="quick-links">
                     <li>
-                        <a href="/community/" class="quick-link">
+                        <a href="/get-involved/" class="quick-link">
                             <span class="quick-link-icon"><IconStar /></span>
                             Join Community
                         </a>
@@ -95,12 +61,7 @@ const categories = ['All', ...new Set(faqs.map(f => f.category))]
                             Workshops
                         </a>
                     </li>
-                    <li>
-                        <a href="/get-involved/" class="quick-link">
-                            <span class="quick-link-icon"><IconLink /></span>
-                            Get Involved
-                        </a>
-                    </li>
+
                 </ul>
             </div>
 
@@ -137,41 +98,41 @@ const categories = ['All', ...new Set(faqs.map(f => f.category))]
 </Main>
 
 <script>
-    // ── Accordion ──
-    document.querySelectorAll<HTMLButtonElement>('.faq-trigger').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const expanded = btn.getAttribute('aria-expanded') === 'true'
-            const answerId = btn.getAttribute('aria-controls')!
-            const answer   = document.getElementById(answerId)!
-            const item     = btn.closest('.faq-item')!
+    // ── Accordion (event delegation) ──
+    document.querySelector('.faq-list')!.addEventListener('click', e => {
+        const btn = (e.target as Element).closest<HTMLButtonElement>('.faq-trigger')
+        if (!btn) return
 
-            btn.setAttribute('aria-expanded', String(!expanded))
-            answer.hidden = expanded
-            item.classList.toggle('is-open', !expanded)
-        })
+        const expanded = btn.getAttribute('aria-expanded') === 'true'
+        btn.setAttribute('aria-expanded', String(!expanded))
+        document.getElementById(btn.getAttribute('aria-controls')!)!.hidden = expanded
+        btn.closest('.faq-item')!.classList.toggle('is-open', !expanded)
     })
 
-    // ── Filter tabs ──
-    const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter-btn'))
-    const faqItems   = Array.from(document.querySelectorAll<HTMLElement>('.faq-item'))
+    // ── Filter tabs (event delegation) ──
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn')
+    const faqItems   = document.querySelectorAll<HTMLElement>('.faq-item')
     const countEl    = document.getElementById('faq-count')!
 
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const cat = btn.dataset.category!
-
-            filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
-            btn.classList.add('active')
-            btn.setAttribute('aria-selected', 'true')
-
-            let visible = 0
-            faqItems.forEach(item => {
-                const show = cat === 'All' || item.dataset.category === cat
-                item.hidden = !show
-                if (show) visible++
-            })
-            countEl.textContent = String(visible)
+    const setFilter = (category: string) => {
+        filterBtns.forEach(btn => {
+            const active = btn.dataset.category === category
+            btn.classList.toggle('active', active)
+            btn.setAttribute('aria-selected', String(active))
         })
+
+        let visible = 0
+        faqItems.forEach(item => {
+            const show = category === 'All' || item.dataset.category === category
+            item.hidden = !show
+            if (show) visible++
+        })
+        countEl.textContent = String(visible)
+    }
+
+    document.querySelector('.filter-bar')!.addEventListener('click', e => {
+        const btn = (e.target as Element).closest<HTMLButtonElement>('.filter-btn')
+        if (btn) setFilter(btn.dataset.category!)
     })
 </script>
 
@@ -192,7 +153,6 @@ const categories = ['All', ...new Set(faqs.map(f => f.category))]
     .filter-btn {
         padding: var(--space-2) var(--space-5);
         font: inherit;
-        font-size: var(--font-size-base);
         font-weight: var(--font-weight-bold);
         color: var(--color-text-muted);
         background: none;
@@ -250,7 +210,6 @@ const categories = ['All', ...new Set(faqs.map(f => f.category))]
     .sidebar-icon :global(svg) { width: 18px; height: 18px; }
 
     .sidebar-title {
-        font-size: var(--font-size-base);
         font-weight: var(--font-weight-bold);
         color: var(--color-text-dark);
         margin-bottom: var(--space-2);
@@ -271,7 +230,6 @@ const categories = ['All', ...new Set(faqs.map(f => f.category))]
         padding: var(--space-3) var(--space-4);
         background: var(--color-primary);
         color: var(--color-text-white);
-        font-size: var(--font-size-base);
         font-weight: var(--font-weight-bold);
         border-radius: 8px;
         text-decoration: none;
@@ -287,7 +245,6 @@ const categories = ['All', ...new Set(faqs.map(f => f.category))]
         align-items: center;
         gap: var(--space-3);
         padding: var(--space-2) var(--space-3);
-        font-size: var(--font-size-base);
         color: var(--color-text-body);
         text-decoration: none;
         border-radius: 8px;
