@@ -1,0 +1,112 @@
+---
+export interface AccordionItem {
+    id: string
+    label: string
+    meta?: string
+    content: string
+    dataCategory?: string
+}
+
+interface Props {
+    items: AccordionItem[]
+}
+
+const { items } = Astro.props
+---
+
+<div class="accordion" role="list">
+    {items.map(item => (
+        <div class="accordion-item" role="listitem" data-category={item.dataCategory}>
+            <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls={`accordion-answer-${item.id}`}
+                id={`accordion-btn-${item.id}`}
+            >
+                <span class="accordion-meta">
+                    {item.meta && <span class="accordion-meta-label">{item.meta}</span>}
+                    <span class="accordion-label">{item.label}</span>
+                </span>
+                <span class="accordion-icon" aria-hidden="true">
+                    <svg class="icon-plus"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <svg class="icon-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </span>
+            </button>
+            <div class="accordion-content" id={`accordion-answer-${item.id}`} role="region" aria-labelledby={`accordion-btn-${item.id}`} hidden>
+                <p set:html={item.content} />
+            </div>
+        </div>
+    ))}
+</div>
+
+<script>
+    document.querySelector('.accordion')!.addEventListener('click', e => {
+        const btn = (e.target as Element).closest<HTMLButtonElement>('.accordion-trigger')
+        if (!btn) return
+
+        const expanded = btn.getAttribute('aria-expanded') === 'true'
+        btn.setAttribute('aria-expanded', String(!expanded))
+        document.getElementById(btn.getAttribute('aria-controls')!)!.hidden = expanded
+        btn.closest('.accordion-item')!.classList.toggle('is-open', !expanded)
+    })
+</script>
+
+<style>
+    .accordion { display: flex; flex-direction: column; gap: var(--space-3); }
+
+    .accordion-item {
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: border-color 0.15s;
+    }
+
+    .accordion-item.is-open { border-color: var(--color-accent); }
+
+    .accordion-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        width: 100%;
+        padding: var(--space-5) var(--space-6);
+        font: inherit;
+        text-align: left;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .accordion-meta { display: flex; flex-direction: column; gap: var(--space-1); }
+
+    .accordion-meta-label {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-accent);
+    }
+
+    .accordion-label {
+        font-size: var(--font-size-body);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+    }
+
+    .accordion-icon { flex-shrink: 0; width: 20px; height: 20px; color: var(--color-text-muted); }
+    .accordion-icon svg { width: 20px; height: 20px; }
+    .icon-minus { display: none; }
+    .is-open .icon-plus  { display: none; }
+    .is-open .icon-minus { display: block; }
+
+    .accordion-content {
+        padding: 0 var(--space-6) var(--space-5);
+        font-size: var(--font-size-body);
+        color: var(--color-text-body);
+        line-height: 1.7;
+    }
+
+    .accordion-content :global(a) { color: var(--color-accent); }
+    .accordion-content :global(a:hover) { text-decoration: underline; }
+</style>

@@ -5,6 +5,7 @@ import IconMail from '../components/icons/IconMail.astro'
 import IconStar from '../components/icons/IconStar.astro'
 import IconCalendar from '../components/icons/IconCalendar.astro'
 import { faqs, CATEGORIES } from '../data/faqs'
+import Accordion from '../components/ui/Accordion.astro'
 
 const CONTACT_EMAIL = 'info@zappfish.org'
 const categories = ['All', ...CATEGORIES]
@@ -68,50 +69,22 @@ const categories = ['All', ...CATEGORIES]
         </aside>
 
         <!-- FAQ accordion -->
-        <div class="faq-list" role="list">
-            {faqs.map((faq, i) => (
-                <div class="faq-item" role="listitem" data-category={faq.category}>
-                    <button
-                        class="faq-trigger"
-                        aria-expanded="false"
-                        aria-controls={`faq-answer-${i}`}
-                        id={`faq-btn-${i}`}
-                    >
-                        <span class="faq-meta">
-                            <span class="faq-category">{faq.category}</span>
-                            <span class="faq-question">{faq.question}</span>
-                        </span>
-                        <span class="faq-icon" aria-hidden="true">
-                            <svg class="icon-plus"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                            <svg class="icon-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        </span>
-                    </button>
-                    <div class="faq-answer" id={`faq-answer-${i}`} role="region" aria-labelledby={`faq-btn-${i}`} hidden>
-                        <p set:html={faq.answer} />
-                    </div>
-                </div>
-            ))}
-        </div>
+        <Accordion items={faqs.map((faq, i) => ({
+            id: String(i),
+            label: faq.question,
+            meta: faq.category,
+            content: faq.answer,
+            dataCategory: faq.category,
+        }))} />
 
     </div>
 
 </Main>
 
 <script>
-    // ── Accordion (event delegation) ──
-    document.querySelector('.faq-list')!.addEventListener('click', e => {
-        const btn = (e.target as Element).closest<HTMLButtonElement>('.faq-trigger')
-        if (!btn) return
-
-        const expanded = btn.getAttribute('aria-expanded') === 'true'
-        btn.setAttribute('aria-expanded', String(!expanded))
-        document.getElementById(btn.getAttribute('aria-controls')!)!.hidden = expanded
-        btn.closest('.faq-item')!.classList.toggle('is-open', !expanded)
-    })
-
     // ── Filter tabs (event delegation) ──
     const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn')
-    const faqItems   = document.querySelectorAll<HTMLElement>('.faq-item')
+    const faqItems   = document.querySelectorAll<HTMLElement>('.accordion-item')
     const countEl    = document.getElementById('faq-count')!
 
     const setFilter = (category: string) => {
@@ -267,62 +240,4 @@ const categories = ['All', ...CATEGORIES]
 
     .quick-link-icon :global(svg) { width: 14px; height: 14px; }
 
-    /* ── FAQ accordion ── */
-    .faq-list { display: flex; flex-direction: column; gap: var(--space-3); }
-
-    .faq-item {
-        background: var(--color-bg-white);
-        border: 1px solid var(--color-border);
-        border-radius: 12px;
-        overflow: hidden;
-        transition: border-color 0.15s;
-    }
-
-    .faq-item.is-open { border-color: var(--color-accent); }
-
-    .faq-trigger {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--space-4);
-        width: 100%;
-        padding: var(--space-5) var(--space-6);
-        font: inherit;
-        text-align: left;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    .faq-meta { display: flex; flex-direction: column; gap: var(--space-1); }
-
-    .faq-category {
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-bold);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--color-accent);
-    }
-
-    .faq-question {
-        font-size: var(--font-size-body);
-        font-weight: var(--font-weight-bold);
-        color: var(--color-text-dark);
-    }
-
-    .faq-icon { flex-shrink: 0; width: 20px; height: 20px; color: var(--color-text-muted); }
-    .faq-icon svg { width: 20px; height: 20px; }
-    .icon-minus { display: none; }
-    .is-open .icon-plus  { display: none; }
-    .is-open .icon-minus { display: block; }
-
-    .faq-answer {
-        padding: 0 var(--space-6) var(--space-5);
-        font-size: var(--font-size-body);
-        color: var(--color-text-body);
-        line-height: 1.7;
-    }
-
-    .faq-answer :global(a) { color: var(--color-accent); }
-    .faq-answer :global(a:hover) { text-decoration: underline; }
 </style>
