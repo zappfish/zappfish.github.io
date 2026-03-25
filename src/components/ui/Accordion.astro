@@ -40,14 +40,21 @@ const { items } = Astro.props
 </div>
 
 <script>
-    document.querySelector('.accordion')!.addEventListener('click', e => {
-        const btn = (e.target as Element).closest<HTMLButtonElement>('.accordion-trigger')
-        if (!btn) return
+    const init = () => {
+        const accordion = document.querySelector('.accordion')
+        if (!accordion) return
 
-        const expanded = btn.getAttribute('aria-expanded') === 'true'
-        btn.setAttribute('aria-expanded', String(!expanded))
-        btn.closest('.accordion-item')!.classList.toggle('is-open', !expanded)
-    })
+        accordion.addEventListener('click', e => {
+            const btn = (e.target as Element).closest<HTMLButtonElement>('.accordion-trigger')
+            if (!btn) return
+
+            const expanded = btn.getAttribute('aria-expanded') === 'true'
+            btn.setAttribute('aria-expanded', String(!expanded))
+            btn.closest('.accordion-item')!.classList.toggle('is-open', !expanded)
+        })
+    }
+
+    document.addEventListener('astro:page-load', init)
 </script>
 
 <style>

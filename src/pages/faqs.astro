@@ -82,30 +82,32 @@ const categories = ['All', ...CATEGORIES]
 </Main>
 
 <script>
-    // ── Filter tabs (event delegation) ──
-    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn')
-    const faqItems   = document.querySelectorAll<HTMLElement>('.accordion-item')
-    const countEl    = document.getElementById('faq-count')!
+    document.addEventListener('astro:page-load', () => {
+        const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn')
+        const faqItems   = document.querySelectorAll<HTMLElement>('.accordion-item')
+        const countEl    = document.getElementById('faq-count')
+        if (!filterBtns.length || !countEl) return
 
-    const setFilter = (category: string) => {
-        filterBtns.forEach(btn => {
-            const active = btn.dataset.category === category
-            btn.classList.toggle('active', active)
-            btn.setAttribute('aria-selected', String(active))
+        const setFilter = (category: string) => {
+            filterBtns.forEach(btn => {
+                const active = btn.dataset.category === category
+                btn.classList.toggle('active', active)
+                btn.setAttribute('aria-selected', String(active))
+            })
+
+            let visible = 0
+            faqItems.forEach(item => {
+                const show = category === 'All' || item.dataset.category === category
+                item.style.display = show ? '' : 'none'
+                if (show) visible++
+            })
+            countEl.textContent = String(visible)
+        }
+
+        document.querySelector('.filter-bar')?.addEventListener('click', e => {
+            const btn = (e.target as Element).closest<HTMLButtonElement>('.filter-btn')
+            if (btn) setFilter(btn.dataset.category!)
         })
-
-        let visible = 0
-        faqItems.forEach(item => {
-            const show = category === 'All' || item.dataset.category === category
-            item.hidden = !show
-            if (show) visible++
-        })
-        countEl.textContent = String(visible)
-    }
-
-    document.querySelector('.filter-bar')!.addEventListener('click', e => {
-        const btn = (e.target as Element).closest<HTMLButtonElement>('.filter-btn')
-        if (btn) setFilter(btn.dataset.category!)
     })
 </script>
 
@@ -209,7 +211,7 @@ const categories = ['All', ...CATEGORIES]
         transition: background 0.15s;
     }
 
-    .sidebar-btn:hover { background: var(--color-primary-dark); }
+    .sidebar-btn:hover { background: var(--color-accent-hover); }
 
     .quick-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1); }
 
