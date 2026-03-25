@@ -1,6 +1,9 @@
 /* Box-sizing reset */
 * { box-sizing: border-box; }
 
+/* Prevent layout shift from scrollbar appearing/disappearing */
+html { overflow-y: scroll; }
+
 /* Accessibility — keyboard focus ring (Tab navigation only, not shown on mouse click) */
 :focus-visible {
     outline: 2px solid var(--color-accent);

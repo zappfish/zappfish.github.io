@@ -81,11 +81,11 @@ const { label, items } = Astro.props
     .nav-dropdown.open .chevron { transform: rotate(180deg); }
 
     .dropdown {
-        display: none;
+        display: flex;
+        flex-direction: column;
         position: absolute;
         top: calc(100% + 4px);
         left: 0;
-        flex-direction: column;
         min-width: 180px;
         list-style: none;
         margin: 0;
@@ -95,15 +95,19 @@ const { label, items } = Astro.props
         border-radius: 8px;
         box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         z-index: 200;
-        animation: dd-in 0.15s ease;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4px);
+        transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+        pointer-events: none;
     }
 
-    @keyframes dd-in {
-        from { opacity: 0; transform: translateY(-4px); }
-        to   { opacity: 1; transform: translateY(0); }
+    .nav-dropdown.open .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
     }
-
-    .nav-dropdown.open .dropdown { display: flex; }
 
     .dropdown li a {
         display: block;
@@ -133,7 +137,8 @@ const { label, items } = Astro.props
             border-radius: 0;
             box-shadow: none;
             padding: 0;
-            animation: none;
+            transform: none;
+            transition: none;
             background: var(--color-bg-subtle, rgba(0,0,0,0.03));
         }
 

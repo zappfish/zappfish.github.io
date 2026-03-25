@@ -32,8 +32,8 @@ const { items } = Astro.props
                     <svg class="icon-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </span>
             </button>
-            <div class="accordion-content" id={`accordion-answer-${item.id}`} role="region" aria-labelledby={`accordion-btn-${item.id}`} hidden>
-                <p set:html={item.content} />
+            <div class="accordion-content" id={`accordion-answer-${item.id}`} role="region" aria-labelledby={`accordion-btn-${item.id}`}>
+                <div class="accordion-content-inner"><p set:html={item.content} /></div>
             </div>
         </div>
     ))}
@@ -46,7 +46,6 @@ const { items } = Astro.props
 
         const expanded = btn.getAttribute('aria-expanded') === 'true'
         btn.setAttribute('aria-expanded', String(!expanded))
-        document.getElementById(btn.getAttribute('aria-controls')!)!.hidden = expanded
         btn.closest('.accordion-item')!.classList.toggle('is-open', !expanded)
     })
 </script>
@@ -101,12 +100,20 @@ const { items } = Astro.props
     .is-open .icon-minus { display: block; }
 
     .accordion-content {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.3s ease;
+    }
+
+    .is-open .accordion-content { max-height: 600px; }
+
+    .accordion-content-inner {
         padding: 0 var(--space-6) var(--space-5);
         font-size: var(--font-size-body);
         color: var(--color-text-body);
         line-height: 1.7;
     }
 
-    .accordion-content :global(a) { color: var(--color-accent); }
-    .accordion-content :global(a:hover) { text-decoration: underline; }
+    .accordion-content-inner :global(a) { color: var(--color-accent); }
+    .accordion-content-inner :global(a:hover) { text-decoration: underline; }
 </style>
