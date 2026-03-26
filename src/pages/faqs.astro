@@ -3,7 +3,7 @@ import Main from '../layouts/Main.astro'
 import Hero from '../layouts/Hero.astro'
 import IconMail from '../components/icons/IconMail.astro'
 import IconStar from '../components/icons/IconStar.astro'
-import IconCalendar from '../components/icons/IconCalendar.astro'
+import IconTarget from '../components/icons/IconTarget.astro'
 import { faqs, CATEGORIES } from '../data/faqs'
 import Accordion from '../components/ui/Accordion.astro'
 
@@ -51,18 +51,17 @@ const categories = ['All', ...CATEGORIES]
                 <p class="sidebar-title">Quick Links</p>
                 <ul class="quick-links">
                     <li>
+                        <a href="/goals/" class="quick-link">
+                            <span class="quick-link-icon"><IconTarget /></span>
+                            Project Goals
+                        </a>
+                    </li>
+                    <li>
                         <a href="/get-involved/" class="quick-link">
                             <span class="quick-link-icon"><IconStar /></span>
                             Join Community
                         </a>
                     </li>
-                    <li>
-                        <a href="/events/" class="quick-link">
-                            <span class="quick-link-icon"><IconCalendar /></span>
-                            Workshops
-                        </a>
-                    </li>
-
                 </ul>
             </div>
 
