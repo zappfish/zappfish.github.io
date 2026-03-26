@@ -17,9 +17,7 @@ export const navItems: NavItem[] = [
     ]},
     { label: "FAQ",         path: "/faqs" },
     { label: "Resources",   children: [
-        { label: "Resources",       path: "/resources" },
-        { label: "GitHub Basics",   path: "https://oboacademy.github.io/obook/howto/github-basics/", external: true },
-        { label: "ZAPP Data Model", path: "https://zappfish.org/zebrafish-toxicology-atlas-schema/", external: true },
-        { label: "ZAPP GitHub",     path: "https://github.com/zappfish", external: true },
+        { label: "Resources",   path: "/resources" },
+        { label: "ZAPP GitHub", path: "https://github.com/zappfish", external: true },
     ]},
 ]
