@@ -1,0 +1,24 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+---
+
+<Main title="ZAPP in the Wild">
+
+    <Hero title="ZAPP in the Wild" variant="teal" slot="hero" />
+
+    <section class="intro">
+        <div class="section-label">ZAPP in the Wild</div>
+        <p class="intro-text">Presentations, posters, and publications featuring ZAPP — coming soon.</p>
+    </section>
+
+</Main>
+
+<style>
+    .intro-text {
+        font-size: var(--font-size-body);
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        font-style: italic;
+    }
+</style>

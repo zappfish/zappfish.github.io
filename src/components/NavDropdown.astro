@@ -1,7 +1,7 @@
 ---
 interface Props {
     label: string
-    items: { label: string; path: string }[]
+    items: { label: string; path: string; external?: boolean }[]
 }
 const { label, items } = Astro.props
 ---
@@ -13,7 +13,9 @@ const { label, items } = Astro.props
         </svg>
     </button>
     <ul class="dropdown">
-        {items.map(({ label, path }) => <li><a href={path}>{label}</a></li>)}
+        {items.map(({ label, path, external }) => (
+            <li><a href={path} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{label}</a></li>
+        ))}
     </ul>
 </li>
 

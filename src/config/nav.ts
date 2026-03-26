@@ -1,7 +1,7 @@
 // Single source of truth for site nav — used by Header and Footer.
 export type NavItem =
     | { label: string; path: string; children?: never }
-    | { label: string; path?: never; children: { label: string; path: string }[] }
+    | { label: string; path?: never; children: { label: string; path: string; external?: boolean }[] }
 
 export const navItems: NavItem[] = [
     { label: "Home",        path: "/" },
@@ -16,5 +16,10 @@ export const navItems: NavItem[] = [
         { label: "Contact Us",  path: "#" },
     ]},
     { label: "FAQ",         path: "/faqs" },
-    { label: "Resources",   path: "#" },
+    { label: "Resources",   children: [
+        { label: "Resources",       path: "/resources" },
+        { label: "GitHub Basics",   path: "https://oboacademy.github.io/obook/howto/github-basics/", external: true },
+        { label: "ZAPP Data Model", path: "https://zappfish.org/zebrafish-toxicology-atlas-schema/", external: true },
+        { label: "ZAPP GitHub",     path: "https://github.com/zappfish", external: true },
+    ]},
 ]
