@@ -6,15 +6,15 @@ export type NavItem =
 export const navItems: NavItem[] = [
     { label: "Home",        path: "/" },
     { label: "About",       children: [
-        { label: "Goals",   path: "/goals/" },
-        { label: "SAB",     path: "/sab/" },
-        { label: "Team",    path: "/team/" },
+        { label: "Goals",   path: "/goals" },
+        { label: "SAB",     path: "/sab" },
+        { label: "Team",    path: "/team" },
     ]},
     { label: "Get Involved", children: [
-        { label: "Community",   path: "/community/" },
-        { label: "Events",      path: "/events/" },
+        { label: "Community",   path: "/community" },
+        { label: "Events",      path: "/events" },
         { label: "Contact Us",  path: "#" },
     ]},
-    { label: "FAQ",         path: "/faqs/" },
+    { label: "FAQ",         path: "/faqs" },
     { label: "Resources",   path: "#" },
 ]

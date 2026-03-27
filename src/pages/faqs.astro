@@ -1,0 +1,244 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import IconMail from '../components/icons/IconMail.astro'
+import IconStar from '../components/icons/IconStar.astro'
+import IconTarget from '../components/icons/IconTarget.astro'
+import { faqs, CATEGORIES } from '../data/faqs'
+import Accordion from '../components/ui/Accordion.astro'
+
+const CONTACT_EMAIL = 'info@zappfish.org'
+const categories = ['All', ...CATEGORIES]
+---
+
+<Main title="FAQs">
+
+    <Hero title="Frequently Asked Questions" variant="teal" slot="hero" />
+
+    <section class="intro" aria-label="FAQs">
+        <div class="section-label">Frequently Asked Questions</div>
+    </section>
+
+    <!-- Filter tabs -->
+    <div class="filter-bar" role="tablist" aria-label="FAQ categories">
+        {categories.map((cat, i) => (
+            <button
+                class={`filter-btn${i === 0 ? ' active' : ''}`}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+                data-category={cat}
+            >{cat}</button>
+        ))}
+        <span class="question-count" aria-live="polite"><span id="faq-count">{faqs.length}</span> questions</span>
+    </div>
+
+    <div class="faq-layout">
+
+        <!-- Left sidebar -->
+        <aside class="faq-sidebar" aria-label="Help and quick links">
+
+            <div class="sidebar-card">
+                <div class="sidebar-icon"><IconMail /></div>
+                <p class="sidebar-title">Still have questions?</p>
+                <p class="sidebar-desc">Can't find what you're looking for? Contact us directly.</p>
+                <a class="sidebar-btn" href={`mailto:${CONTACT_EMAIL}`}>
+                    Email Us
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <div class="sidebar-card">
+                <p class="sidebar-title">Quick Links</p>
+                <ul class="quick-links">
+                    <li>
+                        <a href="/goals" class="quick-link">
+                            <span class="quick-link-icon"><IconTarget /></span>
+                            Project Goals
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/get-involved" class="quick-link">
+                            <span class="quick-link-icon"><IconStar /></span>
+                            Join Community
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </aside>
+
+        <!-- FAQ accordion -->
+        <Accordion items={faqs.map((faq, i) => ({
+            id: String(i),
+            label: faq.question,
+            meta: faq.category,
+            content: faq.answer,
+            dataCategory: faq.category,
+        }))} />
+
+    </div>
+
+</Main>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn')
+        const faqItems   = document.querySelectorAll<HTMLElement>('.accordion-item')
+        const countEl    = document.getElementById('faq-count')
+        if (!filterBtns.length || !countEl) return
+
+        const setFilter = (category: string) => {
+            filterBtns.forEach(btn => {
+                const active = btn.dataset.category === category
+                btn.classList.toggle('active', active)
+                btn.setAttribute('aria-selected', String(active))
+            })
+
+            let visible = 0
+            faqItems.forEach(item => {
+                const show = category === 'All' || item.dataset.category === category
+                item.style.display = show ? '' : 'none'
+                if (show) visible++
+            })
+            countEl.textContent = String(visible)
+        }
+
+        document.querySelector('.filter-bar')?.addEventListener('click', e => {
+            const btn = (e.target as Element).closest<HTMLButtonElement>('.filter-btn')
+            if (btn) setFilter(btn.dataset.category!)
+        })
+    })
+</script>
+
+<style>
+    /* ── Filter bar ── */
+    .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        padding: var(--space-4) var(--space-6);
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        margin-bottom: var(--space-8);
+    }
+
+    .filter-btn {
+        padding: var(--space-2) var(--space-5);
+        font: inherit;
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-muted);
+        background: none;
+        border: 1.5px solid var(--color-border);
+        border-radius: 999px;
+        cursor: pointer;
+        transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+
+    .filter-btn:hover     { color: var(--color-accent); border-color: var(--color-accent); }
+    .filter-btn.active    { background: var(--color-accent); color: var(--color-text-white); border-color: var(--color-accent); }
+
+    .question-count {
+        margin-left: auto;
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+
+    /* ── Layout ── */
+    .faq-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: var(--space-8);
+        align-items: start;
+        padding-bottom: var(--space-16);
+    }
+
+    @media (max-width: 768px) {
+        .faq-layout { grid-template-columns: 1fr; }
+        .faq-sidebar { display: contents; }
+    }
+
+    /* ── Sidebar ── */
+    .faq-sidebar { display: flex; flex-direction: column; gap: var(--space-4); }
+
+    .sidebar-card {
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        padding: var(--space-5);
+    }
+
+    .sidebar-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-accent-tint);
+        color: var(--color-accent);
+        border-radius: 8px;
+        margin-bottom: var(--space-3);
+    }
+
+    .sidebar-icon :global(svg) { width: 18px; height: 18px; }
+
+    .sidebar-title {
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin-bottom: var(--space-2);
+    }
+
+    .sidebar-desc {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-4);
+    }
+
+    .sidebar-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        width: 100%;
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-primary);
+        color: var(--color-text-white);
+        font-weight: var(--font-weight-bold);
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.15s;
+    }
+
+    .sidebar-btn:hover { background: var(--color-accent-hover); }
+
+    .quick-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+
+    .quick-link {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-2) var(--space-3);
+        color: var(--color-text-body);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.15s, color 0.15s;
+    }
+
+    .quick-link:hover { background: var(--color-bg-light); color: var(--color-accent); }
+
+    .quick-link-icon {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-accent-tint);
+        color: var(--color-accent);
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+    .quick-link-icon :global(svg) { width: 14px; height: 14px; }
+
+</style>
