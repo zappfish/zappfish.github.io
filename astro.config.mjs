@@ -6,5 +6,5 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   integrations: [mdx()],
   site: "https://zappfish.org",
-  trailingSlash: "always",
+  trailingSlash: "never",
 });
