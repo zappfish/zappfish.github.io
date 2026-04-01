@@ -1,6 +1,69 @@
 ---
 import Main from '../layouts/Main.astro'
 import Hero from '../layouts/Hero.astro'
+import PresentationIcon from '../icons/presentation.svg?raw'
+import PosterIcon from '../icons/poster.svg?raw'
+
+type WildItem = {
+    title: string
+    description: string
+    href: string
+    label: string
+    icon: string
+    secondaryHref?: string
+    secondaryLabel?: string
+}
+
+type WildGroup = {
+    section: string
+    intro: string
+    items: WildItem[]
+}
+
+const groups: WildGroup[] = [
+    {
+        section: 'Presentations',
+        intro: 'Slide decks presented at conferences, webinars, and internal meetings.',
+        items: [
+            {
+                title: 'ZAPP Project Overview — EHLC Webinar',
+                description: 'Introduces the ZAPP project with progress updates and outreach strategy. Presented at the Environmental Health Language Collaborative (EHLC) webinar (January 2026).',
+                href: 'https://docs.google.com/presentation/d/1x_WJbZTcEUYk_qXmNFIRomhvHmrVRNJ1lg6GBQCzTtg/edit',
+                label: 'View Slides',
+                secondaryHref: 'https://youtu.be/7RNK1g1n9K4',
+                secondaryLabel: 'Watch Recording',
+                icon: PresentationIcon,
+            },
+            {
+                title: 'ZAPP Goals Presentation',
+                description: 'Introduces the goals of the ZAPP project. Presented at the UNC faculty meeting and various conferences (2024–2025).',
+                href: 'https://docs.google.com/presentation/d/11_Bn-TGUQowUwZu_-r-Lf9LdMOCti1BpzlpuD2uL0UU/edit?slide=id.g2ff9a4904e5_0_284#slide=id.g2ff9a4904e5_0_284',
+                label: 'View Slides',
+                icon: PresentationIcon,
+            },
+        ],
+    },
+    {
+        section: 'Posters',
+        intro: 'Posters presented at scientific conferences.',
+        items: [
+            {
+                title: 'ZAPP Project Update Poster',
+                description: 'Introduces the ZAPP project and gives an update on the progress made, especially on the data model and upcoming submission form(January 2026).',
+                href: 'https://docs.google.com/presentation/d/1nqotxQarESk-W2Rm5Ym804EFhYR7dzyUI8HHqwkQgE8/edit?slide=id.g3923fc95426_5_0#slide=id.g3923fc95426_5_0',
+                label: 'View Poster',
+                icon: PosterIcon,
+            },
+            {
+                title: 'ZAPP Goals Poster',
+                description: 'This presentation introduces the goals of the ZAPP project(2024-2025).',
+                href: 'https://docs.google.com/presentation/d/1Fvpqb-4PhTjCwczzyO_QacFQ1--w2N6KCU-xxFtCPPw/edit?slide=id.g2bc22cfab27_0_287#slide=id.g2bc22cfab27_0_287',
+                label: 'View Poster',
+                icon: PosterIcon,
+            },
+        ],
+    },
+]
 ---
 
 <Main title="ZAPP in the Wild">
@@ -9,16 +72,180 @@ import Hero from '../layouts/Hero.astro'
 
     <section class="intro">
         <div class="section-label">ZAPP in the Wild</div>
-        <p class="intro-text">Presentations, posters, and publications featuring ZAPP — coming soon.</p>
+        <p class="intro-text">Presentations and posters featuring ZAPP at conferences, webinars, and beyond.</p>
     </section>
+
+    {groups.map(group => (
+        <section class="resource-group">
+            <h2 class="group-heading">{group.section}</h2>
+            {group.intro && <p class="group-intro">{group.intro}</p>}
+            <div class="resource-cards">
+                {group.items.map(item => (
+                    <div class="resource-card">
+                        <div class="resource-text">
+                            <p class="resource-title">
+                                <span class="resource-icon" set:html={item.icon} aria-hidden="true" />
+                                {item.title}
+                            </p>
+                            <p class="resource-desc">{item.description}</p>
+                        </div>
+                        <div class="resource-actions">
+                            <a class="resource-link" href={item.href} target="_blank" rel="noopener noreferrer">
+                                {item.label}
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                    <polyline points="12 5 19 12 12 19"/>
+                                </svg>
+                            </a>
+                            {item.secondaryHref && (
+                                <a class="resource-link resource-link--secondary" href={item.secondaryHref} target="_blank" rel="noopener noreferrer">
+                                    {item.secondaryLabel}
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13">
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                        <polyline points="12 5 19 12 12 19"/>
+                                    </svg>
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    ))}
 
 </Main>
 
 <style>
+    .intro {
+        margin-bottom: var(--space-4);
+    }
+
     .intro-text {
         font-size: var(--font-size-body);
-        color: var(--color-text-muted);
+        color: var(--color-text-body);
         line-height: 1.7;
-        font-style: italic;
+        max-width: 640px;
+    }
+
+    .resource-group {
+        margin-bottom: var(--space-8);
+    }
+
+    .group-heading {
+        font-size: var(--font-size-h2);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin-bottom: var(--space-2);
+        padding-bottom: var(--space-3);
+        border-bottom: 2px solid var(--color-accent);
+        display: inline-block;
+    }
+
+    .group-intro {
+        font-size: var(--font-size-body);
+        color: var(--color-text-body);
+        line-height: 1.7;
+        margin-bottom: var(--space-4);
+    }
+
+    .resource-cards {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .resource-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-5);
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        box-shadow: var(--shadow-subtle);
+        transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .resource-card:hover {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-card);
+        transform: translateY(-2px);
+    }
+
+    .resource-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .resource-title {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--font-size-body);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin: 0;
+    }
+
+    .resource-icon {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(42,157,138,0.15) 0%, rgba(26,83,92,0.10) 100%);
+        border: 1px solid rgba(42,157,138,0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-accent);
+        position: relative;
+        top: -1px;
+    }
+
+    .resource-icon :global(svg) {
+        width: 16px;
+        height: 16px;
+    }
+
+    .resource-desc {
+        font-size: var(--font-size-ui);
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .resource-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .resource-link {
+        display: inline-flex;
+        align-self: flex-start;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        background: var(--color-accent);
+        color: var(--color-text-white);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background 0.15s;
+    }
+
+    .resource-link:hover { background: var(--color-accent-hover); }
+
+    .resource-link--secondary {
+        background: transparent;
+        color: var(--color-accent);
+        border: 1px solid var(--color-accent);
+    }
+
+    .resource-link--secondary:hover {
+        background: var(--color-accent);
+        color: var(--color-text-white);
     }
 </style>
