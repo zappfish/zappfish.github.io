@@ -53,7 +53,7 @@ const latestPosts = (await getCollection('blog'))
         <h2>Recent Blog Posts</h2>
         <div class="blog-cards">
             {latestPosts.map(post => (
-                <a class="blog-card" href={`/blog/${post.id}`}>
+                <a class="blog-card" href={`/blog/${post.id.replace(/\.md$/, '')}`}>
                     <div class="blog-card-image">
                         {post.data.image
                             ? <img src={post.data.image} alt={post.data.title} />
