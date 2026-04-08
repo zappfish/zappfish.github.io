@@ -5,6 +5,11 @@ import HeroCTAItem from '../components/ui/HeroCTAItem.astro'
 import FeatureCard from '../components/ui/FeatureCard.astro'
 import SectionCard from '../components/ui/SectionCard.astro'
 import { featureItems } from '../config/features'
+import { getCollection } from 'astro:content'
+
+const latestPosts = (await getCollection('blog'))
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 3)
 ---
 
 <Main title="ZAPP">
@@ -46,8 +51,28 @@ import { featureItems } from '../config/features'
 
     <section class="blog-preview">
         <h2>Recent Blog Posts</h2>
-        <div class="blog-coming-soon">
-            <p>Blog posts coming soon. Stay tuned for updates from the ZAPP community.</p>
+        <div class="blog-cards">
+            {latestPosts.map(post => (
+                <a class="blog-card" href={`/blog/${post.id}`}>
+                    <div class="blog-card-image">
+                        {post.data.image
+                            ? <img src={post.data.image} alt={post.data.title} />
+                            : <div class="blog-card-image-placeholder" />
+                        }
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span>{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                        </div>
+                        <p class="blog-card-title">{post.data.title}</p>
+                        <p class="blog-card-excerpt">{post.data.excerpt}</p>
+                        <span class="blog-card-read-more">Read more →</span>
+                    </div>
+                </a>
+            ))}
+        </div>
+        <div class="blog-footer">
+            <a href="/blog" class="blog-all-link">View all posts →</a>
         </div>
     </section>
 
@@ -85,17 +110,93 @@ import { featureItems } from '../config/features'
     }
 
     /* ── Blog preview ── */
-    .blog-coming-soon {
-        text-align: center;
-        padding: var(--space-12) var(--space-8);
-        background: var(--color-bg-surface);
-        border: 2px dashed var(--color-border);
-        border-radius: 10px;
-        color: var(--color-text-muted);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+    .blog-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 480px));
+        gap: var(--space-6);
     }
 
-    .blog-coming-soon p { margin-bottom: 0; }
+    .blog-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        overflow: hidden;
+        text-decoration: none;
+        box-shadow: var(--shadow-subtle);
+        transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .blog-card:hover {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-card);
+        transform: translateY(-2px);
+    }
+
+    .blog-card-image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .blog-card-image-placeholder {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, rgba(42,157,138,0.15) 0%, rgba(26,83,92,0.2) 100%);
+    }
+
+    .blog-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        padding: var(--space-5);
+        flex: 1;
+    }
+
+    .blog-card-meta {
+        display: flex;
+        gap: var(--space-3);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+
+    .blog-card-title {
+        font-size: var(--font-size-body);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin: 0;
+    }
+
+    .blog-card-excerpt {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-body);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .blog-card-read-more {
+        font-size: var(--font-size-action);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+        margin-top: auto;
+        align-self: flex-end;
+    }
+
+    .blog-footer {
+        margin-top: var(--space-6);
+        text-align: center;
+    }
+
+    .blog-all-link {
+        font-size: var(--font-size-action);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+
+    .blog-all-link:hover { text-decoration: underline; }
 
 
     @media (max-width: 900px) {
