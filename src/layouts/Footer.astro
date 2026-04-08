@@ -13,23 +13,19 @@ const flatItems    = navItems.filter(item => item.path && item.path !== "/")
             <a href="mailto:info@zappfish.org">info@zappfish.org</a>
         </div>
 
-        {groupedItems.map(item => (
+        {groupedItems.map((item, i) => (
             <nav class="footer-col" aria-label={`${item.label} navigation`}>
                 <ul class="footer-link-list">
                     {item.children!.map(child => (
                         <li><a href={child.path}>{child.label}</a></li>
                     ))}
+                    {i === groupedItems.length - 1 && flatItems.map(item => (
+                        <li><a href={item.path}>{item.label}</a></li>
+                    ))}
                 </ul>
             </nav>
         ))}
 
-        <nav class="footer-col" aria-label="Resources navigation">
-            <ul class="footer-link-list">
-                {flatItems.map(item => (
-                    <li><a href={item.path}>{item.label}</a></li>
-                ))}
-            </ul>
-        </nav>
 
     </div>
 
