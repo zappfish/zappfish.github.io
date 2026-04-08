@@ -19,6 +19,7 @@ export const navItems: NavItem[] = [
     { label: "Resources",   children: [
         { label: "Technical Resources",   path: "/resources" },
         { label: "ZAPP in the Wild",      path: "/zapp-in-the-wild" },
+        { label: "Blog",                  path: "/blog" },
         { label: "ZAPP GitHub",           path: "https://github.com/zappfish", external: true },
     ]},
 ]
