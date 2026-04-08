@@ -1,0 +1,90 @@
+---
+import Main from '../../layouts/Main.astro'
+import Hero from '../../layouts/Hero.astro'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+    const posts = await getCollection('blog')
+    return posts.map(post => ({ params: { slug: post.id }, props: { post } }))
+}
+
+const { post } = Astro.props
+const { Content } = await post.render()
+---
+
+<Main title={post.data.title}>
+
+    <Hero title={post.data.title} variant="teal" slot="hero" />
+
+    <article class="post">
+        <div class="post-meta">
+            <span class="post-date">{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <span class="post-author">{post.data.author}</span>
+        </div>
+        <div class="post-content">
+            <Content />
+        </div>
+        <a class="back-link" href="/blog">← Back to Blog</a>
+    </article>
+
+</Main>
+
+<style>
+    .post {
+        max-width: 860px;
+        margin-top: var(--space-2);
+        margin-bottom: var(--space-12);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .post-meta {
+        display: flex;
+        gap: var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+
+    .post-date,
+    .post-author {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+
+    .post-content :global(h2) {
+        font-size: var(--font-size-h2);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin: var(--space-8) 0 var(--space-3);
+    }
+
+    .post-content :global(p) {
+        font-size: var(--font-size-body);
+        color: var(--color-text-body);
+        line-height: 1.8;
+        margin-bottom: var(--space-4);
+    }
+
+    .post-content :global(ul) {
+        margin: 0 0 var(--space-4) var(--space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .post-content :global(li) {
+        font-size: var(--font-size-body);
+        color: var(--color-text-body);
+        line-height: 1.7;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: var(--space-8);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+
+    .back-link:hover { text-decoration: underline; }
+</style>
