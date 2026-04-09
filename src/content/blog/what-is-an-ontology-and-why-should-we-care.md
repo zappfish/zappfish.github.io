@@ -3,6 +3,7 @@ title: "What Is an Ontology and Why Should We Care?"
 date: 2026-04-08
 author: MeeSiing Ngu
 excerpt: "If you have ever tried to compare results across zebrafish studies, you have likely encountered a frustrating issue. Ontologies are how we solve it."
+image: /images/blog/blog-ontology-1.png
 ---
 
 ### The Hidden Problem in Modern Biology
