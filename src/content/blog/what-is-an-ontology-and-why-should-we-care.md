@@ -6,6 +6,8 @@ excerpt: "If you have ever tried to compare results across zebrafish studies, yo
 image: /images/blog/blog-ontology-1.png
 ---
 
+![What Is an Ontology and Why Should We Care](/images/blog/blog-ontology-1.png)
+
 ### The Hidden Problem in Modern Biology
 
 If you have ever tried to compare results across zebrafish studies, you have likely encountered a frustrating issue. One paper reports "reduced swimming," another describes "hypoactivity," and a third refers to "decreased locomotor response." It is not always clear whether these observations are identical, similar, or meaningfully different.
@@ -26,7 +28,10 @@ An ontology typically includes:
 
 This structure allows both researchers and software to understand how concepts fit together.
 
-![A diagram showing how ontology terms are connected in a structured hierarchy](/images/blog/blog-ontology-1.png)
+<figure>
+  <img src="/images/blog/blog-ontology-3.png" alt="Ontology structure linking zebrafish concepts across taxonomy, anatomy, and biological processes" />
+  <figcaption>Ontology structure linking zebrafish concepts across taxonomy, anatomy, and biological processes.</figcaption>
+</figure>
 
 ---
 
@@ -46,13 +51,16 @@ As biology becomes increasingly data-driven, ontologies are becoming essential i
 
 ---
 
-### Why Ontologies Matter for the Zebrafish Community?
+### Why Ontologies Matter for Zebrafish Community
 
 In zebrafish research, ontologies might sound like a technical concept, but they solve a very practical problem: everyone describes things a little differently. One lab might record a behavior as "reduced swimming," while another calls it "hypoactivity." Ontologies provide a **shared, standardized vocabulary with clear definitions, so researchers are essentially speaking the same language**. This makes a big difference when trying to compare results across studies, especially in a field like zebrafish research where experiments often generate large, complex datasets. With consistent terminology, data from different labs can be combined more easily, enabling broader analyses and collaborations.
 
-They also make it much easier to find relevant information. Instead of relying on exact keyword matches, **ontology-based systems can connect related ideas**. So, for example, if you search for "heart defects," an ontology-based system can also surface studies describing related findings such as "cardiac malformations" or "cardiac abnormality," even if those exact words were not used in your original search. Another benefit is reproducibility: when terms are clearly defined and used consistently, it becomes easier for others to **understand exactly what was observed and to replicate the experiment.**
+<figure>
+  <img src="/images/blog/blog-ontology-2.png" alt="Different labs often use different terms for the same concept" />
+  <figcaption>Different labs often use different terms for the same concept. Ontologies provide a shared, standardized vocabulary with clear definitions, reducing ambiguity and enabling comparison across studies.</figcaption>
+</figure>
 
-![An illustration of how ontology-based search connects related zebrafish phenotype terms](/images/blog/blog-ontology-2.png)
+They also make it much easier to find relevant information. Instead of relying on exact keyword matches, **ontology-based systems can connect related ideas**. So, for example, if you search for "heart defects", an ontology-based system can also surface studies describing related findings such as "cardiac malformations" or "cardiac abnormality", even if those exact words were not used in your original search. Another benefit is reproducibility: when terms are clearly defined and used consistently, it becomes easier for others to **understand exactly what was observed and compared to and to replicate the experiment.**
 
 Ontologies also open the door to modern computational approaches, such as machine learning and artificial intelligence. These methods rely on data that is not only digital, but structured and consistently defined so that computers can interpret it correctly. Ontologies provide this foundation by organizing information into clearly defined concepts and relationships, making datasets **machine-readable and interoperable**. As a result, researchers can apply advanced analytical tools to automatically detect patterns, compare results across large datasets, and even generate new hypotheses. In zebrafish research, this means being able to extract deeper insights from complex phenotypic and behavioral data, ultimately accelerating discovery and improving the predictive power of scientific studies.
 
