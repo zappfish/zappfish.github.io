@@ -23,7 +23,7 @@ const sections = navItems
             <ul>
             {sections.map((item) =>
                 'children' in item
-                    ? <NavDropdown label={item.label} items={item.children!} />
+                    ? <NavDropdown label={item.label} items={item.children!} align={item.label === 'Resources' ? 'right' : 'left'} />
                     : <li><a href={item.path}>{item.label}</a></li>
             )}
             </ul>

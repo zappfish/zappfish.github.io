@@ -1,0 +1,251 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import PresentationIcon from '../icons/presentation.svg?raw'
+import PosterIcon from '../icons/poster.svg?raw'
+
+type WildItem = {
+    title: string
+    description: string
+    href: string
+    label: string
+    icon: string
+    type: string
+    date: string
+    authors: string
+    secondaryHref?: string
+    secondaryLabel?: string
+}
+
+type WildGroup = {
+    section: string
+    intro: string
+    items: WildItem[]
+}
+
+const groups: WildGroup[] = [
+    {
+        section: 'Presentations',
+        intro: 'Slide decks presented at conferences, webinars, and internal meetings.',
+        items: [
+            {
+                title: 'Zebrafish Atlas Phenotype Project (ZAPP): A Community-Driven Framework for Zebrafish Toxicology and Phenotype Data',
+                description: 'This presentation introduces the Zebrafish Atlas Phenotype Project (ZAPP), including our outreach strategy. This presentation was given at the Environmental Health Language Collaborative (EHLC) webinar in January 2026. ',
+                href: 'https://zenodo.org/records/19475862',
+                label: 'View Presentation',
+                icon: PresentationIcon,
+                type: 'Presentation',
+                date: 'April 8, 2026',
+                authors: 'Toro, Sabrina; Burger, Alexa',
+            },
+        ],
+    },
+    {
+        section: 'Posters',
+        intro: 'Posters presented at scientific conferences.',
+        items: [
+            {
+                title: 'ZAPP: A Community-Governed Project To Standardize Zebrafish Toxicology And Phenotype Data',
+                description: 'Poster presented at the 11th Strategic Conference of Zebrafish Investigators (January 2026).',
+                href: 'https://zenodo.org/records/19475992',
+                label: 'View Poster',
+                icon: PosterIcon,
+                type: 'Poster',
+                date: 'April 8, 2026',
+                authors: 'Ngu, Mee; Golden, Patrick; Odell, Aaron; Gehrke, Sarah; Thessen, Anne; Hamm, Jonathan; Schaper, Kevin; Haendel, Melissa; Burger, Alexa; Toro, Sabrina',
+            },
+        ],
+    },
+]
+---
+
+<Main title="ZAPP in the Wild">
+
+    <Hero title="ZAPP in the Wild" variant="teal" slot="hero" />
+
+    <section class="intro">
+        <div class="section-label">ZAPP in the Wild</div>
+    </section>
+
+    {groups.map(group => (
+        <section class="resource-group">
+            <h2 class="group-heading">{group.section}</h2>
+            {group.intro && <p class="group-intro">{group.intro}</p>}
+            <div class="resource-cards">
+                {group.items.map(item => (
+                    <div class="resource-card">
+                        <div class="resource-text">
+                            <p class="resource-title">
+                                <span class="resource-icon" set:html={item.icon} aria-hidden="true" />
+                                {item.title}
+                            </p>
+                            <p class="resource-desc">{item.description}</p>
+                            <p class="resource-meta">Part of <a href="https://zenodo.org/communities/zapp/records?q=&l=list&p=1&s=10&sort=newest" target="_blank" rel="noopener noreferrer">Zebrafish Toxicology Phenotype Atlas Project</a></p>
+                            <p class="resource-meta">Updated on {item.date}</p>
+                        </div>
+                        <div class="resource-actions">
+                            <a class="resource-link" href={item.href} target="_blank" rel="noopener noreferrer">
+                                {item.label}
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                    <polyline points="12 5 19 12 12 19"/>
+                                </svg>
+                            </a>
+                            {item.secondaryHref && (
+                                <a class="resource-link resource-link--secondary" href={item.secondaryHref} target="_blank" rel="noopener noreferrer">
+                                    {item.secondaryLabel}
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13">
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                        <polyline points="12 5 19 12 12 19"/>
+                                    </svg>
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    ))}
+
+</Main>
+
+<style>
+    .intro {
+        margin-bottom: var(--space-4);
+    }
+
+    .resource-group {
+        margin-bottom: var(--space-8);
+    }
+
+    .group-heading {
+        font-size: var(--font-size-h2);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin-bottom: var(--space-2);
+        padding-bottom: var(--space-3);
+        border-bottom: 2px solid var(--color-accent);
+        display: inline-block;
+    }
+
+    .group-intro {
+        font-size: var(--font-size-body);
+        color: var(--color-text-body);
+        line-height: 1.7;
+        margin-bottom: var(--space-4);
+    }
+
+    .resource-cards {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .resource-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-5);
+        background: var(--color-bg-white);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        box-shadow: var(--shadow-subtle);
+        transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .resource-card:hover {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-card);
+        transform: translateY(-2px);
+    }
+
+    .resource-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .resource-title {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--font-size-body);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-dark);
+        margin: 0;
+    }
+
+    .resource-icon {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--color-bg-tint);
+        border: 1px solid var(--color-accent-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-accent);
+        position: relative;
+        top: -1px;
+    }
+
+    .resource-icon :global(svg) {
+        width: 16px;
+        height: 16px;
+    }
+
+    .resource-desc {
+        font-size: var(--font-size-ui);
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .resource-meta {
+        font-size: var(--font-size-ui);
+        color: var(--color-text-muted);
+        font-style: italic;
+        margin: 0;
+    }
+
+    .resource-meta a {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+    .resource-meta a:hover { text-decoration: underline; }
+
+    .resource-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .resource-link {
+        display: inline-flex;
+        align-self: flex-start;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        background: var(--color-accent);
+        color: var(--color-text-white);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background 0.15s;
+    }
+
+    .resource-link:hover { background: var(--color-accent-hover); }
+
+    .resource-link--secondary {
+        background: transparent;
+        color: var(--color-accent);
+        border: 1px solid var(--color-accent);
+    }
+
+    .resource-link--secondary:hover {
+        background: var(--color-accent);
+        color: var(--color-text-white);
+    }
+</style>

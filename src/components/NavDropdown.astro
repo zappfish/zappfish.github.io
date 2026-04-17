@@ -1,11 +1,12 @@
 ---
 interface Props {
     label: string
-    items: { label: string; path: string }[]
+    items: { label: string; path: string; external?: boolean }[]
+    align?: 'left' | 'right'
 }
-const { label, items } = Astro.props
+const { label, items, align = 'left' } = Astro.props
 ---
-<li class="nav-dropdown">
+<li class={`nav-dropdown${align === 'right' ? ' dropdown-right' : ''}`}>
     <button type="button" aria-haspopup="true" aria-expanded="false">
         {label}
         <svg class="chevron" aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -13,7 +14,9 @@ const { label, items } = Astro.props
         </svg>
     </button>
     <ul class="dropdown">
-        {items.map(({ label, path }) => <li><a href={path}>{label}</a></li>)}
+        {items.map(({ label, path, external }) => (
+            <li><a href={path} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{label}</a></li>
+        ))}
     </ul>
 </li>
 
@@ -59,6 +62,7 @@ const { label, items } = Astro.props
 
 <style>
     .nav-dropdown { position: relative; }
+    .nav-dropdown.dropdown-right .dropdown { left: auto; right: 0; }
 
     .nav-dropdown > button {
         display: inline-flex;
