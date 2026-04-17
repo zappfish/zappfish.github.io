@@ -1,6 +1,8 @@
 ---
 import Main from '../../layouts/Main.astro'
 import Hero from '../../layouts/Hero.astro'
+import LinkedInIcon from '../../icons/linkedin.svg?raw'
+import CopyLinkIcon from '../../icons/copy-link.svg?raw'
 import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
@@ -28,22 +30,16 @@ const { Content, headings } = await post.render()
             <div class="sidebar-section">
                 <p class="sidebar-section-label">Share Article</p>
                 <div class="sidebar-share-item">
-                    <a class="sidebar-share-link" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(Astro.url.href)}`} target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.7 5.5 4.3 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-                        Share on Twitter
-                    </a>
-                </div>
-                <div class="sidebar-share-item">
                     <a class="sidebar-share-link" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`} target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        <span class="sidebar-share-icon" set:html={LinkedInIcon} aria-hidden="true" />
                         Share on LinkedIn
                     </a>
                 </div>
                 <div class="sidebar-share-item">
-                    <a class="sidebar-share-link" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(Astro.url.href)}`} target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                        Share on Facebook
-                    </a>
+                    <button class="sidebar-share-link sidebar-copy-btn" type="button" data-copy-link>
+                        <span class="sidebar-share-icon" set:html={CopyLinkIcon} aria-hidden="true" />
+                        <span class="sidebar-copy-label">Copy Link</span>
+                    </button>
                 </div>
             </div>
 
@@ -69,6 +65,21 @@ const { Content, headings } = await post.render()
     </div>
 
 </Main>
+
+<script>
+    document.querySelectorAll('[data-copy-link]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const label = btn.querySelector('.sidebar-copy-label')
+            if (!label) return
+            try {
+                await navigator.clipboard.writeText(window.location.href)
+                const original = label.textContent
+                label.textContent = 'Copied!'
+                setTimeout(() => { label.textContent = original }, 1500)
+            } catch (e) {}
+        })
+    })
+</script>
 
 <style>
     .post-layout {
@@ -152,6 +163,15 @@ const { Content, headings } = await post.render()
         color: var(--color-text-dark);
         text-decoration: none;
         padding: var(--space-2) var(--space-3);
+    }
+
+    .sidebar-copy-btn {
+        width: 100%;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        text-align: left;
     }
     .sidebar-share-item:hover .sidebar-share-link { color: var(--color-accent); }
     .sidebar-share-link svg { flex-shrink: 0; color: var(--color-accent); }
