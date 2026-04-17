@@ -87,6 +87,7 @@ time, mark, audio, video {
     --color-border:        #e0ddd6;   /* dividers, card borders               */
     --color-accent-tint:   #e6f5f3;   /* very light teal — icon bg, tints     */
     --color-bg-tint: linear-gradient(135deg, rgba(42,157,138,0.15) 0%, rgba(26,83,92,0.10) 100%); /* teal gradient — card/callout bg */
+    --color-accent-border: rgba(42,157,138,0.25); /* teal border for icons/accents */
 
     /* ── Hero ── */
     --color-hero-image-bg:    #5b8fa3;                  /* solid bg for image hero      */
