@@ -19,14 +19,17 @@ const { Content, headings } = await post.render()
 
     <div class="post-layout">
 
-        <h1 class="post-title">{post.data.title}</h1>
+        <header class="post-header">
+            <h1 class="post-title">{post.data.title}</h1>
+            <div class="post-meta">
+                <span class="post-date">{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                <span class="post-meta-sep">•</span>
+                <span class="post-author">By {post.data.author}</span>
+            </div>
+        </header>
 
         <aside class="post-sidebar">
             <a class="back-link" href="/blog">← Back to Blogs</a>
-            <div class="sidebar-meta">
-                <p class="sidebar-date">{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                <p class="sidebar-author">By {post.data.author}</p>
-            </div>
 
             <div class="sidebar-section">
                 <p class="sidebar-section-label">Share Article</p>
@@ -91,13 +94,28 @@ const { Content, headings } = await post.render()
         align-items: start;
     }
 
-    .post-title {
+    .post-header {
         grid-column: 2 / 3;
+    }
+
+    .post-title {
         font-size: var(--font-size-display);
         font-weight: var(--font-weight-bold);
         color: var(--color-primary);
         line-height: 1.2;
-        margin: 0;
+        margin: 0 0 var(--space-3);
+    }
+
+    .post-meta {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--font-size-ui);
+        color: var(--color-text-muted);
+    }
+
+    .post-meta-sep {
+        color: var(--color-border);
     }
 
     /* ── Sidebar ── */
@@ -118,26 +136,6 @@ const { Content, headings } = await post.render()
         text-decoration: none;
     }
     .back-link:hover { text-decoration: underline; }
-
-    .sidebar-meta {
-        border-top: 1px solid var(--color-border);
-        padding-top: var(--space-4);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-1);
-    }
-
-    .sidebar-date {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-muted);
-        margin: 0;
-    }
-
-    .sidebar-author {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-muted);
-        margin: 0;
-    }
 
     /* ── Sidebar sections ── */
     .sidebar-section {
@@ -302,11 +300,5 @@ const { Content, headings } = await post.render()
             padding-bottom: var(--space-4);
         }
 
-        .sidebar-meta {
-            border-top: none;
-            padding-top: 0;
-            border-left: 1px solid var(--color-border);
-            padding-left: var(--space-4);
-        }
     }
 </style>
