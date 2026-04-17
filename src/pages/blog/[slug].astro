@@ -14,7 +14,7 @@ const { Content, headings } = await post.render()
 
 <Main title={post.data.title}>
 
-    <Hero title={post.data.title} variant="teal" slot="hero" />
+    <Hero title="Blogs" variant="teal" slot="hero" />
 
     <div class="post-layout">
 
@@ -60,6 +60,7 @@ const { Content, headings } = await post.render()
         </aside>
 
         <article class="post-body">
+            <h1 class="post-title">{post.data.title}</h1>
             <div class="post-content">
                 <Content />
             </div>
@@ -86,6 +87,7 @@ const { Content, headings } = await post.render()
         display: flex;
         flex-direction: column;
         gap: var(--space-5);
+        padding-top: calc(var(--font-size-display) * 1.2 + var(--space-8));
     }
 
     .back-link {
@@ -171,6 +173,14 @@ const { Content, headings } = await post.render()
     .toc-link:hover { color: var(--color-accent); }
     .toc-h3 { padding-left: var(--space-3); }
     .toc-h4 { padding-left: var(--space-6); }
+
+    .post-title {
+        font-size: var(--font-size-display);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-primary);
+        line-height: 1.2;
+        margin: 0 0 var(--space-8);
+    }
 
     /* ── Post content ── */
     .post-content :global(h2),
