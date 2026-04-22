@@ -1,12 +1,12 @@
 ---
-title: "What Is an Ontology and Why Should We Care?"
+title: "What is an Ontology and Why Should We Care?"
 date: 2026-04-08
 author: MeeSiing Ngu
 excerpt: "If you have ever tried to compare results across zebrafish studies, you have likely encountered a frustrating issue. Ontologies are how we solve it."
 image: /images/blog/blog-ontology-1.png
 ---
 
-![What Is an Ontology and Why Should We Care](/images/blog/blog-ontology-1.png)
+![What is an Ontology and Why Should We Care](/images/blog/blog-ontology-1.png)
 
 ### The Hidden Problem in Modern Biology
 
@@ -51,7 +51,7 @@ As biology becomes increasingly data-driven, ontologies are becoming essential i
 
 ---
 
-### Why Ontologies Matter for Zebrafish Community
+### Why Ontologies Matter for the Zebrafish Community
 
 In zebrafish research, ontologies might sound like a technical concept, but they solve a very practical problem: everyone describes things a little differently. One lab might record a behavior as "reduced swimming," while another calls it "hypoactivity." Ontologies provide a **shared, standardized vocabulary with clear definitions, so researchers are essentially speaking the same language**. This makes a big difference when trying to compare results across studies, especially in a field like zebrafish research where experiments often generate large, complex datasets. With consistent terminology, data from different labs can be combined more easily, enabling broader analyses and collaborations.
 
