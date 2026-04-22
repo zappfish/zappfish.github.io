@@ -86,6 +86,7 @@ time, mark, audio, video {
     --color-text-white:    #ffffff;   /* text on dark backgrounds             */
     --color-border:        #e0ddd6;   /* dividers, card borders               */
     --color-accent-tint:   #e6f5f3;   /* very light teal — icon bg, tints     */
+    --color-bg-tint: linear-gradient(135deg, rgba(42,157,138,0.15) 0%, rgba(26,83,92,0.10) 100%); /* teal gradient — card/callout bg */
     --color-accent-border: rgba(42,157,138,0.25); /* teal border for icons/accents */
 
     /* ── Hero ── */
@@ -135,6 +136,7 @@ time, mark, audio, video {
 
     --font-size-sm:      0.75rem;   /* 12 px — fine print, captions         */
     --font-size-ui:      0.875rem;  /* 14 px — UI labels, nav links         */
+    --font-size-action:  0.9375rem; /* 15 px — CTAs, read more links        */
     --font-size-body:    1.125rem;  /* 18 px — body copy, paragraphs        */
     --font-size-h4:      1.05rem;   /* ~17 px — small section headings      */
     --font-size-h3:      1.125rem;  /* 18 px — subsection headings          */
@@ -182,6 +184,23 @@ ol {
 
 section {
     margin-bottom: var(--section-margin-bottom);
+}
+
+figure {
+    margin: var(--space-6) 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+figcaption {
+    font-size: var(--font-size-ui);
+    color: var(--color-text-dark);
+    margin-top: var(--space-2);
+    font-style: italic;
 }
 
 .section-label {
