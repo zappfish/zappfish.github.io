@@ -4,6 +4,7 @@ import Hero from '../layouts/Hero.astro'
 import IconMail from '../components/icons/IconMail.astro'
 import IconStar from '../components/icons/IconStar.astro'
 import IconTarget from '../components/icons/IconTarget.astro'
+import IconShield from '../components/icons/IconShield.astro'
 import { faqs, CATEGORIES } from '../data/faqs'
 import Accordion from '../components/ui/Accordion.astro'
 
@@ -60,6 +61,12 @@ const categories = ['All', ...CATEGORIES]
                         <a href="/get-involved" class="quick-link">
                             <span class="quick-link-icon"><IconStar /></span>
                             Join Community
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/ZAPPGovernance" class="quick-link">
+                            <span class="quick-link-icon"><IconShield /></span>
+                            Governance
                         </a>
                     </li>
                 </ul>
