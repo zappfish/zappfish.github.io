@@ -9,6 +9,7 @@ const flatItems    = navItems.filter(item => item.path && item.path !== "/")
     <div class="footer-inner">
 
         <div class="footer-brand">
+            <img class="footer-logo" src="/images/logo-white.png" alt="ZAPP logo" width="64" height="64" />
             <p>Zebrafish Toxicology Phenotype Atlas Project</p>
             <a href="mailto:info@zappfish.org">info@zappfish.org</a>
         </div>
@@ -45,6 +46,20 @@ const flatItems    = navItems.filter(item => item.path && item.path !== "/")
         margin: 0 auto;
         padding: var(--space-12) var(--space-8);
         box-sizing: border-box;
+    }
+
+    .footer-logo {
+        display: block;
+        height: 84px;
+        width: auto;
+        /* Negative offset aligns the visible icon edge with the heading text
+           below (PNG has internal whitespace). */
+        margin-left: calc(-1 * var(--space-2));
+        margin-bottom: var(--space-1);
+    }
+
+    .footer-brand p {
+        margin: 0 0 var(--space-1) 0;
     }
 
     .footer-brand p,
