@@ -85,7 +85,7 @@ const sections = navItems
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: var(--space-2) var(--space-8) var(--space-2) var(--space-4);
+        padding: var(--space-2) var(--space-4);
         position: relative;
     }
 
@@ -95,7 +95,9 @@ const sections = navItems
        (PNG has internal whitespace); top offset visually centers it on the icon. */
     .logo-text { margin-left: calc(-1 * var(--space-3)); margin-top: 0.6rem; }
 
-    .logo-img { display: block; height: 56px; width: auto; }
+    /* Negative left margin compensates for PNG internal whitespace so the
+       visible icon edge aligns with the nav-bar's left padding. */
+    .logo-img { display: block; height: 56px; width: auto; margin-left: calc(-1 * var(--space-2)); }
 
     .logo-name { font-weight: var(--font-weight-bold); font-size: var(--font-size-h3); color: var(--color-primary); letter-spacing: 0.08em; }
 
