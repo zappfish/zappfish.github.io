@@ -204,7 +204,8 @@ const { Content, headings } = await post.render()
 
     /* ── Post content ── */
     .post-content :global(h2),
-    .post-content :global(h3) {
+    .post-content :global(h3),
+    .post-content :global(h4) {
         font-weight: var(--font-weight-bold);
         color: var(--color-primary);
         margin: var(--space-10) 0 var(--space-3);
@@ -212,6 +213,7 @@ const { Content, headings } = await post.render()
 
     .post-content :global(h2) { font-size: var(--font-size-h2); }
     .post-content :global(h3) { font-size: var(--font-size-h3); margin-top: var(--space-8); }
+    .post-content :global(h4) { font-size: var(--font-size-h4); margin-top: var(--space-6); }
     .post-content :global(h3:first-child) { margin-top: 0; }
 
     .post-content :global(p) {
@@ -265,6 +267,14 @@ const { Content, headings } = await post.render()
     .post-content :global(sub) { bottom: -0.25em; }
 
     /* ── Tables ── */
+    /* A bold paragraph acting as a table title should hug its table */
+    .post-content :global(p:has(> strong:only-child):has(+ table)) {
+        margin-bottom: 0;
+    }
+    .post-content :global(p:has(> strong:only-child) + table) {
+        margin-top: var(--space-2);
+    }
+
     .post-content :global(table) {
         width: 100%;
         table-layout: fixed;

@@ -3,10 +3,10 @@ title: "What is an Ontology and Why Should We Care?"
 date: 2026-04-08
 author: MeeSiing Ngu
 excerpt: "If you have ever tried to compare results across zebrafish studies, you have likely encountered a frustrating issue. Ontologies are how we solve it."
-image: /images/blog/blog-ontology-one.png
+image: /images/blog/what-is-an-ontology/blog-ontology-one.png
 ---
 
-![What is an Ontology and Why Should We Care](/images/blog/blog-ontology-one.png)
+![What is an Ontology and Why Should We Care](/images/blog/what-is-an-ontology/blog-ontology-one.png)
 
 ### The Hidden Problem in Modern Biology
 
@@ -29,7 +29,7 @@ An ontology typically includes:
 This structure allows both researchers and software to understand how concepts fit together.
 
 <figure>
-  <img src="/images/blog/blog-ontology-three.png" alt="Ontology structure linking zebrafish concepts across taxonomy, anatomy, and biological processes" />
+  <img src="/images/blog/what-is-an-ontology/blog-ontology-three.png" alt="Ontology structure linking zebrafish concepts across taxonomy, anatomy, and biological processes" />
   <figcaption>Ontology structure linking zebrafish concepts across taxonomy, anatomy, and biological processes.</figcaption>
 </figure>
 
@@ -56,7 +56,7 @@ As biology becomes increasingly data-driven, ontologies are becoming essential i
 In zebrafish research, ontologies might sound like a technical concept, but they solve a very practical problem: everyone describes things a little differently. One lab might record a behavior as "reduced swimming," while another calls it "hypoactivity." Ontologies provide a **shared, standardized vocabulary with clear definitions, so researchers are essentially speaking the same language**. This makes a big difference when trying to compare results across studies, especially in a field like zebrafish research where experiments often generate large, complex datasets. With consistent terminology, data from different labs can be combined more easily, enabling broader analyses and collaborations.
 
 <figure>
-  <img src="/images/blog/blog-ontology-two.png" alt="Different labs often use different terms for the same concept" />
+  <img src="/images/blog/what-is-an-ontology/blog-ontology-two.png" alt="Different labs often use different terms for the same concept" />
   <figcaption>Different labs often use different terms for the same concept. Ontologies provide a shared, standardized vocabulary with clear definitions, reducing ambiguity and enabling comparison across studies.</figcaption>
 </figure>
 

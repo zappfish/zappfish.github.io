@@ -3,10 +3,10 @@ title: "Using Ontologies and Standards in Zebrafish Research"
 date: 2026-05-15
 author: MeeSiing Ngu
 excerpt: "Zebrafish research generates large, complex datasets, yet much of it is hard to reuse or compare. The fix is consistent reporting with ontology terms and persistent IDs."
-image: /images/blog/blog-ontology-using-standards.png
+image: /images/blog/using-ontologies-and-standards/blog-ontology-using-standards.png
 ---
 
-![Using ontologies and standards in zebrafish research: use community resources and always report terms with their IDs](/images/blog/blog-ontology-using-standards.png)
+![Using ontologies and standards in zebrafish research: use community resources and always report terms with their IDs](/images/blog/using-ontologies-and-standards/blog-ontology-using-standards.png)
 
 Zebrafish research generates large, complex datasets, yet a substantial portion of these data remains difficult to reuse or compare across studies. The primary limitation is inconsistent reporting. The same gene or phenotype often appears under different names, which creates ambiguity and limits both reproducibility and data integration. For example, *fgf8a* mutation is known to affect midbrain-hindbrain boundary development. However, is *fgf8a* the same as *fgf-8* or *fgf8*, or is there a relation between *ace* and *fgf8a*? Ontologies and standards address this by providing a shared system of terms, definitions, and unique persistent identifiers (ID) that make data clear, consistent, and machine-readable.
 
@@ -45,7 +45,7 @@ Ontology terms and their IDs can be reported in a manuscript in the same way cat
 If a researcher is studying zebrafish craniofacial development, you could report "We examined the development of the *mandibular arch skeleton* (ZFA:0001227) at 5 dpf." In this context, "mandibular arch skeleton" corresponds to terms such as "jaws" and "pharyngeal arch 1 skeleton." The identifier ZFA:0001227 defines the concept explicitly and confirms these terms as exact synonyms, which removes ambiguity in interpretation.
 
 <figure>
-  <img src="/images/blog/blog-example-one.png" alt="Example One: 'jaws' and 'mandibular arch skeleton' are exact synonyms that share the same identifier, ZFA:0001227." />
+  <img src="/images/blog/using-ontologies-and-standards/blog-example-one.png" alt="Example One: 'jaws' and 'mandibular arch skeleton' are exact synonyms that share the same identifier, ZFA:0001227." />
   <figcaption>Visual representation of Example One</figcaption>
 </figure>
 
@@ -54,13 +54,13 @@ If a researcher is studying zebrafish craniofacial development, you could report
 **Before standardization:** *fgf8a* mutation is known to affect the midbrain-hindbrain boundary development in the zebrafish mutant line *fgf8a*<sup>ti282a</sup>.
 
 <figure>
-  <img src="/images/blog/blog-example-two-limitation.png" alt="Limitations of unstandardized reporting: no stable identifiers; ambiguous gene names (ace, fgf8, fgf-8); no link to anatomy ontology (isthmus)." />
+  <img src="/images/blog/using-ontologies-and-standards/blog-example-two-limitation.png" alt="Limitations of unstandardized reporting: no stable identifiers; ambiguous gene names (ace, fgf8, fgf-8); no link to anatomy ontology (isthmus)." />
 </figure>
 
 **After standardization:** *fgf8a* (<span style="color:#2253B8">Gene:30538</span>) mutation is known to affect the midbrain-hindbrain boundary (<span style="color:#37683E">ZFA:0000042</span>) development in zebrafish mutant line *fgf8a*<sup>ti282a</sup> (<span style="color:#F56C18">ZDB-FISH-150901-16069</span>).
 
 <figure>
-  <img src="/images/blog/blog-example-two.png" alt="Example Two after standardization: fgf8a maps to Gene:30538 (other names ace, fgf8, fgf-8); midbrain-hindbrain boundary maps to ZFA:0000042 (exact synonym isthmus); the mutant line maps to ZDB-FISH-150901-16069." />
+  <img src="/images/blog/using-ontologies-and-standards/blog-example-two.png" alt="Example Two after standardization: fgf8a maps to Gene:30538 (other names ace, fgf8, fgf-8); midbrain-hindbrain boundary maps to ZFA:0000042 (exact synonym isthmus); the mutant line maps to ZDB-FISH-150901-16069." />
   <figcaption>Visual representation of Example Two</figcaption>
 </figure>
 
