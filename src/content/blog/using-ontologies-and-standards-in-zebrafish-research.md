@@ -22,15 +22,15 @@ In practice, ontologies and standards should be used at the point of data genera
 
 | Domain | Standard Name | Example (Identifier) | Type | Browser |
 | :---- | :---- | :---- | :---- | :---- |
-| Anatomy | Zebrafish Anatomy Ontology (ZFA) | Brain (ZFA:0000008) | Ontology | [ols4/ontologies/zfa](https://www.ebi.ac.uk/ols4/ontologies/zfa) |
-| Allele | ZFIN line designation | kc13 (ZDB-ALT-000831-6) | Identifier from ZFIN | [ZFIN mutation search](https://zfin.org/action/quicksearch/prototype?category=Mutation+%2F+Tg&q=) |
+| Anatomy | Zebrafish Anatomy Ontology (ZFA) | Brain (ZFA:0000008) | Ontology | [www.ebi.ac.uk/ols4/ontologies/zfa](https://www.ebi.ac.uk/ols4/ontologies/zfa) |
+| Allele | ZFIN line designation | kc13 (ZDB-ALT-000831-6) | Identifier from ZFIN | [zfin.org/action/quicksearch/prototype](https://zfin.org/action/quicksearch/prototype?category=Mutation+%2F+Tg&q=) |
 | Chemical\*\* | CAS | Ethanol (CAS 67-14-5) | CAS Registry Number | [commonchemistry.cas.org](https://commonchemistry.cas.org/) |
-| Chemical\*\* | CHEBI Ontology | Ethanol (CHEBI:16236) | Ontology | [ols4/ontologies/chebi](https://www.ebi.ac.uk/ols4/ontologies/chebi) |
-| Developmental stage | Zebrafish Developmental Stages Ontology (ZFS) | Gastrula:bud (ZFS:0000022) | Ontology | [ols4/ontologies/zfs](https://www.ebi.ac.uk/ols4/ontologies/zfs) |
-| Experimental condition | Zebrafish Experimental Conditions Ontology (ZECO) | Chemical treatment by environment (ZECO:0000238) | Ontology | [ols4/ontologies/zeco](https://www.ebi.ac.uk/ols4/ontologies/zeco) |
-| Gene\*\* | Ensembl gene | fgf8a (ENSDARG00000003399) | Identifier from Ensembl | [Ensembl Danio rerio](https://www.ensembl.org/Danio_rerio/Info/Index) |
-| Gene\*\* | NCBI gene | fgf8a (NCBI Gene ID 30538) | Identifier from NCBI | [ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene/) |
-| Gene\*\* | ZFIN gene | fgf8a (ZDB-GENE-990415-72) | Identifier from ZFIN | [ZFIN gene search](https://zfin.org/search?category=Gene+%2F+Transcript&q=) |
+| Chemical\*\* | CHEBI Ontology | Ethanol (CHEBI:16236) | Ontology | [www.ebi.ac.uk/ols4/ontologies/chebi](https://www.ebi.ac.uk/ols4/ontologies/chebi) |
+| Developmental stage | Zebrafish Developmental Stages Ontology (ZFS) | Gastrula:bud (ZFS:0000022) | Ontology | [www.ebi.ac.uk/ols4/ontologies/zfs](https://www.ebi.ac.uk/ols4/ontologies/zfs) |
+| Experimental condition | Zebrafish Experimental Conditions Ontology (ZECO) | Chemical treatment by environment (ZECO:0000238) | Ontology | [www.ebi.ac.uk/ols4/ontologies/zeco](https://www.ebi.ac.uk/ols4/ontologies/zeco) |
+| Gene\*\* | Ensembl gene | fgf8a (ENSDARG00000003399) | Identifier from Ensembl | [www.ensembl.org/Danio_rerio/Info/Index](https://www.ensembl.org/Danio_rerio/Info/Index) |
+| Gene\*\* | NCBI gene | fgf8a (NCBI Gene ID 30538) | Identifier from NCBI | [www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene/) |
+| Gene\*\* | ZFIN gene | fgf8a (ZDB-GENE-990415-72) | Identifier from ZFIN | [zfin.org/search](https://zfin.org/search?category=Gene+%2F+Transcript&q=) |
 
 <figcaption>** Note that several standards can exist for a specific domain. Mappings between these standards enable equivalent concepts to be linked. The consistent use of standardized identifiers is more important than using a specific standard.</figcaption>
 
