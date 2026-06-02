@@ -73,7 +73,7 @@ Furthermore, providing a supplemental table that lists all the terms and IDs use
 | ID | Terms used in manuscript | Zygosity |
 | :---- | :---- | :---: |
 | NCBI Gene:30538 | *fgf8a* | — |
-| ZDB-FISH-150901-16069 | *fgf8a*<sup>ti282a</sup> | heterozygous |
+| ZDB-FISH-150901-16069 | <em>fgf8a</em><sup>ti282a</sup> | heterozygous |
 | ZFA:0000042 | midbrain-hindbrain boundary | — |
 
 ---
