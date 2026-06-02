@@ -7,4 +7,5 @@ export default defineConfig({
   integrations: [mdx()],
   site: "https://zappfish.org",
   trailingSlash: "never",
+  build: { format: "file" },
 });
