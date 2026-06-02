@@ -46,7 +46,7 @@ If a researcher is studying zebrafish craniofacial development, you could report
 
 <figure>
   <img src="/images/blog/blog-example-one.png" alt="Example One: 'jaws' and 'mandibular arch skeleton' are exact synonyms that share the same identifier, ZFA:0001227." />
-  <figcaption>Visual representation of Example One.</figcaption>
+  <figcaption>Visual representation of Example One</figcaption>
 </figure>
 
 #### Example Two
@@ -61,7 +61,7 @@ If a researcher is studying zebrafish craniofacial development, you could report
 
 <figure>
   <img src="/images/blog/blog-example-two.png" alt="Example Two after standardization: fgf8a maps to Gene:30538 (other names ace, fgf8, fgf-8); midbrain-hindbrain boundary maps to ZFA:0000042 (exact synonym isthmus); the mutant line maps to ZDB-FISH-150901-16069." />
-  <figcaption>Visual representation of Example Two.</figcaption>
+  <figcaption>Visual representation of Example Two</figcaption>
 </figure>
 
 In this example, by using the NCBI Gene ID (<span style="color:#2253B8">Gene:30538</span>) for *fgf8a*, the researcher can immediately understand that *ace*, *fgf8*, and *fgf-8* are referring to the same gene. Likewise, the ZFA ID (<span style="color:#37683E">ZFA:0000042</span>) indicates the midbrain-hindbrain boundary is the same as isthmus.
