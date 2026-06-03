@@ -1,0 +1,21 @@
+---
+site_name: "Zebrafish Toxicology Atlas Schema Documentation"
+theme:
+  name: material
+  palette:
+    scheme: black
+    primary: black
+  logo: images/biolink-logo.png
+  features:
+    - content.tabs.link
+plugins:
+  - search
+  - mermaid2:
+      version: 10.6.1
+nav:
+  - Overview: index.md
+  - Schema Diagram: schema_diagram.md
+site_url: https://zappfish.org/ZAPPSchema
+repo_url: https://github.com/zappfish/zapp-atlas/tree/main/server/src/zapp_atlas/schema
+extra_css:
+  - style.css
