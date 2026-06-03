@@ -57,7 +57,7 @@ If a researcher is studying zebrafish craniofacial development, you could report
   <img src="/images/blog/using-ontologies-and-standards/blog-example-two-limitation.png" alt="Limitations of unstandardized reporting: no stable identifiers; ambiguous gene names (ace, fgf8, fgf-8); no link to anatomy ontology (isthmus)." />
 </figure>
 
-**After standardization:** *fgf8a* (<span style="color:#2253B8">Gene:30538</span>) mutation is known to affect the midbrain-hindbrain boundary (<span style="color:#37683E">ZFA:0000042</span>) development in zebrafish mutant line *fgf8a*<sup>ti282a</sup> (<span style="color:#F56C18">ZDB-FISH-150901-16069</span>).
+**After standardization:** *fgf8a* (<span style="color:#2253B8">Gene:30538</span>) mutation is known to affect the midbrain-hindbrain boundary (<span style="color:#37683E">ZFA:0000042</span>) development in zebrafish mutant line *fgf8a*<sup>ti282a</sup> (<span style="color:#F56C18">ZDB-ALT-980203-1091</span>).
 
 <figure>
   <img src="/images/blog/using-ontologies-and-standards/blog-example-two.png" alt="Example Two after standardization: fgf8a maps to Gene:30538 (other names ace, fgf8, fgf-8); midbrain-hindbrain boundary maps to ZFA:0000042 (exact synonym isthmus); the mutant line maps to ZDB-FISH-150901-16069." />
