@@ -37,6 +37,7 @@ schema-docs: schema-md
 
 schema-md: $(ZAPP_ATLAS_REPO)
 	uv run --with linkml gen-doc $(SCHEMA) -d $(DOCS_OUTPUT_DIR)
+	uv run --with linkml gen-erdiagram $(SCHEMA) > $(DOCS_OUTPUT_DIR)/schema_diagram.md
 
 clean:
 	rm -rf $(DIST_DIR) $(DOCS_OUTPUT_DIR)
