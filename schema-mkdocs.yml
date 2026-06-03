@@ -17,5 +17,10 @@ nav:
   - Schema Diagram: schema_diagram.md
 site_url: https://zappfish.org/ZAPPSchema
 repo_url: https://github.com/zappfish/zapp-atlas/tree/main/server/src/zapp_atlas/schema
+markdown_extensions:
+  - tables        # render the pipe tables gen-doc emits
+  - md_in_html    # the <br/> inside table cells
+  - attr_list
+  - admonition
 extra_css:
   - style.css
