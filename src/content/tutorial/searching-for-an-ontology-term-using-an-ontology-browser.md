@@ -1,6 +1,9 @@
 ---
 title: "Searching for an Ontology Term using an Ontology Browser"
 image: /images/tutorial/ols-home-search-box.png
+excerpt: "A step-by-step guide to finding a standardized ontology term using an ontology browser, from keyword search to recording the term ID."
+category: "Finding Terms"
+date: 2026-06-04
 ---
 
 Ontology browsers are specialized software tools designed to navigate, visualize, and query ontologies. Examples of some common ontology browsers include [Ontology Lookup Service (OLS)](https://www.ebi.ac.uk/ols4), [BioPortal](https://www.bioontology.org/), and [Ontobee](https://ontobee.org/).
