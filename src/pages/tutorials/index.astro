@@ -3,12 +3,43 @@ import Main from '../../layouts/Main.astro'
 import Hero from '../../layouts/Hero.astro'
 import { getCollection } from 'astro:content'
 
-const tutorials = (await getCollection('tutorial')).sort(
-    (a, b) => a.data.title.localeCompare(b.data.title)
+type Card = {
+    title: string
+    excerpt?: string
+    category?: string
+    date?: Date
+    href: string
+    external?: boolean
+}
+
+const collection = await getCollection('tutorial')
+
+// Tutorials authored as content files in this site.
+const localCards: Card[] = collection.map(t => ({
+    title: t.data.title,
+    excerpt: t.data.excerpt,
+    category: t.data.category,
+    date: t.data.date,
+    href: `/tutorials/${t.id.replace(/\.md$/, '')}`,
+}))
+
+// External tutorials hosted elsewhere, surfaced here as cards.
+const externalCards: Card[] = [
+    {
+        title: 'The Basics of GitHub: Organizations, Repositories & Issues',
+        excerpt: 'A step-by-step overview of GitHub organizations, repositories, and issues — the core concepts and workflows used across all ZAPP projects.',
+        category: 'GitHub',
+        href: 'https://oboacademy.github.io/obook/howto/github-basics/',
+        external: true,
+    },
+]
+
+const cards: Card[] = [...localCards, ...externalCards].sort(
+    (a, b) => a.title.localeCompare(b.title)
 )
 
 // Unique categories for the filter row (in first-seen order).
-const categories = [...new Set(tutorials.map(t => t.data.category).filter(Boolean))] as string[]
+const categories = [...new Set(cards.map(c => c.category).filter(Boolean))] as string[]
 
 const fmtDate = (d?: Date) =>
     d ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''
@@ -36,33 +67,33 @@ const fmtDate = (d?: Date) =>
                 <button class="tut-filter" data-filter={cat} type="button">{cat}</button>
             ))}
         </div>
-        <span class="tut-count" id="tut-count">{tutorials.length} tutorial{tutorials.length === 1 ? '' : 's'}</span>
+        <span class="tut-count" id="tut-count">{cards.length} tutorial{cards.length === 1 ? '' : 's'}</span>
     </div>
 
     <section class="tut-grid" id="tut-grid">
-        {tutorials.map(tutorial => {
-            const slug = tutorial.id.replace(/\.md$/, '')
-            const haystack = [tutorial.data.title, tutorial.data.excerpt, tutorial.data.category]
+        {cards.map(card => {
+            const haystack = [card.title, card.excerpt, card.category]
                 .filter(Boolean).join(' ').toLowerCase()
             return (
                 <a
                     class="tut-card"
-                    href={`/tutorials/${slug}`}
-                    data-category={tutorial.data.category ?? ''}
+                    href={card.href}
+                    data-category={card.category ?? ''}
                     data-search={haystack}
+                    {...(card.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
-                    {tutorial.data.category && (
+                    {card.category && (
                         <div class="tut-card-head">
-                            <span class="tut-card-category">{tutorial.data.category}</span>
+                            <span class="tut-card-category">{card.category}</span>
                         </div>
                     )}
 
-                    <h2 class="tut-card-title">{tutorial.data.title}</h2>
-                    {tutorial.data.excerpt && <p class="tut-card-excerpt">{tutorial.data.excerpt}</p>}
+                    <h2 class="tut-card-title">{card.title}</h2>
+                    {card.excerpt && <p class="tut-card-excerpt">{card.excerpt}</p>}
 
                     <div class="tut-card-foot">
-                        <span class="tut-card-date">{fmtDate(tutorial.data.date)}</span>
-                        <span class="tut-card-more">Read more →</span>
+                        <span class="tut-card-date">{card.external ? 'External guide' : fmtDate(card.date)}</span>
+                        <span class="tut-card-more">{card.external ? 'Read guide ↗' : 'Read more →'}</span>
                     </div>
                 </a>
             )

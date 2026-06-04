@@ -1,7 +1,6 @@
 ---
 import Main from '../layouts/Main.astro'
 import Hero from '../layouts/Hero.astro'
-import BookIcon from '../icons/book.svg?raw'
 import CodeIcon from '../icons/code.svg?raw'
 import ShareIcon from '../icons/share.svg?raw'
 
@@ -20,19 +19,6 @@ type ResourceGroup = {
 }
 
 const resources: ResourceGroup[] = [
-    {
-        section: 'GitHub Basics',
-        intro: 'New to GitHub? This step-by-step overview covers the core concepts and workflows you need to get started — no prior experience required.',
-        items: [
-            {
-                title: 'The Basics of GitHub: Organizations, Repositories & Issues',
-                description: 'Covers GitHub organizations, repositories, and issues — the key building blocks used across all ZAPP projects.',
-                href: 'https://oboacademy.github.io/obook/howto/github-basics/',
-                label: 'Read Guide',
-                icon: BookIcon,
-            },
-        ],
-    },
     {
         section: 'ZAPP Repositories',
         intro: 'Explore the ZAPP codebase, open issues, and contribute to ongoing development.',
