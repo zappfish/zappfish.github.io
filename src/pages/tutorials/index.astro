@@ -4,7 +4,7 @@ import Hero from '../../layouts/Hero.astro'
 import { getCollection } from 'astro:content'
 
 const tutorials = (await getCollection('tutorial')).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+    (a, b) => a.data.title.localeCompare(b.data.title)
 )
 ---
 
@@ -20,9 +20,8 @@ const tutorials = (await getCollection('tutorial')).sort(
             <a class="post-card" href={`/tutorials/${tutorial.id.replace(/\.md$/, '')}`}>
                 <div class="post-card-text">
                     <h2 class="post-title">{tutorial.data.title}</h2>
-                    <p class="post-excerpt">{tutorial.data.excerpt}</p>
+                    {tutorial.data.excerpt && <p class="post-excerpt">{tutorial.data.excerpt}</p>}
                     <div class="post-footer">
-                        <span class="post-date">{tutorial.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                         <span class="post-read-more">Read more →</span>
                     </div>
                 </div>
@@ -96,11 +95,6 @@ const tutorials = (await getCollection('tutorial')).sort(
         align-items: center;
         justify-content: space-between;
         margin-top: var(--space-1);
-    }
-
-    .post-date {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-muted);
     }
 
     .post-read-more {

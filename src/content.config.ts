@@ -55,9 +55,7 @@ const tutorial = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    date: z.date(),
-    author: z.string(),
-    excerpt: z.string(),
+    excerpt: z.string().optional(),
     image: z.string().optional(),
   }),
 })
