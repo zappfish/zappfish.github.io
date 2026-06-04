@@ -51,9 +51,21 @@ const blog = defineCollection({
   }),
 })
 
+const tutorial = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    author: z.string(),
+    excerpt: z.string(),
+    image: z.string().optional(),
+  }),
+})
+
 export const collections = {
   pis,
   events,
   team,
   blog,
+  tutorial,
 }

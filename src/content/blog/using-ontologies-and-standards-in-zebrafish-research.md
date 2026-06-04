@@ -94,3 +94,4 @@ By learning how to identify and use the right ontology terms, and always includi
 
 - [Building a framework for reproducibility: the case for standardized data reporting and metadata integration in zebrafish research](https://journals.biologists.com/dmm/article/18/11/dmm052441/369857/Building-a-framework-for-reproducibility-the-case)
 - [What Is an Ontology and Why Should We Care?](/blogs/what-is-an-ontology-and-why-should-we-care)
+- [Searching for an Ontology Term using an Ontology Browser](/tutorials/searching-for-an-ontology-term-using-an-ontology-browser) (tutorial)
