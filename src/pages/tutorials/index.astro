@@ -105,43 +105,51 @@ const fmtDate = (d?: Date) =>
 </Main>
 
 <script>
-    const input = document.getElementById('tut-search-input') as HTMLInputElement | null
-    const cards = Array.from(document.querySelectorAll('.tut-card')) as HTMLAnchorElement[]
-    const filters = Array.from(document.querySelectorAll('.tut-filter')) as HTMLButtonElement[]
-    const countEl = document.getElementById('tut-count')
-    const emptyEl = document.getElementById('tut-empty')
+    // Runs on initial load AND on every client-side navigation (Astro ClientRouter).
+    // Binding only at parse time would leave the filters dead when arriving via view transitions.
+    function initTutorialFilters() {
+        const input = document.getElementById('tut-search-input') as HTMLInputElement | null
+        const cards = Array.from(document.querySelectorAll('.tut-card')) as HTMLAnchorElement[]
+        const filters = Array.from(document.querySelectorAll('.tut-filter')) as HTMLButtonElement[]
+        const countEl = document.getElementById('tut-count')
+        const emptyEl = document.getElementById('tut-empty')
 
-    let activeCategory = 'all'
-    let query = ''
+        if (!cards.length || !filters.length) return
 
-    function apply() {
-        let visible = 0
-        cards.forEach(card => {
-            const cat = card.getAttribute('data-category') ?? ''
-            const hay = card.getAttribute('data-search') ?? ''
-            const matchCat = activeCategory === 'all' || cat === activeCategory
-            const matchQuery = query === '' || hay.includes(query)
-            const show = matchCat && matchQuery
-            card.style.display = show ? '' : 'none'
-            if (show) visible++
-        })
-        if (countEl) countEl.textContent = `${visible} tutorial${visible === 1 ? '' : 's'}`
-        if (emptyEl) emptyEl.hidden = visible !== 0
-    }
+        let activeCategory = 'all'
+        let query = ''
 
-    input?.addEventListener('input', () => {
-        query = input.value.trim().toLowerCase()
-        apply()
-    })
+        function apply() {
+            let visible = 0
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category') ?? ''
+                const hay = card.getAttribute('data-search') ?? ''
+                const matchCat = activeCategory === 'all' || cat === activeCategory
+                const matchQuery = query === '' || hay.includes(query)
+                const show = matchCat && matchQuery
+                card.style.display = show ? '' : 'none'
+                if (show) visible++
+            })
+            if (countEl) countEl.textContent = `${visible} tutorial${visible === 1 ? '' : 's'}`
+            if (emptyEl) emptyEl.hidden = visible !== 0
+        }
 
-    filters.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filters.forEach(b => b.classList.remove('is-active'))
-            btn.classList.add('is-active')
-            activeCategory = btn.getAttribute('data-filter') ?? 'all'
+        input?.addEventListener('input', () => {
+            query = input.value.trim().toLowerCase()
             apply()
         })
-    })
+
+        filters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filters.forEach(b => b.classList.remove('is-active'))
+                btn.classList.add('is-active')
+                activeCategory = btn.getAttribute('data-filter') ?? 'all'
+                apply()
+            })
+        })
+    }
+
+    document.addEventListener('astro:page-load', initTutorialFilters)
 </script>
 
 <style>
