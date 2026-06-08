@@ -190,12 +190,6 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3)
     /* Section headings sit a clear step above body text (which is 1.125rem) */
     .tut-content :global(h2) { font-size: 1.6rem; margin: var(--space-8) 0 var(--space-3); }
     .tut-content :global(h3) { font-size: 1.35rem; margin: var(--space-8) 0 var(--space-3); }
-    /* Divider line separating the intro/lede (first paragraph) from the rest */
-    .tut-content :global(p:nth-of-type(2)) {
-        border-top: 1px solid var(--color-border);
-        padding-top: var(--space-6);
-        margin-top: var(--space-6);
-    }
 
     .tut-content :global(p) {
         font-size: var(--font-size-body);
@@ -246,7 +240,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3)
         position: relative;
         width: 100%;
         aspect-ratio: 16 / 9;
-        margin: var(--space-4) auto var(--space-2);
+        margin: var(--space-4) auto var(--space-6);
         border-radius: var(--radius-md);
         overflow: hidden;
         box-shadow: var(--shadow-card);
