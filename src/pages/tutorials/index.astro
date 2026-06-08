@@ -1,0 +1,314 @@
+---
+import Main from '../../layouts/Main.astro'
+import Hero from '../../layouts/Hero.astro'
+import { getCollection } from 'astro:content'
+
+type Card = {
+    title: string
+    excerpt?: string
+    category?: string
+    date?: Date
+    href: string
+    external?: boolean
+}
+
+const collection = await getCollection('tutorial')
+
+// Tutorials authored as content files in this site.
+const localCards: Card[] = collection.map(t => ({
+    title: t.data.title,
+    excerpt: t.data.excerpt,
+    category: t.data.category,
+    date: t.data.date,
+    href: `/tutorials/${t.id.replace(/\.md$/, '')}`,
+}))
+
+// External tutorials hosted elsewhere, surfaced here as cards.
+const externalCards: Card[] = [
+    {
+        title: 'The Basics of GitHub: Organizations, Repositories & Issues',
+        excerpt: 'A step-by-step overview of GitHub organizations, repositories, and issues — the core concepts and workflows used across all ZAPP projects.',
+        category: 'GitHub',
+        href: 'https://oboacademy.github.io/obook/howto/github-basics/',
+        external: true,
+    },
+]
+
+const cards: Card[] = [...localCards, ...externalCards].sort(
+    (a, b) => a.title.localeCompare(b.title)
+)
+
+// Unique categories for the filter row (in first-seen order).
+const categories = [...new Set(cards.map(c => c.category).filter(Boolean))] as string[]
+
+const fmtDate = (d?: Date) =>
+    d ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''
+---
+
+<Main title="Tutorials">
+
+    <Hero title="Tutorials" variant="teal" slot="hero" />
+
+    <div class="section-label">Documentation</div>
+    <p class="intro-text">Hands-on, step-by-step guides for finding ontology terms and working with zebrafish data standards.</p>
+
+    <div class="tut-search">
+        <svg class="tut-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="tut-search-input" placeholder="Search tutorials..." aria-label="Search tutorials" autocomplete="off" />
+    </div>
+
+    <div class="tut-toolbar">
+        <div class="tut-filters" role="tablist" aria-label="Filter tutorials by category">
+            <button class="tut-filter is-active" data-filter="all" type="button">All</button>
+            {categories.map(cat => (
+                <button class="tut-filter" data-filter={cat} type="button">{cat}</button>
+            ))}
+        </div>
+        <span class="tut-count" id="tut-count">{cards.length} tutorial{cards.length === 1 ? '' : 's'}</span>
+    </div>
+
+    <section class="tut-grid" id="tut-grid">
+        {cards.map(card => {
+            const haystack = [card.title, card.excerpt, card.category]
+                .filter(Boolean).join(' ').toLowerCase()
+            return (
+                <a
+                    class="tut-card"
+                    href={card.href}
+                    data-category={card.category ?? ''}
+                    data-search={haystack}
+                    {...(card.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                    {card.category && (
+                        <div class="tut-card-head">
+                            <span class="tut-card-category">{card.category}</span>
+                        </div>
+                    )}
+
+                    <h2 class="tut-card-title">{card.title}</h2>
+                    {card.excerpt && <p class="tut-card-excerpt">{card.excerpt}</p>}
+
+                    <div class="tut-card-foot">
+                        <span class="tut-card-date">{card.external ? 'External guide' : fmtDate(card.date)}</span>
+                        <span class="tut-card-more">{card.external ? 'Read guide ↗' : 'Read more →'}</span>
+                    </div>
+                </a>
+            )
+        })}
+    </section>
+
+    <p class="tut-empty" id="tut-empty" hidden>No tutorials match your search.</p>
+
+</Main>
+
+<script>
+    // Runs on initial load AND on every client-side navigation (Astro ClientRouter).
+    // Binding only at parse time would leave the filters dead when arriving via view transitions.
+    function initTutorialFilters() {
+        const input = document.getElementById('tut-search-input') as HTMLInputElement | null
+        const cards = Array.from(document.querySelectorAll('.tut-card')) as HTMLAnchorElement[]
+        const filters = Array.from(document.querySelectorAll('.tut-filter')) as HTMLButtonElement[]
+        const countEl = document.getElementById('tut-count')
+        const emptyEl = document.getElementById('tut-empty')
+
+        if (!cards.length || !filters.length) return
+
+        let activeCategory = 'all'
+        let query = ''
+
+        function apply() {
+            let visible = 0
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category') ?? ''
+                const hay = card.getAttribute('data-search') ?? ''
+                const matchCat = activeCategory === 'all' || cat === activeCategory
+                const matchQuery = query === '' || hay.includes(query)
+                const show = matchCat && matchQuery
+                card.style.display = show ? '' : 'none'
+                if (show) visible++
+            })
+            if (countEl) countEl.textContent = `${visible} tutorial${visible === 1 ? '' : 's'}`
+            if (emptyEl) emptyEl.hidden = visible !== 0
+        }
+
+        input?.addEventListener('input', () => {
+            query = input.value.trim().toLowerCase()
+            apply()
+        })
+
+        filters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filters.forEach(b => b.classList.remove('is-active'))
+                btn.classList.add('is-active')
+                activeCategory = btn.getAttribute('data-filter') ?? 'all'
+                apply()
+            })
+        })
+    }
+
+    document.addEventListener('astro:page-load', initTutorialFilters)
+</script>
+
+<style>
+    .intro-text {
+        font-size: var(--font-size-body);
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        margin-bottom: var(--space-6);
+    }
+
+    /* ── Search ── */
+    .tut-search {
+        position: relative;
+        max-width: 420px;
+        margin-bottom: var(--space-8);
+    }
+    .tut-search-icon {
+        position: absolute;
+        left: var(--space-4);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-text-muted);
+        pointer-events: none;
+    }
+    .tut-search input {
+        width: 100%;
+        padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10);
+        font-size: var(--font-size-ui);
+        color: var(--color-text-dark);
+        background: var(--color-bg-light);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .tut-search input::placeholder { color: var(--color-text-muted); }
+    .tut-search input:focus {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 15%, transparent);
+    }
+
+    /* ── Toolbar: filters + count ── */
+    .tut-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-6);
+    }
+    .tut-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+    .tut-filter {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-text-muted);
+        background: transparent;
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        padding: var(--space-2) var(--space-4);
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+    .tut-filter:hover { color: var(--color-text-dark); border-color: var(--color-text-muted); }
+    .tut-filter.is-active {
+        color: var(--color-bg-light);
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+    .tut-count {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+        white-space: nowrap;
+    }
+
+    /* ── Card grid ── */
+    .tut-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: var(--space-5);
+        margin-bottom: var(--space-12);
+    }
+
+    .tut-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-5);
+        background: var(--color-bg-light);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    }
+    .tut-card:hover {
+        border-color: var(--color-text-muted);
+        box-shadow: var(--shadow-card);
+        transform: translateY(-2px);
+    }
+
+    .tut-card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+    }
+    .tut-card-category {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--color-text-muted);
+    }
+    .tut-card-title {
+        font-size: var(--font-size-h3);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-primary);
+        line-height: 1.3;
+        margin: 0;
+    }
+
+    .tut-card-excerpt {
+        font-size: var(--font-size-ui);
+        color: var(--color-text-dark);
+        line-height: 1.6;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .tut-card-foot {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding-top: var(--space-3);
+        border-top: 1px solid var(--color-border);
+    }
+    .tut-card-date {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+    .tut-card-more {
+        font-size: var(--font-size-action);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+    }
+
+    .tut-empty {
+        font-size: var(--font-size-body);
+        color: var(--color-text-muted);
+        text-align: center;
+        padding: var(--space-8) 0;
+        margin-bottom: var(--space-12);
+    }
+</style>
