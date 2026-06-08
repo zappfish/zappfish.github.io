@@ -8,6 +8,12 @@ date: 2026-06-04
 
 Ontology browsers are specialized software tools designed to navigate, visualize, and query ontologies. Examples of some common ontology browsers include [Ontology Lookup Service (OLS)](https://www.ebi.ac.uk/ols4), [BioPortal](https://www.bioontology.org/), and [Ontobee](https://ontobee.org/).
 
+### Video walkthrough
+
+<div class="video-embed">
+  <iframe src="https://www.youtube.com/embed/I8m3oCyDyiQ" title="Searching for an ontology term using an ontology browser" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
 Let's say you are looking to use a standardized term for the zebrafish jaws.
 
 Go to the **Ontology Lookup Service (OLS)** website [https://www.ebi.ac.uk/ols4](https://www.ebi.ac.uk/ols4)
