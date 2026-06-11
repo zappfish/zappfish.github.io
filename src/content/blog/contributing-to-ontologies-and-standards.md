@@ -43,7 +43,7 @@ If the ontology only contains "mandibular arch skeleton" (ZFA:0001227), searches
 
 ### When and How to Report
 
-Best practice is to share your feedback as soon as you spot a potential need for an update. Most ontologies use GitHub issue trackers or simple feedback forms to collect suggestions (Table 1). Ontology browsers, such as the [Ontology Lookup Service](https://www.ebi.ac.uk/ols4), provide direct access to these resources (Figure 2). You do not need coding or programming experience to use GitHub issue trackers, though you will need a free GitHub account. If you are new to the platform, you can check out this quick guide on [the basics of GitHub](https://oboacademy.github.io/obook/howto/github-basics/)) to learn how to navigate it and submit your first request. Note: it is not as complicated as you might expect it to be!
+Best practice is to share your feedback as soon as you spot a potential need for an update. Most ontologies use GitHub issue trackers or simple feedback forms to collect suggestions (Table 1). Ontology browsers, such as the [Ontology Lookup Service](https://www.ebi.ac.uk/ols4), provide direct access to these resources (Figure 2). You do not need coding or programming experience to use GitHub issue trackers, though you will need a free GitHub account. If you are new to the platform, you can check out this quick guide on [the basics of GitHub](https://oboacademy.github.io/obook/howto/github-basics/) to learn how to navigate it and submit your first request. Note: it is not as complicated as you might expect it to be!
 
 **Table 1. List of established data standards, with direct links to their official feedback forms or GitHub issue trackers.**
 
