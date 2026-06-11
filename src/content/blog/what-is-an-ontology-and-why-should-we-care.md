@@ -33,8 +33,6 @@ This structure allows both researchers and software to understand how concepts f
   <figcaption>Ontology structure linking zebrafish concepts across taxonomy, anatomy, and biological processes.</figcaption>
 </figure>
 
----
-
 ### Why Ontologies Matter
 
 As biology becomes increasingly data-driven, ontologies are becoming essential infrastructure. They directly impact how research is conducted, shared, and reused.

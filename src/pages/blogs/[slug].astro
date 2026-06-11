@@ -255,6 +255,23 @@ const { Content, headings } = await post.render()
         margin: var(--space-8) 0;
     }
 
+    /* ── Figures: single source of truth for figure spacing & separation.
+       Generous margin replaces hand-authored `---` dividers around figures. */
+    .post-content :global(figure) {
+        margin: var(--space-8) 0;
+        text-align: center;
+    }
+    .post-content :global(figure img) {
+        max-width: 100%;
+        height: auto;
+    }
+    .post-content :global(figcaption) {
+        font-size: var(--font-size-ui);
+        color: var(--color-text-dark);
+        font-style: italic;
+        margin-top: var(--space-2);
+    }
+
     /* Restore sup/sub (the global reset flattens them to baseline) */
     .post-content :global(sup),
     .post-content :global(sub) {

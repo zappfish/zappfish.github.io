@@ -8,8 +8,6 @@ image: /images/blog/contributing-to-ontologies-and-standards/blog-contributing-t
 
 ![Contributing to ontologies and data standards: a cycle in which researchers contribute, standards improve, and everyone benefits—standards are living infrastructure and researchers keep them alive](/images/blog/contributing-to-ontologies-and-standards/blog-contributing-to-ontologies-data-standards.png)
 
----
-
 ### Standards are Living Infrastructure and Researchers Keep Them Alive
 
 Responsible data management consists of using standards as well as improving existing standards. We often think of data standards and ontologies as static resources, but they actually grow alongside our research. They **evolve with scientific discovery, staying practical and up-to-date through community feedback**. By participating in using and improving standards, you help prevent data fragmentation and build a stronger, more connected research community.
@@ -43,8 +41,6 @@ If the ontology only contains "mandibular arch skeleton" (ZFA:0001227), searches
   <figcaption>Figure 1. Synonyms improve searches and annotation consistency.</figcaption>
 </figure>
 
----
-
 ### When and How to Report
 
 Best practice is to share your feedback as soon as you spot a potential need for an update. Most ontologies use GitHub issue trackers or simple feedback forms to collect suggestions (Table 1). Ontology browsers, such as the [Ontology Lookup Service](https://www.ebi.ac.uk/ols4), provide direct access to these resources (Figure 2). You do not need coding or programming experience to use GitHub issue trackers, though you will need a free GitHub account. If you are new to the platform, you can check out this quick guide on [the basics of GitHub](https://oboacademy.github.io/obook/howto/github-basics/)) to learn how to navigate it and submit your first request. Note: it is not as complicated as you might expect it to be!
@@ -70,8 +66,6 @@ Best practice is to share your feedback as soon as you spot a potential need for
   <figcaption>Figure 2. The 'Issue Tracker' link on the ontology page directs users to the ZFA GitHub repository.</figcaption>
 </figure>
 
----
-
 ### What to Include in the Request
 
 Informative, clear requests reduce curator workload and speed up implementation, so share as much information as you can when you create a GitHub issue (Figure 3). Use this as a guide:
@@ -87,8 +81,6 @@ Informative, clear requests reduce curator workload and speed up implementation,
   <img src="/images/blog/contributing-to-ontologies-and-standards/blog-figure-3.png" alt="Example of a GitHub 'Create new issue' form requesting new synonyms for ZP:0000043, annotated to show a concise title, the existing term label and ID, the new synonyms, supporting evidence (PMIDs), and an ORCID." />
   <figcaption>Figure 3. Example of a good GitHub issue for synonym requests.</figcaption>
 </figure>
-
----
 
 ### Final Thoughts
 
