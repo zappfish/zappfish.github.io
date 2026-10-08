@@ -283,6 +283,12 @@ const { Content, headings } = await post.render()
     .post-content :global(sup) { top: -0.5em; }
     .post-content :global(sub) { bottom: -0.25em; }
 
+    /* Restore italics (the global reset sets font: inherit on em/i) */
+    .post-content :global(em),
+    .post-content :global(i) {
+        font-style: italic;
+    }
+
     /* ── Tables ── */
     /* A bold paragraph acting as a table title should hug its table */
     .post-content :global(p:has(> strong:only-child):has(+ table)) {
