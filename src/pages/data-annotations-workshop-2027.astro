@@ -1,0 +1,79 @@
+---
+import Main from '../layouts/Main.astro'
+import Hero from '../layouts/Hero.astro'
+import SectionCard from '../components/ui/SectionCard.astro'
+import ActionCard from '../components/ui/ActionCard.astro'
+import IconCalendar from '../components/icons/IconCalendar.astro'
+import IconMail from '../components/icons/IconMail.astro'
+---
+
+<Main title="ZAPP Data Annotations Workshop">
+
+    <Hero title="ZAPP Data Annotations Workshop" image="/images/events/cu-anschutz-campus.jpg" slot="hero" />
+
+    <section class="about">
+        <div class="section-label">About the Workshop</div>
+        <p>Check this page often for updates, registrations, and more information as it becomes available. If you aren't already signed up, join our <a href="https://docs.google.com/forms/d/e/1FAIpQLSfJcQehTjQZQHKil_aW0eTlRVewu154UOYGDEzGGoBb0la0Kg/viewform" target="_blank" rel="noopener noreferrer">mailing list</a> to get updates directly to your mailbox.</p>
+    </section>
+
+    <section class="details">
+        <SectionCard title="Workshop Details" iconColor="teal">
+            <IconCalendar slot="icon" />
+            {/* Scoping anchor: ensures .details-body and ul share the same Astro scope hash, preventing styles from silently dropping on SSR hard-refresh across slot boundaries. */}
+            <div class="details-body">
+                <ul>
+                    <li><strong>Date:</strong> February 23-24, 2027</li>
+                    <li><strong>Time:</strong> 9 am - 5 pm Mountain Time (both days)</li>
+                    <li><strong>Location:</strong> <a href="https://www.cuanschutz.edu/" target="_blank" rel="noopener noreferrer">University of Colorado Anschutz Medical Campus</a>, Aurora, Colorado</li>
+                </ul>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="action-cards">
+        <ActionCard
+            title="All Events"
+            description="See all upcoming and past ZAPP workshops and meetings."
+            href="/events"
+            linkLabel="View Events"
+        >
+            <IconCalendar slot="icon" />
+        </ActionCard>
+        <ActionCard
+            title="Questions?"
+            description="Get in touch with the ZAPP team about the workshop."
+            href="/contact"
+            linkLabel="Contact Us"
+        >
+            <IconMail slot="icon" />
+        </ActionCard>
+    </section>
+
+</Main>
+
+<style>
+    /* links — match link style on the Goals page */
+    .about a,
+    .details-body a {
+        text-decoration: none;
+        color: var(--color-accent);
+        font-weight: var(--font-weight-bold);
+        transition: color var(--transition-fast);
+    }
+    .about a:hover,
+    .details-body a:hover {
+        color: var(--color-accent-hover);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+    /* details card body */
+    .details-body ul { padding: var(--space-8) var(--space-8) var(--space-8) var(--space-12); margin-bottom: 0; }
+    .details-body li { margin-bottom: var(--space-3); }
+    .details-body li:last-child { margin-bottom: 0; }
+
+    /* action cards grid — layout lives here, card styles live in ActionCard.astro */
+    .action-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+
+    @media (max-width: 768px) { .action-cards { grid-template-columns: 1fr; } }
+</style>

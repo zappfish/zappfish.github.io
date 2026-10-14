@@ -13,6 +13,7 @@ export const navItems: NavItem[] = [
     ]},
     { label: "Get Involved", children: [
         { label: "Community",   path: "/community" },
+        { label: "Data Annotations Workshop 2027", path: "/data-annotations-workshop-2027" },
         { label: "Events",      path: "/events" },
         { label: "Contact Us",  path: "/contact" },
     ]},
