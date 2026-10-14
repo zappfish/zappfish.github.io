@@ -27,7 +27,8 @@ async function renderCards(entries: Event[], showMeta: boolean) {
     }))
 }
 
-const upcomingCards = await renderCards(upcoming, true)
+// Time and location go in each event's Markdown body, under its info heading.
+const upcomingCards = await renderCards(upcoming, false)
 const pastCards     = await renderCards(past, false)
 ---
 
