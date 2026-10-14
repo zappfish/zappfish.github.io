@@ -11,9 +11,12 @@ const allEvents = await getCollection("events")
 const today = new Date()
 today.setHours(0, 0, 0, 0)
 
-const sorted   = allEvents.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime())
-const upcoming = sorted.filter(e => new Date(e.data.date) >= today)
-const past     = sorted.filter(e => new Date(e.data.date) < today).reverse()
+// Multi-day dates like "February 23-24, 2027" don't parse, so drop the end day.
+const parseDate = (date: string) => new Date(date.replace(/(\d+)\s*-\s*\d+/, '$1'))
+
+const sorted   = allEvents.sort((a, b) => parseDate(a.data.date).getTime() - parseDate(b.data.date).getTime())
+const upcoming = sorted.filter(e => parseDate(e.data.date) >= today)
+const past     = sorted.filter(e => parseDate(e.data.date) < today).reverse()
 
 type Event = CollectionEntry<"events">
 
