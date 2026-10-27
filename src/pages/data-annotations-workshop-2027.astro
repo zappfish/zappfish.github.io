@@ -4,7 +4,15 @@ import Hero from '../layouts/Hero.astro'
 import SectionCard from '../components/ui/SectionCard.astro'
 import ActionCard from '../components/ui/ActionCard.astro'
 import IconCalendar from '../components/icons/IconCalendar.astro'
+import IconEdit from '../components/icons/IconEdit.astro'
+import IconTarget from '../components/icons/IconTarget.astro'
+import IconUsers from '../components/icons/IconUsers.astro'
+import IconUpload from '../components/icons/IconUpload.astro'
+import IconMap from '../components/icons/IconMap.astro'
+import IconFileText from '../components/icons/IconFileText.astro'
 import IconMail from '../components/icons/IconMail.astro'
+
+const registrationUrl = 'https://forms.gle/LaSLkzEyUvZGzLJo6'
 ---
 
 <Main title="ZAPP Data Annotations Workshop">
@@ -25,6 +33,93 @@ import IconMail from '../components/icons/IconMail.astro'
                     <li><strong>Date:</strong> February 23-24, 2027</li>
                     <li><strong>Time:</strong> 9 am - 5 pm Mountain Time (both days)</li>
                     <li><strong>Location:</strong> <a href="https://www.cuanschutz.edu/" target="_blank" rel="noopener noreferrer">University of Colorado Anschutz Medical Campus</a>, Aurora, Colorado</li>
+                </ul>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="registration">
+        <SectionCard title="Registration" iconColor="teal">
+            <IconEdit slot="icon" />
+            <div class="details-body">
+                <ul>
+                    <li><strong>In person:</strong> registration closes on December 12, 2026</li>
+                    <li><strong>Virtual:</strong> registration closes on February 14, 2027</li>
+                </ul>
+                <a class="register-btn" href={registrationUrl} target="_blank" rel="noopener noreferrer">Register</a>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="goals">
+        <SectionCard title="Workshop Goals" iconColor="teal">
+            <IconTarget slot="icon" />
+            <div class="details-body">
+                <ul>
+                    <li>Introduce the ZAPP annotation tools and teach community members how to use them</li>
+                    <li>Collect data for the Atlas through hands-on sessions</li>
+                    <li>Gather feedback about the annotation tools and the Atlas</li>
+                    <li>Discuss curation guidelines and data governance</li>
+                </ul>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="attend">
+        <SectionCard title="Who Can Attend" iconColor="teal">
+            <IconUsers slot="icon" />
+            <div class="details-body">
+                <p>Anyone in the zebrafish community is welcome to join in person. Some parts of the workshop will also be offered virtually via Zoom, but all hands-on sessions are for in-person participants only.</p>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="bring">
+        <SectionCard title="What to Bring" iconColor="teal">
+            <IconUpload slot="icon" />
+            <div class="details-body">
+                <p>This is a hands-on workshop. Participants will bring their own images and data and annotate them using the ZAPP annotation tools.</p>
+                <ul>
+                    <li>Images (phenotypic fish and controls) and information from at least 5 individual chemical treatment experiments (different chemicals and/or different concentrations)</li>
+                    <li>Data can be already published or new data that has not yet been made public</li>
+                    <li>You decide whether to publish your data in the publicly accessible Atlas or keep it unpublished within the annotation tool platform. See our <a href="/ZAPPGovernance">data governance rules</a> for how data sharing and ownership work.</li>
+                </ul>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="travel">
+        <SectionCard title="Travel and Lodging" iconColor="teal">
+            <IconMap slot="icon" />
+            <div class="details-body">
+                <p>If traveling by plane, fly into Denver International Airport (DEN), then take a taxi or rideshare (such as Uber) to the Anschutz campus.</p>
+                <p>Suggested hotels close to campus:</p>
+                <ul>
+                    <li><a href="https://www.thebensonhotel.com/" target="_blank" rel="noopener noreferrer">The Benson Hotel &amp; Faculty Club</a>: on campus, with a complimentary golf cart shuttle around campus (13025 E Montview Blvd)</li>
+                    <li><a href="https://www.marriott.com/denaf" target="_blank" rel="noopener noreferrer">SpringHill Suites Denver at Anschutz Medical Campus</a>: about a 5-10 minute walk to campus (13400 E Colfax Ave)</li>
+                    <li><a href="https://www.hyatt.com/hyatt-house/en-US/denxo-hyatt-house-denver-aurora-anschutz-medical-campus" target="_blank" rel="noopener noreferrer">Hyatt House Denver Aurora Anschutz Medical Campus</a>: across Colfax Ave from campus, a few minutes' walk (12230 E Colfax Ave)</li>
+                </ul>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="schedule">
+        <SectionCard title="Workshop Schedule" iconColor="teal">
+            <IconCalendar slot="icon" />
+            <div class="details-body">
+                <p>Coming soon.</p>
+            </div>
+        </SectionCard>
+    </section>
+
+    <section class="resources">
+        <SectionCard title="Workshop Material and Resources" iconColor="teal">
+            <IconFileText slot="icon" />
+            <div class="details-body">
+                <ul>
+                    <li><a href="https://docs.google.com/document/d/1HRDuhKquGIEclo37bmxQUJXNiXWVmxRZtieWLmcmzCU/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Information required for data annotation</a></li>
+                    <li><a href="/ZAPPGovernance">Data governance</a>: current rules about data sharing, data ownership, and data governance</li>
+                    <li><a href="https://drive.google.com/file/d/1iM0jrpyLSPX7Fj0OfVeEDa4DPX_IR0dU/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Code of conduct</a></li>
                 </ul>
             </div>
         </SectionCard>
@@ -54,26 +149,47 @@ import IconMail from '../components/icons/IconMail.astro'
 <style>
     /* links — match link style on the Goals page */
     .about a,
-    .details-body a {
+    .details-body a:not(.register-btn) {
         text-decoration: none;
         color: var(--color-accent);
         font-weight: var(--font-weight-bold);
         transition: color var(--transition-fast);
     }
     .about a:hover,
-    .details-body a:hover {
+    .details-body a:not(.register-btn):hover {
         color: var(--color-accent-hover);
         text-decoration: underline;
         text-underline-offset: 2px;
     }
 
-    /* details card body */
-    .details-body ul { padding: var(--space-8) var(--space-8) var(--space-8) var(--space-12); margin-bottom: 0; }
+    /* card body */
+    .details-body { padding: var(--space-8); }
+    .details-body p { margin-bottom: var(--space-4); }
+    .details-body p:last-child { margin-bottom: 0; }
+    .details-body ul { padding-left: var(--space-4); margin-bottom: 0; }
     .details-body li { margin-bottom: var(--space-3); }
     .details-body li:last-child { margin-bottom: 0; }
+
+    /* register button — matches the Sign Up button on the Events page */
+    .register-btn {
+        display: inline-block;
+        margin-top: var(--space-6);
+        padding: var(--space-3) var(--space-6);
+        background: var(--color-accent);
+        color: var(--color-text-white);
+        border-radius: 6px;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        text-decoration: none;
+        transition: background 0.15s;
+    }
+    .register-btn:hover { background: var(--color-accent-hover); }
 
     /* action cards grid — layout lives here, card styles live in ActionCard.astro */
     .action-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
 
-    @media (max-width: 768px) { .action-cards { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) {
+        .details-body { padding: var(--space-6); }
+        .action-cards { grid-template-columns: 1fr; }
+    }
 </style>
