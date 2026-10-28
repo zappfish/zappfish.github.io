@@ -8,7 +8,4 @@ export default defineConfig({
   site: "https://zappfish.org",
   trailingSlash: "never",
   build: { format: "file" },
-  redirects: {
-    "/data-annotations-workshop-2027": "/events/data-annotations-workshop-2027",
-  },
 });

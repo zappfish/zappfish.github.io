@@ -69,6 +69,9 @@ const pastCards     = await renderCards(past, false)
                         <div class="event-card" id={`event-${entry.id}`}>
                             <SectionCard title={entry.data.title} subtitle={`${entry.data.topic} · ${entry.data.date}`} iconColor="teal">
                                 <IconCalendar slot="icon" />
+                                {entry.data.signup && entry.data.signup !== 'Closed' &&
+                                    <a slot="action" class="signup-btn" href={entry.data.signup}>Sign Up</a>
+                                }
                                 <div class="event-body">
                                     {showMeta && (
                                         <div class="event-meta-row">
@@ -77,9 +80,6 @@ const pastCards     = await renderCards(past, false)
                                             <span class="meta-item">{entry.data.location}</span>
                                         </div>
                                     )}
-                                    {entry.data.signup && entry.data.signup !== 'Closed' &&
-                                        <a class="signup-btn" href={entry.data.signup}>Sign Up</a>
-                                    }
                                     <div class="event-content"><Content /></div>
                                 </div>
                             </SectionCard>
@@ -258,12 +258,11 @@ const pastCards     = await renderCards(past, false)
 
     .signup-btn {
         display: inline-block;
-        margin-bottom: var(--space-6);
         padding: var(--space-3) var(--space-6);
         background: var(--color-accent);
         color: var(--color-text-white);
         border-radius: 6px;
-        font-size: var(--font-size-base);
+        font-size: var(--font-size-ui);
         font-weight: var(--font-weight-bold);
         text-decoration: none;
         transition: background 0.15s;
@@ -369,6 +368,14 @@ const pastCards     = await renderCards(past, false)
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: var(--color-text-dark);
+    }
+
+    /* phones: one column, and let tile text wrap, so the resource cards don't push the page wider than the screen */
+    @media (max-width: 768px) {
+        /* .event-body already pads 32px each side; a second layer squeezes text on phones */
+        .event-content { padding-left: 0; padding-right: 0; }
+        .event-content :global(ul:last-of-type) { grid-template-columns: minmax(0, 1fr); }
+        .event-content :global(ul:last-of-type li) { grid-template-columns: 36px minmax(0, 1fr); overflow-wrap: anywhere; }
     }
 
     /* Per-item icon base */
