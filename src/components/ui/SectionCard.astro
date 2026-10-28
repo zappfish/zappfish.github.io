@@ -22,6 +22,11 @@ const hasHeader = !!title || hasIcon
                     {subtitle && <p class="section-subtitle">{subtitle}</p>}
                 </div>
             )}
+            {Astro.slots.has('action') && (
+                <div class="section-action">
+                    <slot name="action" />
+                </div>
+            )}
         </div>
     )}
     <div class="section-card-body">
@@ -47,6 +52,7 @@ const hasHeader = !!title || hasIcon
     }
 
     .section-card-header h2 { margin-bottom: 0; }
+    .section-action { margin-left: auto; flex-shrink: 0; }
     .section-subtitle { font-size: var(--font-size-ui); color: var(--color-text-muted); margin: var(--space-1) 0 0; }
 
     .section-icon {
